@@ -175,11 +175,20 @@ fun notifyResize(playerDimensions: Rect, creativeDimensions: Rect, fullscreen: B
 **UI Improvements:**
 - Moved input controls outside of player container for better layout
 - Removed localStorage usage for stream URL (now uses query parameters only)
-- Updated to use new controller constructor with separate creative dimensions
+- Changed player positioning from absolute to relative for better responsiveness
 
-**Player Resize Support:**
-- Added proper handling for player and creative resize notifications
-- Implements `notifyResize` when dimensions change
+**Controller Integration Updates:**
+- ✅ Updated constructor call to new signature (passing `playerRect` twice)
+- ✅ Added `onPauseMedia` and `onPlayMedia` callbacks
+- ✅ Implemented `pauseMedia()` and `playMedia()` methods
+- ✅ Added window resize observer that debounces and calls `notifyResize()`
+- ✅ New `handleResize()` method that notifies all active SIMID controllers
+
+**Limitations:**
+- ⚠️ Demo passes same dimensions for both player and creative (`playerRect, playerRect`)
+- ⚠️ Does not demonstrate the separate creative dimensions feature
+- ⚠️ No specific UI to showcase nonlinear ad expansion/collapse functionality
+- Note: The demo works correctly but doesn't fully showcase the new nonlinear ad capabilities
 
 ### Android Demo App
 
@@ -278,6 +287,130 @@ All package files updated from 0.4.0 to 0.5.0:
 - `web/controller/package.json`
 - `web/app/package.json`
 - Android build configuration files
+
+---
+
+## Detailed Web Demo App Changes
+
+### App.ts Changes
+
+**Removed:**
+- LocalStorage functionality for persisting stream URL
+- `STORAGE_BASE_KEY` constant
+- `getFromLocalStorage()` and `saveToLocalStorage()` methods
+
+**Added:**
+- Resize observer with debouncing (200ms delay)
+- `resizeTimer` property to handle debounced resize events
+- `setResizeObserver()` method that calls `player.handleResize()`
+
+**Simplified:**
+- Stream URL now uses query parameter or defaults to `DEFAULT_STREAM_URL`
+- No longer saves stream URL between sessions
+
+### Player.ts Changes
+
+**Constructor Call Update:**
+```typescript
+// v0.4.0
+const simidController = new SimidController(playerRect, creativeUri, adParameters, duration)
+
+// v0.5.0
+const simidController = new SimidController(
+  playerRect,    // playerDimensions
+  playerRect,    // creativeDimensions (same as player)
+  creativeUri,
+  adParameters,
+  duration
+)
+```
+
+**New Callbacks:**
+```typescript
+// Added media control callbacks
+simidController.onPauseMedia = () => this.pauseMedia()
+simidController.onPlayMedia = () => this.playMedia()
+```
+
+**New Methods:**
+```typescript
+// Handles window resize events
+public handleResize() {
+  const playerRect: DOMRect = this.playerContainer.getBoundingClientRect()
+  this.simidControllers.forEach(controller => 
+    controller.notifyResize(playerRect, playerRect, false)
+  )
+}
+
+// Pause video playback
+private pauseMedia(): boolean {
+  console.log('[Player] Pause media')
+  this.videoElement.pause()
+  return true
+}
+
+// Resume video playback
+private playMedia(): boolean {
+  console.log('[Player] Play media')
+  this.videoElement.play()
+  return true
+}
+```
+
+### index.html Changes
+
+**CSS Updates:**
+- Player positioning changed from `absolute` to `relative`
+- Player dimensions changed from `100vw/100vh` to `100%`
+- Inputs moved outside the `#player` div
+- Input controls z-index increased to 999 for better visibility
+
+**HTML Structure:**
+```html
+<!-- v0.4.0: Inputs inside player -->
+<div id="player">
+  <div class="inputs">...</div>
+  <video>...</video>
+</div>
+
+<!-- v0.5.0: Inputs outside player -->
+<div class="inputs">...</div>
+<div id="player">
+  <video>...</video>
+</div>
+```
+
+### What's Missing for Full Feature Demonstration
+
+To fully showcase v0.5.0's nonlinear ad capabilities, the demo would ideally include:
+
+1. **Separate Creative Dimensions:**
+   ```typescript
+   // Example: smaller creative area for nonlinear ad
+   const creativeRect = new DOMRect(
+     playerRect.x,
+     playerRect.y + playerRect.height - 100,  // Bottom of player
+     playerRect.width,
+     100  // 100px tall banner
+   )
+   const simidController = new SimidController(
+     playerRect,      // Full player
+     creativeRect,    // Smaller banner area
+     creativeUri,
+     adParameters,
+     duration
+   )
+   ```
+
+2. **UI Controls for Testing:**
+   - Button to manually trigger expand/collapse
+   - Visual indicator of creative vs player dimensions
+   - Toggle between linear and nonlinear ad modes
+
+3. **Visual Demonstration:**
+   - Show the creative in a smaller area initially
+   - Demonstrate expansion to full screen on user interaction
+   - Show collapse back to original size
 
 ---
 
