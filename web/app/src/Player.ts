@@ -202,6 +202,12 @@ export default class Player {
       simidIframe.style.zIndex = '20'
     }
     simidIframe.style.display = show ? 'block' : 'none'
+
+    // trigger trackers
+    if (show) {
+      this.smartlibSession?.sendTracker('impression', adId)
+      this.smartlibSession?.sendTracker('creativeView', adId)
+    }
   }
 
   private resizeSimid(adId: string, dimensions: DOMRect): boolean {
