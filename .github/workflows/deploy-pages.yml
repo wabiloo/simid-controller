@@ -1,0 +1,71 @@
+name: Deploy demo app to GitHub Pages
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch, tag, or commit SHA to deploy
+        required: true
+        default: develop
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deployment at a time; cancel any in-progress run for the same branch
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+
+      # Build the controller library first (the app depends on it via file:../controller)
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: web/controller/package-lock.json
+
+      - name: Install controller dependencies
+        run: npm ci
+        working-directory: web/controller
+
+      - name: Build controller
+        run: npm run build
+        working-directory: web/controller
+
+      # Build the demo app
+      - name: Install app dependencies
+        run: npm ci
+        working-directory: web/app
+
+      - name: Build app
+        run: npm run build
+        working-directory: web/app
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/app/public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
