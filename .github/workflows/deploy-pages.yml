@@ -60,3 +60,12 @@ jobs:
           folder: web/app/public
           target-folder: ${{ inputs.label }}
           # clean: true (default) — wipes only the target subfolder, preserving other deployments
+
+      - name: Show deployment URL
+        run: |
+          URL="https://wabiloo.github.io/simid-controller/${{ inputs.label }}/"
+          echo "## Deployed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**$URL**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Built from \`${{ inputs.ref }}\` with label \`${{ inputs.label }}\`" >> $GITHUB_STEP_SUMMARY
