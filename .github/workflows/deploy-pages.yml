@@ -7,26 +7,27 @@ on:
         description: Branch, tag, or commit SHA to deploy
         required: true
         default: develop
+      label:
+        description: 'Deployment label — becomes the URL path (e.g. "v0.7.0", "demo-dai")'
+        required: true
+        default: develop
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
-# Only one deployment at a time; cancel any in-progress run for the same branch
+# Concurrent deployments to the same label cancel each other; different labels run in parallel
 concurrency:
-  group: pages
+  group: pages-${{ inputs.label }}
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.ref }}
 
-      # Build the controller library first (the app depends on it via file:../controller)
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -34,6 +35,7 @@ jobs:
           cache: npm
           cache-dependency-path: web/controller/package-lock.json
 
+      # Build the controller library first (app depends on it via file:../controller)
       - name: Install controller dependencies
         run: npm ci
         working-directory: web/controller
@@ -48,24 +50,13 @@ jobs:
         working-directory: web/app
 
       - name: Build app
-        run: npm run build
+        run: npm run build -- --output-public-path "/simid-controller/${{ inputs.label }}/dist/"
         working-directory: web/app
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: web/app/public
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: web/app/public
+          target-folder: ${{ inputs.label }}
+          # clean: true (default) — wipes only the target subfolder, preserving other deployments
