@@ -1,10 +1,10 @@
 import { MediaState } from '@broadpeak-tv/simid-controller'
-import SimidController from './SimidController'
 import { SmartLib, StreamingSessionOptions } from '@broadpeak/smartlib'
 import '@broadpeak/smartlib-ad'
-import '@broadpeak/smartlib-shaka'
 import '@broadpeak/smartlib-analytics'
+import '@broadpeak/smartlib-shaka'
 import { GenericSimidControllerApi } from '@broadpeak/smartlib-simid'
+import SimidController from './SimidController'
 
 declare const shaka: any
 
@@ -28,8 +28,8 @@ export default class Player {
   private aspectTwoThirdsEnabled: boolean = false
 
   private contentMetadata: Record<string, string> = {
-    contentPosterUrl: 'https://m.media-amazon.com/images/M/MV5BN2Q0Y2M2OWYtODU5MS00ZTkwLTlkN2QtMWI4MWM4MGViODFmXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
-    contentTitle: 'Meridian'
+    contentPosterUrl: 'https://bpkcscreatives.s3-eu-west-1.amazonaws.com/non-linear/customers/rmc/reinesvolant.jpg',
+    contentTitle: 'Les reines du volant, saison 2 épisode 2'
   }
 
   constructor(playerContainer: HTMLElement, playerElement: HTMLElement, videoElement: HTMLMediaElement) {

@@ -1,6 +1,6 @@
 import Player from './Player'
 
-const DEFAULT_STREAM_URL = 'https://dcv5s0ei7csoc.cloudfront.net/2ab56412b1163ee1f2c20f39d03e6ede/AVOD/Meridian_1920x1080_30fps_SDR/conditioned/stream.mpd?ooba-tag=rmc-pause'
+const DEFAULT_STREAM_URL = 'https://dcv5s0ei7csoc.cloudfront.net/2ab56412b1163ee1f2c20f39d03e6ede/AVOD/CAMIONSXXL-S2E2/unconditioned/stream.m3u8?ooba-tag=rmc-pause'
 
 export default class App {
 
