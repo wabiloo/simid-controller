@@ -113,6 +113,9 @@ class App {
         await this.player.stop();
     }
     setupMetadata() {
+        const aspectCheckbox = document.getElementById('aspect-two-thirds-checkbox');
+        aspectCheckbox.onclick = (e) => e.stopPropagation();
+        aspectCheckbox.onchange = () => this.player.setAspectTwoThirds(aspectCheckbox.checked);
         this.metadataButton.onclick = () => this.openMetadataOverlay();
         document.getElementById('metadata-close').onclick = () => this.closeMetadataOverlay();
         document.getElementById('metadata-cancel').onclick = () => this.closeMetadataOverlay();
@@ -209,6 +212,7 @@ class Player {
         this.adDatas = new Map();
         this.simidControllers = new Map();
         this.simidIframes = new Map();
+        this.aspectTwoThirdsEnabled = false;
         this.contentMetadata = {
             contentPosterUrl: 'https://m.media-amazon.com/images/M/MV5BN2Q0Y2M2OWYtODU5MS00ZTkwLTlkN2QtMWI4MWM4MGViODFmXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
             contentTitle: 'Meridian'
@@ -285,6 +289,9 @@ class Player {
         console.log(`[Player] Load SIMID controller v${simidController.getVersion()}`);
         simidController.load(autoStart);
         this.simidControllers.set(adId, simidController);
+    }
+    setAspectTwoThirds(enabled) {
+        this.aspectTwoThirdsEnabled = enabled;
     }
     getContentMetadata() {
         return { ...this.contentMetadata };
@@ -463,7 +470,8 @@ class Player {
         console.log('[Player] Video paused');
         if (this.smartlibSession) {
             console.log('[Player] Request pause ads');
-            this.smartlibSession.requestOutOfBandAds('pause', 0, true, {});
+            const targeting = this.aspectTwoThirdsEnabled ? { cat: 'aspect-two-thirds' } : {};
+            this.smartlibSession.requestOutOfBandAds('pause', 0, true, targeting);
         }
     }
     onVideoPlay() {
@@ -1526,7 +1534,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("bdeb136b5fd8ac6b9c58")
+/******/ 		__webpack_require__.h = () => ("d4f2d5cd2354aa6df50c")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
