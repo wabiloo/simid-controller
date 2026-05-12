@@ -25,6 +25,8 @@ export default class Player {
   private activePauseAdBreak?: any /* AdBreakData */
   private activePauseAdId?: string
 
+  private aspectTwoThirdsEnabled: boolean = false
+
   private contentMetadata: Record<string, string> = {
     contentPosterUrl: 'https://m.media-amazon.com/images/M/MV5BN2Q0Y2M2OWYtODU5MS00ZTkwLTlkN2QtMWI4MWM4MGViODFmXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
     contentTitle: 'Meridian'
@@ -124,6 +126,10 @@ export default class Player {
     simidController.load(autoStart)
 
     this.simidControllers.set(adId, simidController)
+  }
+
+  public setAspectTwoThirds(enabled: boolean): void {
+    this.aspectTwoThirdsEnabled = enabled
   }
 
   public getContentMetadata(): Record<string, string> {
@@ -331,7 +337,8 @@ export default class Player {
     console.log('[Player] Video paused')
     if (this.smartlibSession) {
       console.log('[Player] Request pause ads')
-      this.smartlibSession.requestOutOfBandAds('pause', 0, true, {})       
+      const targeting = this.aspectTwoThirdsEnabled ? { cat: 'aspect-two-thirds' } : {}
+      this.smartlibSession.requestOutOfBandAds('pause', 0, true, targeting)
     }
   }
 
