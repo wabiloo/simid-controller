@@ -27,8 +27,7 @@ export default class Player {
 
   private contentMetadata: Record<string, string> = {
     contentPosterUrl: 'https://m.media-amazon.com/images/M/MV5BN2Q0Y2M2OWYtODU5MS00ZTkwLTlkN2QtMWI4MWM4MGViODFmXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
-    contentTitle: 'Meridian',
-    durationRemaining: '12 min'
+    contentTitle: 'Meridian'
   }
 
   constructor(playerContainer: HTMLElement, playerElement: HTMLElement, videoElement: HTMLMediaElement) {
@@ -85,7 +84,16 @@ export default class Player {
       // adParameters was not valid JSON — start from empty object
     }
     Object.assign(params, this.contentMetadata)
+    params.durationRemaining = this.getRemainingDuration()
     return JSON.stringify(params)
+  }
+
+  private getRemainingDuration(): string {
+    const duration = this.videoElement.duration
+    if (!duration || !isFinite(duration) || isNaN(duration)) return '...'
+    const remaining = Math.max(0, duration - this.videoElement.currentTime)
+    if (remaining < 60) return '< 1 min'
+    return `${Math.floor(remaining / 60)} min`
   }
 
   public loadSimid(adId: string, creativeUri: string, adParameters: string, clickThruUrl: string, duration: number, autoStart = false) {

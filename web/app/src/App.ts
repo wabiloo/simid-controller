@@ -14,7 +14,6 @@ export default class App {
 
   private metadataButton: HTMLButtonElement
   private metadataOverlay: HTMLElement
-  private metadataTextarea: HTMLTextAreaElement
 
   private resizeTimer: number = -1
 
@@ -29,7 +28,6 @@ export default class App {
     this.streamButtonStop = document.getElementById('stream-button-stop') as HTMLButtonElement
     this.metadataButton = document.getElementById('metadata-button') as HTMLButtonElement
     this.metadataOverlay = document.getElementById('metadata-overlay') as HTMLElement
-    this.metadataTextarea = document.getElementById('metadata-textarea') as HTMLTextAreaElement
 
     this.player = new Player(this.playerContainer, this.playerElement, this.videoElement)
 
@@ -64,14 +62,13 @@ export default class App {
   }
 
   private setupMetadata() {
-    this.metadataTextarea.value = this.metadataToText(this.player.getContentMetadata())
-
     this.metadataButton.onclick = () => this.openMetadataOverlay()
 
+    document.getElementById('metadata-close')!.onclick = () => this.closeMetadataOverlay()
     document.getElementById('metadata-cancel')!.onclick = () => this.closeMetadataOverlay()
 
     document.getElementById('metadata-save')!.onclick = () => {
-      this.player.setContentMetadata(this.textToMetadata(this.metadataTextarea.value))
+      this.player.setContentMetadata(this.readMetadataFields())
       this.closeMetadataOverlay()
     }
 
@@ -85,7 +82,7 @@ export default class App {
   }
 
   private openMetadataOverlay() {
-    this.metadataTextarea.value = this.metadataToText(this.player.getContentMetadata())
+    this.renderMetadataFields(this.player.getContentMetadata())
     this.metadataOverlay.style.display = 'flex'
   }
 
@@ -93,24 +90,34 @@ export default class App {
     this.metadataOverlay.style.display = 'none'
   }
 
-  private metadataToText(metadata: Record<string, string>): string {
-    return Object.entries(metadata).map(([k, v]) => `${k}: ${v}`).join('\n')
+  private renderMetadataFields(metadata: Record<string, string>): void {
+    const container = document.getElementById('metadata-fields')!
+    container.innerHTML = ''
+    for (const [key, value] of Object.entries(metadata)) {
+      const row = document.createElement('div')
+      row.className = 'metadata-row'
+
+      const label = document.createElement('label')
+      label.className = 'metadata-key'
+      label.textContent = key
+
+      const input = document.createElement('input')
+      input.className = 'metadata-value'
+      input.type = 'text'
+      input.dataset.key = key
+      input.value = value
+
+      row.appendChild(label)
+      row.appendChild(input)
+      container.appendChild(row)
+    }
   }
 
-  private textToMetadata(text: string): Record<string, string> {
+  private readMetadataFields(): Record<string, string> {
     const metadata: Record<string, string> = {}
-    for (const line of text.split('\n')) {
-      const trimmed = line.trim()
-      if (!trimmed) continue
-      // support both "key: value" and "key=value"
-      const colonIdx = trimmed.indexOf(': ')
-      const equalsIdx = trimmed.indexOf('=')
-      if (colonIdx > 0) {
-        metadata[trimmed.slice(0, colonIdx).trim()] = trimmed.slice(colonIdx + 2)
-      } else if (equalsIdx > 0) {
-        metadata[trimmed.slice(0, equalsIdx).trim()] = trimmed.slice(equalsIdx + 1)
-      }
-    }
+    document.querySelectorAll<HTMLInputElement>('#metadata-fields .metadata-value').forEach(input => {
+      metadata[input.dataset.key!] = input.value
+    })
     return metadata
   }
 
