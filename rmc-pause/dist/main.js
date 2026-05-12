@@ -78,7 +78,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ "./src/Player.ts");
 
-const DEFAULT_STREAM_URL = 'https://dcv5s0ei7csoc.cloudfront.net/2ab56412b1163ee1f2c20f39d03e6ede/AVOD/Meridian_1920x1080_30fps_SDR/conditioned/stream.mpd?ooba-tag=rmc-pause';
+const DEFAULT_STREAM_URL = 'https://dcv5s0ei7csoc.cloudfront.net/2ab56412b1163ee1f2c20f39d03e6ede/AVOD/CAMIONSXXL-S2E2/unconditioned/stream.m3u8?ooba-tag=rmc-pause';
 class App {
     constructor() {
         this.resizeTimer = -1;
@@ -190,17 +190,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Player)
 /* harmony export */ });
-/* harmony import */ var _SimidController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SimidController */ "./src/SimidController.ts");
-/* harmony import */ var _broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @broadpeak/smartlib */ "./node_modules/@broadpeak/smartlib/base.smartlib.js");
-/* harmony import */ var _broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _broadpeak_smartlib_ad__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @broadpeak/smartlib-ad */ "./node_modules/@broadpeak/smartlib-ad/ad.smartlib.js");
-/* harmony import */ var _broadpeak_smartlib_ad__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_broadpeak_smartlib_ad__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @broadpeak/smartlib */ "./node_modules/@broadpeak/smartlib/base.smartlib.js");
+/* harmony import */ var _broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _broadpeak_smartlib_ad__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @broadpeak/smartlib-ad */ "./node_modules/@broadpeak/smartlib-ad/ad.smartlib.js");
+/* harmony import */ var _broadpeak_smartlib_ad__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_broadpeak_smartlib_ad__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _broadpeak_smartlib_analytics__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @broadpeak/smartlib-analytics */ "./node_modules/@broadpeak/smartlib-analytics/analytics.smartlib.js");
+/* harmony import */ var _broadpeak_smartlib_analytics__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_broadpeak_smartlib_analytics__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _broadpeak_smartlib_shaka__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @broadpeak/smartlib-shaka */ "./node_modules/@broadpeak/smartlib-shaka/shaka.smartlib.js");
 /* harmony import */ var _broadpeak_smartlib_shaka__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_broadpeak_smartlib_shaka__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _broadpeak_smartlib_analytics__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @broadpeak/smartlib-analytics */ "./node_modules/@broadpeak/smartlib-analytics/analytics.smartlib.js");
-/* harmony import */ var _broadpeak_smartlib_analytics__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_broadpeak_smartlib_analytics__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _broadpeak_smartlib_simid__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @broadpeak/smartlib-simid */ "./node_modules/@broadpeak/smartlib-simid/simid.smartlib.js");
-/* harmony import */ var _broadpeak_smartlib_simid__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_broadpeak_smartlib_simid__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _broadpeak_smartlib_simid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @broadpeak/smartlib-simid */ "./node_modules/@broadpeak/smartlib-simid/simid.smartlib.js");
+/* harmony import */ var _broadpeak_smartlib_simid__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_broadpeak_smartlib_simid__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _SimidController__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SimidController */ "./src/SimidController.ts");
 
 
 
@@ -214,23 +214,23 @@ class Player {
         this.simidIframes = new Map();
         this.aspectTwoThirdsEnabled = false;
         this.contentMetadata = {
-            contentPosterUrl: 'https://m.media-amazon.com/images/M/MV5BN2Q0Y2M2OWYtODU5MS00ZTkwLTlkN2QtMWI4MWM4MGViODFmXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
-            contentTitle: 'Meridian'
+            contentPosterUrl: 'https://bpkcscreatives.s3-eu-west-1.amazonaws.com/non-linear/customers/rmc/reinesvolant.jpg',
+            contentTitle: 'Les reines du volant, saison 2 épisode 2'
         };
         this.playerContainer = playerContainer;
         this.playerElement = playerElement;
         this.videoElement = videoElement;
-        _broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_1__.SmartLib.getInstance().init('', '', '*');
+        _broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_0__.SmartLib.getInstance().init('', '', '*');
         this.loadPlayer();
     }
     async load(url) {
         await this.stop();
         // Create SmartLib session
-        this.smartlibSession = _broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_1__.SmartLib.getInstance().createStreamingSession();
-        this.smartlibSession.setOption(_broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_1__.StreamingSessionOptions.AD_TRACKERS_NON_LINEAR_AUTO_SEND, false);
+        this.smartlibSession = _broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_0__.SmartLib.getInstance().createStreamingSession();
+        this.smartlibSession.setOption(_broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_0__.StreamingSessionOptions.AD_TRACKERS_NON_LINEAR_AUTO_SEND, false);
         this.setAdDataListeners(this.smartlibSession);
         this.setAdEventsListeners(this.smartlibSession);
-        this.bpkSimidController = new _broadpeak_smartlib_simid__WEBPACK_IMPORTED_MODULE_5__.GenericSimidControllerApi();
+        this.bpkSimidController = new _broadpeak_smartlib_simid__WEBPACK_IMPORTED_MODULE_4__.GenericSimidControllerApi();
         // Attach player to smartlib session
         this.smartlibSession.attachPlayer(this.player);
         // Attach bpkSimidController to the session
@@ -275,7 +275,7 @@ class Player {
         // Consider player container dimensions as initial creative dimensions
         const playerRect = this.getElementDimensions(this.playerContainer);
         console.log(`[Player] Load SIMID - uri:${creativeUri} duration:${duration}`);
-        const simidController = new _SimidController__WEBPACK_IMPORTED_MODULE_0__["default"](playerRect, playerRect, creativeUri, adParameters, duration, false);
+        const simidController = new _SimidController__WEBPACK_IMPORTED_MODULE_5__["default"](playerRect, playerRect, creativeUri, adParameters, duration, false);
         simidController.onGetMediaState = () => this.getMediaState();
         simidController.onAddSimid = (iframe) => this.addSimidIframe(adId, iframe);
         simidController.onShowSimid = (show) => this.showSimidIframe(adId, show);
@@ -1534,7 +1534,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("d4f2d5cd2354aa6df50c")
+/******/ 		__webpack_require__.h = () => ("d4d190cbe96853865dc9")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
