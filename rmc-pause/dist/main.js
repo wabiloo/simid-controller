@@ -90,7 +90,6 @@ class App {
         this.streamButtonStop = document.getElementById('stream-button-stop');
         this.metadataButton = document.getElementById('metadata-button');
         this.metadataOverlay = document.getElementById('metadata-overlay');
-        this.metadataTextarea = document.getElementById('metadata-textarea');
         this.player = new _Player__WEBPACK_IMPORTED_MODULE_0__["default"](this.playerContainer, this.playerElement, this.videoElement);
         this.setResizeObserver();
         this.setupMetadata();
@@ -114,11 +113,11 @@ class App {
         await this.player.stop();
     }
     setupMetadata() {
-        this.metadataTextarea.value = this.metadataToText(this.player.getContentMetadata());
         this.metadataButton.onclick = () => this.openMetadataOverlay();
+        document.getElementById('metadata-close').onclick = () => this.closeMetadataOverlay();
         document.getElementById('metadata-cancel').onclick = () => this.closeMetadataOverlay();
         document.getElementById('metadata-save').onclick = () => {
-            this.player.setContentMetadata(this.textToMetadata(this.metadataTextarea.value));
+            this.player.setContentMetadata(this.readMetadataFields());
             this.closeMetadataOverlay();
         };
         this.metadataOverlay.addEventListener('click', (e) => {
@@ -131,31 +130,36 @@ class App {
         });
     }
     openMetadataOverlay() {
-        this.metadataTextarea.value = this.metadataToText(this.player.getContentMetadata());
+        this.renderMetadataFields(this.player.getContentMetadata());
         this.metadataOverlay.style.display = 'flex';
     }
     closeMetadataOverlay() {
         this.metadataOverlay.style.display = 'none';
     }
-    metadataToText(metadata) {
-        return Object.entries(metadata).map(([k, v]) => `${k}: ${v}`).join('\n');
-    }
-    textToMetadata(text) {
-        const metadata = {};
-        for (const line of text.split('\n')) {
-            const trimmed = line.trim();
-            if (!trimmed)
-                continue;
-            // support both "key: value" and "key=value"
-            const colonIdx = trimmed.indexOf(': ');
-            const equalsIdx = trimmed.indexOf('=');
-            if (colonIdx > 0) {
-                metadata[trimmed.slice(0, colonIdx).trim()] = trimmed.slice(colonIdx + 2);
-            }
-            else if (equalsIdx > 0) {
-                metadata[trimmed.slice(0, equalsIdx).trim()] = trimmed.slice(equalsIdx + 1);
-            }
+    renderMetadataFields(metadata) {
+        const container = document.getElementById('metadata-fields');
+        container.innerHTML = '';
+        for (const [key, value] of Object.entries(metadata)) {
+            const row = document.createElement('div');
+            row.className = 'metadata-row';
+            const label = document.createElement('label');
+            label.className = 'metadata-key';
+            label.textContent = key;
+            const input = document.createElement('input');
+            input.className = 'metadata-value';
+            input.type = 'text';
+            input.dataset.key = key;
+            input.value = value;
+            row.appendChild(label);
+            row.appendChild(input);
+            container.appendChild(row);
         }
+    }
+    readMetadataFields() {
+        const metadata = {};
+        document.querySelectorAll('#metadata-fields .metadata-value').forEach(input => {
+            metadata[input.dataset.key] = input.value;
+        });
         return metadata;
     }
     setResizeObserver() {
@@ -207,8 +211,7 @@ class Player {
         this.simidIframes = new Map();
         this.contentMetadata = {
             contentPosterUrl: 'https://m.media-amazon.com/images/M/MV5BN2Q0Y2M2OWYtODU5MS00ZTkwLTlkN2QtMWI4MWM4MGViODFmXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
-            contentTitle: 'Meridian',
-            durationRemaining: '12 min'
+            contentTitle: 'Meridian'
         };
         this.playerContainer = playerContainer;
         this.playerElement = playerElement;
@@ -252,7 +255,17 @@ class Player {
             // adParameters was not valid JSON — start from empty object
         }
         Object.assign(params, this.contentMetadata);
+        params.durationRemaining = this.getRemainingDuration();
         return JSON.stringify(params);
+    }
+    getRemainingDuration() {
+        const duration = this.videoElement.duration;
+        if (!duration || !isFinite(duration) || isNaN(duration))
+            return '...';
+        const remaining = Math.max(0, duration - this.videoElement.currentTime);
+        if (remaining < 60)
+            return '< 1 min';
+        return `${Math.floor(remaining / 60)} min`;
     }
     loadSimid(adId, creativeUri, adParameters, duration, autoStart = false) {
         // Consider player container dimensions as initial creative dimensions
@@ -1513,7 +1526,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("c92c8af566042f23a1fd")
+/******/ 		__webpack_require__.h = () => ("bdeb136b5fd8ac6b9c58")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
