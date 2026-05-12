@@ -45,16 +45,11 @@
       z-index: 999;
     }
 
-    .inputs button,
-    .inputs select,
-    .inputs input {
-      height: 24px;
-      box-sizing: border-box;
-    }
-    
     .inputs label {
       white-space: nowrap;
       flex: 0 0 auto;
+      font-size: 0.85em;
+      color: #888;
     }
 
     .inputs .input {
@@ -64,13 +59,64 @@
       width: 100%;
     }
 
+    .inputs input {
+      height: 26px;
+      box-sizing: border-box;
+      background: #181818;
+      color: #e8e8e8;
+      border: 1px solid #444;
+      border-radius: 5px;
+      padding: 0 10px;
+      font-size: 0.88em;
+      font-family: inherit;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .inputs input:focus {
+      outline: none;
+      border-color: #5b9bd5;
+      background: #1a2535;
+    }
+
     .flex-edit {
       flex: 1 1 0;
       min-width: 0;
     }
 
-    .inputs button {
-      padding: 4px;
+    #stream-button-load {
+      height: 26px;
+      background: #3a7abf;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 0 14px;
+      font-size: 0.88em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    #stream-button-load:hover {
+      background: #2e6aad;
+    }
+
+    #stream-button-stop {
+      height: 26px;
+      background: transparent;
+      color: #aaa;
+      border: 1px solid #484848;
+      border-radius: 5px;
+      padding: 0 14px;
+      font-size: 0.88em;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    #stream-button-stop:hover {
+      background: #2e2e2e;
+      color: #ddd;
     }
 
     .app {
@@ -113,13 +159,32 @@
       border: 0;
     }
 
+    #metadata-button {
+      height: 26px;
+      background: transparent;
+      color: #a8c4de;
+      border: 1px solid #4a6f8a;
+      border-radius: 5px;
+      padding: 0 12px;
+      font-size: 0.88em;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    #metadata-button:hover {
+      background: #1e3347;
+      color: #cde0f0;
+    }
+
     #metadata-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(3px);
       z-index: 1000;
       display: none;
       align-items: center;
@@ -127,44 +192,131 @@
     }
 
     #metadata-dialog {
-      background: #2a2a2a;
-      border: 1px solid #555;
-      padding: 20px;
-      width: 480px;
-      max-width: 90vw;
+      background: #222;
+      border: 1px solid #3a3a3a;
+      border-radius: 10px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+      width: 520px;
+      max-width: 92vw;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      overflow: hidden;
+      font-size: 14px;
     }
 
-    #metadata-dialog h3 {
-      font-size: 1.1em;
+    .dialog-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-bottom: 1px solid #333;
+    }
+
+    .dialog-header h3 {
+      font-size: 1em;
       font-weight: 600;
-      color: #eee;
+      color: #f0f0f0;
+      letter-spacing: 0.02em;
     }
 
-    #metadata-textarea {
-      width: 100%;
-      height: 160px;
-      font-family: monospace;
-      font-size: 0.85em;
-      background: #1a1a1a;
-      color: #eee;
-      border: 1px solid #555;
-      padding: 8px;
-      resize: vertical;
+    #metadata-close {
+      background: none;
+      border: none;
+      color: #777;
+      font-size: 1em;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 4px;
+      line-height: 1;
+      transition: background 0.15s, color 0.15s;
     }
 
-    #metadata-dialog .dialog-actions {
+    #metadata-close:hover {
+      background: #383838;
+      color: #ddd;
+    }
+
+    #metadata-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 18px 20px;
+    }
+
+    .metadata-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .metadata-key {
+      flex: 0 0 148px;
+      font-size: 0.82em;
+      color: #888;
+      text-align: right;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      user-select: none;
+    }
+
+    .metadata-value {
+      flex: 1;
+      min-width: 0;
+      background: #181818;
+      color: #e8e8e8;
+      border: 1px solid #444;
+      border-radius: 5px;
+      padding: 7px 10px;
+      font-size: 0.88em;
+      font-family: inherit;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .metadata-value:focus {
+      outline: none;
+      border-color: #5b9bd5;
+      background: #1a2535;
+    }
+
+    .dialog-actions {
       display: flex;
       gap: 8px;
       justify-content: flex-end;
+      padding: 12px 18px;
+      border-top: 1px solid #333;
     }
 
-    #metadata-dialog button {
-      height: 28px;
-      padding: 4px 12px;
+    #metadata-cancel {
+      background: transparent;
+      color: #aaa;
+      border: 1px solid #484848;
+      border-radius: 5px;
+      padding: 6px 18px;
+      font-size: 0.88em;
       cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    #metadata-cancel:hover {
+      background: #2e2e2e;
+      color: #ddd;
+    }
+
+    #metadata-save {
+      background: #3a7abf;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 6px 20px;
+      font-size: 0.88em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    #metadata-save:hover {
+      background: #2e6aad;
     }
 
 </style>
@@ -185,8 +337,11 @@
 
   <div id="metadata-overlay">
     <div id="metadata-dialog">
-      <h3>Content Metadata</h3>
-      <textarea id="metadata-textarea" spellcheck="false"></textarea>
+      <div class="dialog-header">
+        <h3>Content Metadata</h3>
+        <button id="metadata-close">✕</button>
+      </div>
+      <div id="metadata-fields"></div>
       <div class="dialog-actions">
         <button id="metadata-cancel">Cancel</button>
         <button id="metadata-save">Save</button>
