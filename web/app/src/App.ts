@@ -62,6 +62,10 @@ export default class App {
   }
 
   private setupMetadata() {
+    const aspectCheckbox = document.getElementById('aspect-two-thirds-checkbox') as HTMLInputElement
+    aspectCheckbox.onclick = (e) => e.stopPropagation()
+    aspectCheckbox.onchange = () => this.player.setAspectTwoThirds(aspectCheckbox.checked)
+
     this.metadataButton.onclick = () => this.openMetadataOverlay()
 
     document.getElementById('metadata-close')!.onclick = () => this.closeMetadataOverlay()
