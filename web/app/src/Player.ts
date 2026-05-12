@@ -23,7 +23,13 @@ export default class Player {
   private bpkSimidController: any /* GenericSimidControllerApi */
 
   private activePauseAdBreak?: any /* AdBreakData */
-  private activePauseAdId?: string 
+  private activePauseAdId?: string
+
+  private contentMetadata: Record<string, string> = {
+    contentPosterUrl: 'https://m.media-amazon.com/images/M/MV5BN2Q0Y2M2OWYtODU5MS00ZTkwLTlkN2QtMWI4MWM4MGViODFmXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
+    contentTitle: 'Meridian',
+    durationRemaining: '12 min'
+  }
 
   constructor(playerContainer: HTMLElement, playerElement: HTMLElement, videoElement: HTMLMediaElement) {
     this.playerContainer = playerContainer
@@ -71,6 +77,17 @@ export default class Player {
     await this.player.unload()
   }
 
+  private injectContentMetadata(adParameters: string): string {
+    let params: Record<string, any> = {}
+    try {
+      params = JSON.parse(adParameters)
+    } catch {
+      // adParameters was not valid JSON — start from empty object
+    }
+    Object.assign(params, this.contentMetadata)
+    return JSON.stringify(params)
+  }
+
   public loadSimid(adId: string, creativeUri: string, adParameters: string, clickThruUrl: string, duration: number, autoStart = false) {
 
     // Consider player container dimensions as initial creative dimensions
@@ -99,6 +116,14 @@ export default class Player {
     simidController.load(autoStart)
 
     this.simidControllers.set(adId, simidController)
+  }
+
+  public getContentMetadata(): Record<string, string> {
+    return { ...this.contentMetadata }
+  }
+
+  public setContentMetadata(metadata: Record<string, string>): void {
+    this.contentMetadata = metadata
   }
 
   public handleResize() {
@@ -152,8 +177,9 @@ export default class Player {
           this.adDatas.set(adData.adId, adData)
           if (adData.nonLinearIframeResources && adData.nonLinearIframeResources.length) {
             const iframeResource = adData.nonLinearIframeResources[0]
+            const adParameters = this.injectContentMetadata(iframeResource.parameters)
             const duration = adData.duration ? (adData.duration / 1000) : 0
-            this.loadSimid(adData.adId, iframeResource.url, iframeResource.parameters, adData.clickURL, duration)
+            this.loadSimid(adData.adId, iframeResource.url, adParameters, adData.clickURL, duration)
           }
         },
         onAdBegin: (adData: any, adBreakData: any) => {

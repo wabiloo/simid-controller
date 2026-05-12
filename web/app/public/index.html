@@ -113,6 +113,60 @@
       border: 0;
     }
 
+    #metadata-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #metadata-dialog {
+      background: #2a2a2a;
+      border: 1px solid #555;
+      padding: 20px;
+      width: 480px;
+      max-width: 90vw;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #metadata-dialog h3 {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #eee;
+    }
+
+    #metadata-textarea {
+      width: 100%;
+      height: 160px;
+      font-family: monospace;
+      font-size: 0.85em;
+      background: #1a1a1a;
+      color: #eee;
+      border: 1px solid #555;
+      padding: 8px;
+      resize: vertical;
+    }
+
+    #metadata-dialog .dialog-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    #metadata-dialog button {
+      height: 28px;
+      padding: 4px 12px;
+      cursor: pointer;
+    }
+
 </style>
 </head>
 <body>
@@ -125,6 +179,18 @@
       <input type="text" id="stream-edit-url" class="flex-edit" value="">
       <button id="stream-button-load">LOAD</button>
       <button id="stream-button-stop">STOP</button>
+      <button id="metadata-button">Content Metadata</button>
+    </div>
+  </div>
+
+  <div id="metadata-overlay">
+    <div id="metadata-dialog">
+      <h3>Content Metadata</h3>
+      <textarea id="metadata-textarea" spellcheck="false"></textarea>
+      <div class="dialog-actions">
+        <button id="metadata-cancel">Cancel</button>
+        <button id="metadata-save">Save</button>
+      </div>
     </div>
   </div>
 
