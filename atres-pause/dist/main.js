@@ -1,0 +1,2538 @@
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else {
+		var a = factory();
+		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
+	}
+})(self, () => {
+return /******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./node_modules/@broadpeak/smartlib-ad/ad.smartlib.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@broadpeak/smartlib-ad/ad.smartlib.js ***!
+  \************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+!function(t,i){ true?module.exports=i():0}("undefined"!=typeof self?self:__webpack_require__.g,function(){return(("undefined"!=typeof self?self:__webpack_require__.g).webpackChunkSmartLibModule=("undefined"!=typeof self?self:__webpack_require__.g).webpackChunkSmartLibModule||[]).push([[256],{7575(t,i,e){e.r(i),e.d(i,{AdBreakEventTracker:function(){return f},AdBreakTracker:function(){return k},AdDataTracker:function(){return A},AdEventTracker:function(){return S},AdFriendlyObstructionPurpose:function(){return l.D6},AdManager:function(){return l.X2},AdMetrics:function(){return a},AdMetricsBuilder:function(){return r},AdMetricsManager:function(){return D},AdSession:function(){return E.A},AdTracker:function(){return P},AdTrackingManager:function(){return m},AdType:function(){return l.eQ},AdViewState:function(){return l.up},InternalAdManager:function(){return y.A},OMSDKManager:function(){return I},OMSessionHandler:function(){return O}});var s=e(3445);class a{adSkippable;adSkipped;adProgress;adDuration;stallsNumber;stallsDuration;layerSwitchesNumber;averageBitrate;creativeId;adId;adIndex;adCount;adFormat;impressionDate;constructor(t=void 0){void 0===t?(this.adSkippable=!1,this.adSkipped=!1,this.adProgress=-1,this.adDuration=0,this.stallsNumber=0,this.stallsDuration=0,this.layerSwitchesNumber=0,this.averageBitrate=0,this.creativeId="",this.adId="",this.adIndex=-1,this.adCount=-1,this.adFormat="",this.impressionDate=-1):(this.adSkippable=t.adSkippable,this.adSkipped=t.adSkipped,this.adProgress=t.adProgress,this.adDuration=t.adDuration,this.stallsNumber=t.stallsNumber,this.stallsDuration=t.stallsDuration,this.layerSwitchesNumber=t.layerSwitchesNumber,this.averageBitrate=t.averageBitrate,this.creativeId=t.creativeId,this.adId=t.adId,this.adIndex=t.adIndex,this.adCount=t.adCount,this.adFormat=t.adFormat,this.impressionDate=t.impressionDate)}static merge(t){if(void 0!==t&&t.length>0){const i=new a,e=t[t.length-1];i.adSkippable=e.adSkippable,i.adSkipped=e.adSkipped,i.adProgress=e.adProgress,i.creativeId=e.creativeId,i.adId=e.adId;let s=0,r=0;for(let e=0;e<t.length;e++){const a=t[e];i.adDuration+=a.adDuration,i.stallsNumber+=a.stallsNumber,i.stallsDuration+=a.stallsDuration,i.layerSwitchesNumber+=a.layerSwitchesNumber,s+=a.averageBitrate*a.adDuration,r+=a.adDuration}return 0!==r&&(i.averageBitrate=Math.round(s/r)),i}}toString(){return"\n{ adSkippable="+this.adSkippable+"\n  adSkipped="+this.adSkipped+"\n  adProgress="+this.adProgress+"\n  adDuration="+this.adDuration+"\n  stallsNumber="+this.stallsNumber+"\n  stallsDuration="+this.stallsDuration+"\n  layerSwitchesNumber="+this.layerSwitchesNumber+"\n  averageBitrate="+this.averageBitrate+"\n  creativeId='"+this.creativeId+"'\n  adId='"+this.adId+"'\n  adIndex="+this.adIndex+"\n  adCount="+this.adCount+"\n  adFormat='"+this.adFormat+"'\n  impressionDate="+this.impressionDate+" ("+s.A.formatTime(this.impressionDate)+")\n}"}}class r{adMetrics;timeSpentPerLayer;quartiles;constructor(t=void 0,i=void 0,e=void 0){void 0===t&&void 0===i&&void 0===e?(this.timeSpentPerLayer={},this.quartiles={},this.reset()):(this.adMetrics=t,this.timeSpentPerLayer=i,this.quartiles=e)}isInitialized(){return""!==this.adMetrics.adId}import(t){return void 0!==t&&1===t.length&&t[0].impressionDate<=0&&(this.adMetrics=t[0]),this.adMetrics.impressionDate=Date.now(),this}setAdSkippable(t){return this.adMetrics.adSkippable=t,this}setAdSkipped(t){return this.adMetrics.adSkipped=t,this}addProgress(t){return this.quartiles[t]=!0,this.adMetrics.adProgress=Math.max(this.adMetrics.adProgress,t),this}init(t,i,e){return this.adMetrics.adFormat=t,this.adMetrics.adIndex=i,this.adMetrics.adCount=e,this}setCreativeId(t){return this.adMetrics.creativeId=t,this}setAdId(t){return this.adMetrics.adId=t,this}addTimeSpentPerLayer(t,i){if((t=Math.round(t))>0){void 0!==this.timeSpentPerLayer[t]?this.timeSpentPerLayer[t]+=i:this.timeSpentPerLayer[t]=i}return this}addLayerSwitch(){return this.adMetrics.layerSwitchesNumber++,this}addStall(t){return this.adMetrics.stallsNumber++,this.adMetrics.stallsDuration+=t,this}reset(){return this.adMetrics=new a,this.timeSpentPerLayer={},this.quartiles={},this}clone(){return new r(new a(this.adMetrics),Object.assign({},this.timeSpentPerLayer),Object.assign({},this.quartiles))}build(){let t=0,i=0;for(const e in this.timeSpentPerLayer){const s=this.timeSpentPerLayer[e];t+=e*s,i+=s}return 0!==i&&(this.adMetrics.averageBitrate=Math.round(t/i)),this.adMetrics.adDuration=i,this.adMetrics}}var d=e(8379),n=e(1142),o=e(1134),h=e(6506),c=e(7832),p=e(3641),l=e(5690);const u="BpkAdTracker";class g{proceeded;constructor(){this.proceeded={},this.prepared=!1}canProcess(t=0){const i=void 0===this.proceeded[t];return i&&(this.proceeded[t]=Date.now()),i}resetProcess(){this.proceeded={}}}class A{adTrackingManager;sessionToken;timeReference;adBreaks;emptyAdBreaks;outOfBandAdBreaks;constructor(t,i,e){this.adTrackingManager=t,this.sessionToken=i,this.timeReference=e,this.adBreaks=[],this.emptyAdBreaks=[],this.outOfBandAdBreaks=[]}hasRemainingAdBreaks(t){const i=this.adBreaks.some(i=>t<i.position+i.duration),e=this.emptyAdBreaks.some(i=>t<i.position);return i||e}resetProgression(t){this.adBreaks.forEach(i=>i.resetProgression(t)),this.emptyAdBreaks.forEach(i=>i.resetProgression(t))}}class k extends g{adData;id;position;duration;live;ads;trackingEvents;ooba;constructor(t,i,e,s,a,r){super(),this.adData=t,this.id=i,this.position=e,this.duration=s,this.live=a,this.ads=[],this.trackingEvents=[],this.ooba=r}resetProgression(t){t<=this.position&&this.resetProcess(),this.ads.forEach(i=>i.resetProgression(t))}processPrepare(){const t=this.adData.adTrackingManager,i=t.handler.adSession?.adEventsListener;!1===this.prepared&&void 0!==i?.onPrepareAdBreak&&(i.onPrepareAdBreak(this.toData()),this.prepared=!0)}processBegin(){const t=this.adData.adTrackingManager;if(!this.canProcess(0))return void d.g.d(u,"Ad break already began (id: "+this.id+")",t.handler.id);d.g.d(u,"Processing ad break begin...",t.handler.id),d.g.d(u,"Duration: "+this.duration+"ms",t.handler.id),t.notifyAdBreakData(this),t.notifyAdBreakBegin(this.adData.sessionToken),this.trackingEvents.filter(t=>"breakStart"===t.type).forEach(t=>t.processEvent());const i=t.handler.adSession?.adEventsListener;this.processPrepare(),i?.onAdBreakBegin(this.toData())}processEnd(){const t=this.adData.adTrackingManager;if(!this.canProcess(1))return void d.g.d(u,"Ad break already ended (id: "+this.id+")",t.handler.id);d.g.d(u,"Processing ad break end...",t.handler.id),t.notifyAdBreakEnd(this.adData.sessionToken),this.trackingEvents.filter(t=>"breakEnd"===t.type).forEach(t=>t.processEvent());const i=t.handler.adSession?.adEventsListener;i?.onAdBreakEnd(this.toData()),void 0===this.ooba&&(this.resetProcess(),this.prepared=!1)}resetProcess(){super.resetProcess(),this.ads.forEach(t=>t.resetProcess()),this.trackingEvents.forEach(t=>t.resetProcess())}toData(){return{id:this.id,startPosition:this.position||0,duration:!0===this.live?-1:this.duration,ads:this.ads.map(t=>t.toData()),adCount:!0===this.live?-1:this.ads.length,ooba:this.ooba}}}class f extends g{adBreak;type;url;constructor(t,i,e){super(),this.adBreak=t,this.type=i,this.url=e}processEvent(){const t=this.adBreak.adData.adTrackingManager;return!!this.canProcess()&&(d.g.d(u,"Processing "+this.type+"...",t.handler.id),void 0!==this.url&&this.url.length>0&&(d.g.d(u,"Requesting "+this.url,t.handler.id),h.A.getInstance().adEvent(t.handler,this.url,!0)),!0)}}class P extends g{adType;adBreak;index;position;duration;skippablePosition;skippable;creativeId;adId;events;clickable;verifications;watched;progression;nonLinearInfo;errorURL;constructor(t,i,e,s,a,r,d,n,o,h,c,p,l){super(),this.adType=t,this.adBreak=i,this.index=e,this.position=s,this.duration=a,this.skippable=r,this.skippablePosition=d,this.creativeId=n,this.adId=o,this.events=[],this.clickable=h,this.verifications=c,this.watched=[],this.progression=0,this.nonLinearInfo=p,this.errorURL=l}flatWatched(){let t=JSON.parse(JSON.stringify(this.watched)).slice(0);const i=[];let e=null;t=t.sort((t,i)=>t[0]>i[0]?1:t[0]<i[0]?-1:0),i.push(t[0]);for(let s=1;s<t.length;s++)e=i[i.length-1],e[1]<t[s][0]?i.push(t[s]):e[1]<t[s][1]&&(e[1]=t[s][1],i.pop(),i.push(e));this.watched=i}resetProgression(t){t<=this.position&&(this.watched=[],this.progression=0,this.resetProcess()),this.events.forEach(i=>i.resetProgression(t))}updateProgression(t,i){if(t>i||t<this.position||i<this.position||t>this.position+this.duration||i>this.position+this.duration)return;const e=this.watched.reduce((t,i)=>t+(i[1]-i[0]),0)/this.duration;this.watched.push([t-this.position,i-this.position]),this.flatWatched();const s=this.watched.reduce((t,i)=>t+(i[1]-i[0]),0)/this.duration;this.progression=s;const a=this.adBreak.adData,r=a.adTrackingManager;e<=.25&&s>=.25&&r.notifyAdProgress(a.sessionToken,this,25),e<=.5&&s>=.5&&r.notifyAdProgress(a.sessionToken,this,50),e<=.75&&s>=.75&&r.notifyAdProgress(a.sessionToken,this,75),this.events.forEach(t=>t.processEvent(e,s)),1===e&&1===s?d.g.d(u,"Ad already seen (100%)",r.handler.id):d.g.d(u,"Ad progressed from "+Math.floor(1e5*e)/1e3+"% to "+Math.floor(1e5*s)/1e3+"% (id: "+this.adId+")",r.handler.id)}processPrepare(){const t=this.adBreak.adData.adTrackingManager,i=t.handler.adSession?.adEventsListener;!1===this.prepared&&void 0!==i?.onPrepareAd&&(i.onPrepareAd(this.toData(),this.adBreak.toData()),this.prepared=!0)}processBegin(){if(!this.canProcess(0))return;const t=this.adBreak.adData,i=t.adTrackingManager;d.g.d(u,"Processing ad begin "+this.adId+"...",i.handler.id),d.g.d(u,"Start: "+this.position+"ms",i.handler.id),d.g.d(u,"End  : "+(this.position+this.duration)+"ms",i.handler.id),d.g.d(u,"Duration: "+this.duration+"ms",i.handler.id),d.g.d(u,"Type: "+this.adType,i.handler.id),i.notifyAdData(this),i.notifyAdBegin(t.sessionToken,this),!0===this.skippable&&i.notifyAdSkippable(t.sessionToken,this.skippablePosition,this.position+this.duration,this.adBreak.position+this.adBreak.duration),i.notifyAdProgress(t.sessionToken,this,0);const e=i.handler.adSession?.adEventsListener,s=this.toData(),a=this.adBreak.toData();this.processPrepare(),i.handler?.omSessionHandler&&(s.omAdSessionId=i.handler.omSessionHandler.omAdSession?.adSession?.getAdSessionId(),i.currentAdData=s),e?.onAdBegin(s,a),!0===this.skippable&&e?.onAdSkippable(s,a,this.skippablePosition,this.position+this.duration,this.adBreak.position+this.adBreak.duration)}processEnd(){if(!this.canProcess(1))return;const t=this.adBreak.adData,i=t.adTrackingManager;d.g.d(u,"Processing ad end "+this.adId+"...",i.handler.id),this.progression>=.95&&(this.updateProgression(this.position,this.position+this.duration),i.notifyAdProgress(t.sessionToken,this,100)),i.notifyAdEnd(t.sessionToken,this);const e=i.handler.adSession?.adEventsListener;e?.onAdEnd(this.toData(),this.adBreak.toData()),void 0===this.adBreak.ooba&&(this.resetProcess(),this.prepared=!1)}getNonLinearResources(t){return this.nonLinearInfo.filter(i=>""!==i[t]).map(i=>({url:i[t],parameters:i.adParameters,creativeId:i.creativeId}))}toData(){return{adType:this.adType,index:this.index,creativeId:this.creativeId,adId:this.adId,startPosition:this.position,skipPosition:this.skippablePosition,duration:this.duration,clickURL:this.clickable.uri,nonLinearIframeResources:this.getNonLinearResources("iframeResource"),nonLinearStaticResources:this.getNonLinearResources("staticResource")}}}class S extends g{ad;type;url;offset;position;progression;constructor(t,i,e,s,a){super(),this.ad=t,this.type=i,this.url=e,this.offset=s,this.position=a,this.progression=0,this.processProgression()}resetProgression(t){t<=this.ad.position&&this.resetProcess()}processProgression(){switch(void 0===this.type?void 0:this.type.toLowerCase()){case void 0:this.progression=(this.position-this.ad.position)/this.ad.duration;break;case"start":this.progression=0;break;case"firstquartile":this.progression=.25;break;case"midpoint":this.progression=.5;break;case"thirdquartile":this.progression=.75;break;case"complete":this.progression=1;break;case"progress":this.progression=this.offset/this.ad.duration;break;case"impression":this.progression=0}}processEvent(t,i){const e=this.ad.adBreak.adData.adTrackingManager;if(t<=this.progression&&this.progression<=i){if(this.ad.adType===l.eQ.AD_NON_LINEAR&&"impression"===this.type)return!1;if(!this.canProcess())return!1;d.g.d(u,"Processing "+(this.type||"timed event")+" ("+Math.floor(100*this.progression)+"%)...",e.handler.id),void 0!==this.url&&this.url.length>0&&(d.g.d(u,"Requesting "+this.url,e.handler.id),h.A.getInstance().adEvent(e.handler,this.url))}return!0}}const B="BpkAdTrackingMgr";class m{static POSITION_UPDATE_INTERVAL=1e3;static POSITION_START_DELTA=4e3;static POSITION_SEEK_ERROR_DELTA=6e3;static POSITION_PREPARE_DELTA=3e3;static SESSION_UPDATE_INTERVAL=5e3;static NEAR_AD_DELTA=1.2*this.POSITION_UPDATE_INTERVAL;static OOBA_REQUEST_TIMEOUT=5e3;static IGNORE_BACKWARD_SEEK_DELTA=2e3;handler;playerAdapter;listeners;adData;adList;outOfBandAdList;updatePositionJob;updateSessionJob;started;paused;buffering;lastPosition;lastPositionBeforePause;lastPositionAfterSeek;firstImageDate;currentAdTracker;currentAdBreakTracker;currentOutOfBandAdTrackers;currentOutOfBandAdBreakTrackers;currentAdData;currentAdBreakData;adPalSession;bkYouSession;sessionToken;baseURL;nonce;adPalSessionRequest;firstFileReceived;firstFileProceeded;podsSentNumber;sessionUpdateInterval;positionHistory;constructor(t,i){this.handler=t,this.playerAdapter=i,this.listeners=[],this.adData=void 0,this.adList=[],this.outOfBandAdList=[],this.currentOutOfBandAdTrackers=[],this.currentOutOfBandAdBreakTrackers=[],this.updatePositionJob=void 0,this.updateSessionJob=void 0,this.started=!1,this.paused=!1,this.buffering=!1,this.lastPosition=0,this.lastPositionBeforePause=0,this.lastPositionAfterSeek=0,this.bkYouSession=!1,this.baseURL=void 0,this.nonce=void 0,this.adPalSessionRequest=void 0,this.firstFileReceived=!1,this.firstFileProceeded=!1,this.podsSentNumber=0,this.sessionUpdateInterval=m.SESSION_UPDATE_INTERVAL,this.positionHistory=[]}initBkYouSession(t,i,e,s,a){this.baseURL=t,this.sessionToken=i,this.bkYouSession=!0,void 0!==s&&(this.adPalSession=s,this.nonce=a),this.parseAdPods(e),d.g.d(B,"BkYou session initialized",this.handler.id)}updateBkYouSession(){if(!0!==this.handler.stopped&&!0===this.bkYouSession){d.g.d(B,"Updating ad tracking file...",this.handler.id);let t=this.baseURL;const i={userAgent:this.handler.smartLib.getParameters().userAgent};h.A.getInstance().adTracking(this.handler,i,t,!0).then(t=>{if(!0!==this.handler.stopped)if(void 0!==this.updateSessionJob&&o.A.getInstance().cancel(this.updateSessionJob),t.httpStatus>=200&&t.httpStatus<300){let i;try{i=JSON.parse(t.content)}catch(t){return d.g.d(B,"Ad tracking updated file unreadable",this.handler.id),void(!0===this.firstFileReceived&&this.scheduleBkYouSessionUpdate())}this.firstFileReceived=!0,this.parseAdPods(i),this.isLive()?this.scheduleBkYouSessionUpdate():d.g.d(B,"Stopping ad tracking file update (VOD stream)...",this.handler.id)}else this.isLive()?this.scheduleBkYouSessionUpdate():d.g.d(B,"Stopping ad tracking file update (status code "+t.httpStatus+")",this.handler.id)})}}scheduleBkYouSessionUpdate(){this.updateSessionJob=o.A.getInstance().asyncDelay(this.sessionUpdateInterval,()=>{this.updateSessionJob=void 0,this.updateBkYouSession()})}fixAdBreak(t){let i;if(t.ads.forEach((e,s)=>{const a=t.ads[s+1];if(void 0!==a){const t=e.position+e.duration;a.position<t&&(d.g.d(B,"Ad overlap detected, position updated from "+a.position+" to "+t+" (id: "+a.adId+")",this.handler.id),a.position=t,a.events.filter(i=>i.position<t).forEach(i=>{i.position=t}))}i=e}),void 0!==i){const e=i.position+i.duration-t.position;t.duration!==e&&(d.g.d(B,"Ad break duration updated from "+t.duration+" to "+e+" (id: "+t.id+")",this.handler.id),t.duration=e)}}parseAdPods(t,i){const e=t.sessiontoken||"",s=t.timereference_ms||0;if(void 0===i){const i=t.refresh_delay_ms||m.SESSION_UPDATE_INTERVAL;i>=2e3&&i<=m.SESSION_UPDATE_INTERVAL?(this.sessionUpdateInterval=i,d.g.d(B,"Setting refresh delay to "+this.sessionUpdateInterval+"ms",this.handler.id)):d.g.d(B,"Setting refresh delay to "+m.SESSION_UPDATE_INTERVAL+"ms (default value)",this.handler.id)}const a=new A(this,e,s),r=t.adpods;if(Array.isArray(r)&&(r.forEach(t=>{const e=t.id||"",r=t.starttime_ms+s;let d=t.duration_ms||0;const n=t.ads,o=t.adbreaktrackingevents,h=new k(a,e,r,d,this.isLive(),i);Array.isArray(o)&&o.forEach(t=>{const i=t.callbackurl;if(void 0!==i){const e=t.type,s=new f(h,e,i);h.trackingEvents.push(s)}}),Array.isArray(n)&&n.forEach((t,i)=>{const e=t.starttime_ms+s,a=t.duration_ms,r=t.trackingevents;let d=!0;if(Array.isArray(r)&&r.length>0&&(d=e>0&&r[0].time_ms>0||0===e),void 0!==e&&void 0!==a&&!0===d){const d=l.eQ.getAdType(t.adtype),n=t.skippable_ms+s||0,o=0!==n&&null!=n,c=t.creativeid||"",p=t.adid+"-"+e||"",u={uri:t.videoclicks?.clickthroughurl||"",trackers:t.videoclicks?.clicktracking||[],customClick:t.videoclicks?.customclick||[]},g=t.adverifications||[];let A=[];g.forEach(t=>{A.push({vendor:t.vendor||"",javascriptResources:t.javascriptresources||[],executableResources:t.executableresources||[],trackingEvents:t.trackingevents||[],verificationParameters:t.verificationparameters||""})});const k=t.nonlinearinfo||[];let f=[];k.forEach(t=>{f.push({creativeId:t.creativeid||"",staticResource:this.applyRelativeUrl(t.staticresource||""),iframeResource:this.applyRelativeUrl(t.iframeresource||""),adParameters:t.adparameters||"",trackingEvents:t.trackingevents||[]})});const B=t.errorurl||"",m=new P(d,h,i,e,a,o,n,c,p,u,A,f,B);h.ads.push(m),Array.isArray(r)&&r.forEach(t=>{const i=t.callbackurl;if(void 0!==i){const a=t.type,r=t.offset_ms,d=t.time_ms+s||e,n=new S(m,a,i,r,d);m.events.push(n)}})}}),void 0===i?h.ads.length>0?a.adBreaks.push(h):a.emptyAdBreaks.push(h):a.outOfBandAdBreaks.push(h)}),a.adBreaks.forEach(t=>{this.fixAdBreak(t)})),void 0===i){let t=this.mergeEvents(a);this.adList=this.adData.adBreaks.map(t=>t.toData()),this.notifyAdDataListener(t)}else this.adData.outOfBandAdBreaks=[...this.adData.outOfBandAdBreaks,...a.outOfBandAdBreaks],this.outOfBandAdList=this.adData.outOfBandAdBreaks.map(t=>t.toData()),this.notifyOutOfBandAdDataListener(this.outOfBandAdList)}beginOutOfBandAdBreak(t){d.g.d(B,"Calling beginOutOfBandAdBreak with id: "+t,this.handler.id);const i=this.adData.outOfBandAdBreaks.find(i=>i.id===t);if(i){const t=this.playerAdapter.getPosition();i.position=t,i.processBegin(),i.ads.map(i=>(i.position=t,i.processBegin(),i))}else d.g.w(B,"Out-of-band ad break with id "+t+" not found",this.handler.id)}endOutOfBandAdBreak(t){d.g.d(B,"Calling endOutOfBandAdBreak() with id: "+t,this.handler.id);const i=this.adData.outOfBandAdBreaks.findIndex(i=>i.id===t);if(-1===i)d.g.w(B,"Out-of-band ad break with id "+t+" not found",this.handler.id);else{const e=this.adData.outOfBandAdBreaks[i];e.processEnd(),e.ads.forEach(t=>t.processEnd()),d.g.d(B,"Deleting out-of-band ad break with id: "+t,this.handler.id),this.adData.outOfBandAdBreaks.splice(i,1)}}start(t,i=m.POSITION_UPDATE_INTERVAL){void 0===this.updatePositionJob&&(this.updatePositionJob=o.A.getInstance().asyncDelay(i,()=>{this.updatePositionJob=void 0,this.onPositionUpdated(void 0===t?this.playerAdapter.getPosition():t)}))}stop(){void 0!==this.updatePositionJob&&(d.g.d(B,"Ad tracking paused (player event)",this.handler.id),o.A.getInstance().cancel(this.updatePositionJob),this.updatePositionJob=void 0)}isLive(){return void 0!==this.firstImageDate&&this.playerAdapter.getDuration()<=0}removeExpiredAdBreaks(t,i){const e=new Set(i.map(t=>t.id));let s=0;return t.forEach((t,i,a)=>{if(!e.has(t.id)&&this.currentAdTracker?.adBreak.id!==t.id){let e=!0;const r=this.handler.options.get(c.H.AD_TRACKERS_STORE_DURATION);if(void 0!==r)if(-1===r)e=!1;else{const i=Date.now()-1e3*r;t.position+t.duration>i&&(e=!1)}e&&(a.splice(i,1),s++)}}),s}updateAdBreaks(t,i){let e=0,s=0,a=0;return i.forEach(i=>{i.adData=this.adData;const r=t.find(t=>t.id===i.id);if(void 0===r)t.push(i),e+=i.ads.length,s++;else{const t=i.ads.filter(t=>!r.ads.some(i=>i.adId===t.adId));t.length>0&&(a++,t.forEach(t=>{const i=r.ads.findIndex(i=>i.position>t.position);-1===i?r.ads.push(t):r.ads.splice(i,0,t),e++}),this.fixAdBreak(r))}}),{newAdBreakCount:s,updatedAdBreakCount:a,newAdCount:e}}mergeEvents(t){let i=!1;if(void 0===this.adData)this.adData=t,d.g.d(B,t.adBreaks.length+" ad break(s) parsed",this.handler.id),i=!0;else{this.adData.sessionToken=t.sessionToken,this.adData.timeReference=t.timeReference;const e=this.removeExpiredAdBreaks(this.adData.adBreaks,t.adBreaks),s=this.removeExpiredAdBreaks(this.adData.emptyAdBreaks,t.emptyAdBreaks),{newAdBreakCount:a,updatedAdBreakCount:r,newAdCount:n}=this.updateAdBreaks(this.adData.adBreaks,t.adBreaks),{newAdBreakCount:o,updatedAdBreakCount:h,newAdCount:c}=this.updateAdBreaks(this.adData.emptyAdBreaks,t.emptyAdBreaks),p=a+o,l=r+h,u=n+c,g=e+s;i=p+l+g>0,d.g.d(B,t.adBreaks.length+" ad break(s) parsed, "+this.adData.adBreaks.length+" ad break(s) now handled (ad break(s): "+g+" deleted (expired) / "+l+" updated, "+p+" added, "+u+" new ad(s))",this.handler.id)}if(this.notifyAdsUpdated(this.adData),this.started&&!this.paused&&!this.buffering){const t=this.playerAdapter.getPosition();void 0===this.updatePositionJob&&this.adData.hasRemainingAdBreaks(t)>0&&(d.g.d(B,"Ad tracking resumed",this.handler.id),this.lastPosition=t),this.checkStart(),this.isLive()&&this.checkAdBreakEnded(t)}return i}processJsonFileAfterFirstImage(t){this.firstFileProceeded=!0,d.g.d(B,"Processing all events since first image...",this.handler.id),void 0===this.positionHistory[this.positionHistory.length-1].end&&(this.positionHistory[this.positionHistory.length-1].end=t),this.positionHistory.forEach(t=>{d.g.d(B,"Between "+t.start+" and "+t.end,this.handler.id),this.lastPosition=t.start;for(let i=t.start;i<=t.end+m.POSITION_UPDATE_INTERVAL;i+=m.POSITION_UPDATE_INTERVAL){const e=Math.min(i,t.end);this.onPositionUpdated(e),this.lastPosition=e}}),d.g.d(B,"Tracking catch-up finished",this.handler.id)}processExitingInBandAd(t,i,e){d.g.d(B,"Exiting ad "+this.currentAdTracker.adId+"...",this.handler.id),i-(this.currentAdTracker.position+this.currentAdTracker.duration)<m.POSITION_UPDATE_INTERVAL&&(i=this.currentAdTracker.position+this.currentAdTracker.duration),t>=this.currentAdTracker.position&&this.currentAdTracker.updateProgression(t,i),this.currentAdTracker.progression<1&&(d.g.d(B,"Ad skipped (progression not complete)",this.handler.id),this.notifyAdSkipped(this.adData.sessionToken,this.currentAdTracker)),this.currentAdTracker.processEnd(),void 0!==e||this.isLive()||(this.currentAdBreakTracker.processEnd(),this.currentAdBreakTracker=void 0,this.currentAdBreakData=void 0),this.currentAdTracker=void 0,this.currentAdData=void 0}processEnteringInBandAd(t,i,e,s){d.g.d(B,"Entering ad "+s.adId+"...",this.handler.id);const a=t-s.position>=m.POSITION_SEEK_ERROR_DELTA;a||(d.g.d(B,"Update position start from "+t+" to "+s.position,this.handler.id),t=s.position),this.currentAdData=s.toData(),this.currentAdBreakData=e.toData(),e.processBegin(),s.processBegin(),s.updateProgression(t,i),a&&(d.g.d(B,"Ad skipped (previous position was "+m.POSITION_SEEK_ERROR_DELTA+"ms after ad start)",this.handler.id),this.notifyAdSkipped(this.adData.sessionToken,s))}processChangingInBandAd(t,i,e,s){d.g.d(B,"Changing from ad "+this.currentAdTracker.adId+" to "+s.adId+"...",this.handler.id),s.adBreak.id===this.currentAdTracker.adBreak.id&&this.currentAdTracker.updateProgression(t,this.currentAdTracker.position+this.currentAdTracker.duration),this.currentAdTracker.progression<1&&(d.g.d(B,"Ad skipped (progression not complete)",this.handler.id),this.notifyAdSkipped(this.adData.sessionToken,this.currentAdTracker)),this.currentAdTracker.processEnd(),s.adBreak.id===this.currentAdTracker.adBreak.id?this.currentAdData=s.toData():(this.currentAdTracker.adBreak.processEnd(),this.currentAdData=s.toData(),this.currentAdBreakData=e.toData(),e.processBegin()),s.processBegin(),i-s.position>=m.POSITION_SEEK_ERROR_DELTA?(d.g.d(B,"Ad skipped (new position is "+m.POSITION_SEEK_ERROR_DELTA+"ms after ad start)",this.handler.id),this.notifyAdSkipped(this.adData.sessionToken,s)):s.updateProgression(s.position,i)}processInBandAds(t,i,e,s){void 0===s?void 0!==this.currentAdTracker&&this.processExitingInBandAd(t,i,e):(void 0===this.currentAdTracker?this.processEnteringInBandAd(t,i,e,s):this.currentAdTracker===s?s.updateProgression(t,i):this.currentAdTracker!==s&&this.processChangingInBandAd(t,i,e,s),this.currentAdTracker=s,this.currentAdBreakTracker=e)}processOutOfBandAds(t,i){if(void 0!==this.adData?.outOfBandAdBreaks){const e=t=>void 0===t.proceeded[1]&&t.duration>0&&t.position<=i&&i<t.position+t.duration,s=this.adData.outOfBandAdBreaks.filter(e),a=s.reduce((t,i)=>[...t,...i.ads.filter(e)],[]);s.forEach(t=>{this.currentOutOfBandAdBreakTrackers.some(i=>i.id===t.id)||(d.g.d(B,"Entering out-of-band ad break "+t.id+"...",this.handler.id),t.processBegin(),this.currentOutOfBandAdBreakTrackers.push(t))}),a.forEach(e=>{this.currentOutOfBandAdTrackers.some(t=>t.adId===e.adId)?e.updateProgression(t,i):(e.processBegin(),this.currentOutOfBandAdTrackers.push(e))}),this.currentOutOfBandAdTrackers.forEach((t,i)=>{a.some(i=>i.adId===t.adId)||(t.processEnd(),this.currentOutOfBandAdTrackers.splice(i,1))}),this.currentOutOfBandAdBreakTrackers.forEach((t,i)=>{s.some(i=>i.id===t.id)||(d.g.getInstance().printDebugLogs(B,"Exiting out-of-band ad break "+t.id+"...",this.handler.id),this.endOutOfBandAdBreak(t.id),this.currentOutOfBandAdBreakTrackers.splice(i,1))})}}processEmptyAdBreaks(t,i){if(void 0!==this.adData?.emptyAdBreaks){i-t>m.NEAR_AD_DELTA&&(t=i-m.NEAR_AD_DELTA,d.g.d(B,"Limiting empty ad break search interval to "+m.NEAR_AD_DELTA+"ms before current position, new interval: "+t+" - "+i,this.handler.id));const e=e=>t<e.position&&e.position<=i;this.adData.emptyAdBreaks.filter(e).forEach(t=>{t.processBegin(),t.processEnd()})}}processRemainingEvents(t,i,e){if(this.paused||this.buffering)d.g.d(B,"Ad tracking paused (playback paused, onPositionUpdated)",this.handler.id);else{let s,a=m.POSITION_UPDATE_INTERVAL;if(void 0!==e){const i=e.position-t;i>0&&i<m.NEAR_AD_DELTA&&(a=i,s=e.position,d.g.getInstance().printDebugLogs(B,"Ad incoming in "+i+"ms",this.handler.id))}if(void 0!==i){const e=i.position+i.duration-t;e>0&&e<m.NEAR_AD_DELTA&&(a=e,s=i.position+i.duration,d.g.getInstance().printDebugLogs(B,"Ad ending in "+e+"ms",this.handler.id))}a=Math.round(a),this.start(s,a)}}onPositionUpdated(t){let i=this.lastPosition===t?t-1:this.lastPosition,e=t;if(!0===this.firstFileReceived&&!1===this.firstFileProceeded&&this.processJsonFileAfterFirstImage(t),i<e&&e-i<m.POSITION_SEEK_ERROR_DELTA){const s=this.adData?.adBreaks.find(t=>t.position<=e&&e<t.position+t.duration),a=this.adData?.adBreaks.find(t=>t.position<=e+m.POSITION_PREPARE_DELTA&&e+m.POSITION_PREPARE_DELTA<t.position+t.duration),r=s?.ads.find(t=>t.position<=e&&e<t.position+t.duration),n=a?.ads.find(t=>t.position<=e+m.POSITION_PREPARE_DELTA&&e+m.POSITION_PREPARE_DELTA<t.position+t.duration);a?.processPrepare(),n?.processPrepare(),this.processInBandAds(i,e,s,r),this.processOutOfBandAds(i,e),this.processEmptyAdBreaks(i,e),this.lastPosition=t,this.adData?.hasRemainingAdBreaks(e)||this.adData?.outOfBandAdBreaks.length>0?this.processRemainingEvents(e,r,n):d.g.d(B,"Ad tracking paused (no more event, onPositionUpdated)",this.handler.id)}else this.adData?.hasRemainingAdBreaks(e)&&(this.paused||this.buffering||(d.g.d(B,"Processing trackers from "+i+"ms to "+e+"ms, resuming tracking...",this.handler.id),this.start()))}checkStart(t=this.playerAdapter.getPosition()){this.adData?.hasRemainingAdBreaks(t)>0||this.adData?.outOfBandAdBreaks.length>0?this.onPositionUpdated(t):d.g.d(B,"Ad tracking paused (no more event, checkStart)",this.handler.id)}checkAdBreakEnded(t){let i=this.lastPosition===t?t-1:this.lastPosition,e=t;if(i<e&&e-i<m.POSITION_SEEK_ERROR_DELTA){const t=this.adData?.adBreaks.find(t=>t.position<=e&&e<t.position+t.duration);void 0!==this.currentAdBreakTracker&&(void 0===t?(void 0!==this.currentAdTracker&&this.currentAdTracker.position+this.currentAdTracker.duration-e<m.POSITION_SEEK_ERROR_DELTA&&(this.currentAdTracker.updateProgression(this.currentAdTracker.position,this.currentAdTracker.position+this.currentAdTracker.duration),this.currentAdTracker.processEnd(),this.currentAdTracker=void 0,this.currentAdData=void 0),this.currentAdBreakTracker.processEnd(),this.currentAdBreakTracker=void 0,this.currentAdBreakData=void 0,d.g.d(B,"Ad break end detected",this.handler.id)):d.g.d(B,"Ad break not yet ended",this.handler.id))}}adUserInteraction(t){this.currentAdTracker?.clickable?.trackers.forEach(t=>{d.g.d(B,"Requesting click tracker "+t.clickurl,this.handler.id),h.A.getInstance().adEvent(this.handler,t.clickurl)})}getCurrentAd(){return this.currentAdData}getCurrentAdBreak(){return this.currentAdBreakData}getPositionForBookmark(t=void 0){if(this.playerAdapter.getDuration()>0){let i=void 0===t?this.playerAdapter.getPosition():t;const e=this.adList.find(t=>t.startPosition<i&&i<=t.startPosition+t.duration);return void 0!==e&&(i=e.startPosition),this.adList.filter(t=>t.startPosition+t.duration<i).forEach(t=>{i-=t.duration}),i}return-1}getPositionForPlayback(t,i){let e,s=t;this.adList.sort((t,i)=>t.startPosition-i.startPosition);for(let t of this.adList){if(t.startPosition>s)break;s+=t.duration,e=t}return!0===i&&void 0!==e&&s===e.startPosition+e.duration?e.startPosition:s}getTotalAdsDuration(){return this.isLive()?-1:this.adList.reduce((t,i)=>i.duration<0?t:t+i.duration,0)}onFirstImage(t,i){this.started=!0,this.paused=!1,this.buffering=!1,this.lastPosition=i,this.firstImageDate=Date.now(),this.positionHistory.push({start:i}),d.g.d(B,"Ad tracking enabled (live:"+this.isLive()+")",this.handler.id),void 0!==this.adData&&(this.adList=this.adData.adBreaks.map(t=>(t.live=this.isLive(),t.toData()))),this.checkStart(i),this.updateBkYouSession(),this.isLive()&&this.playerAdapter.getPosition()<12623004e5&&d.g.e(B,"The player position does not return a position as a timestamp in millis. The ad tracking might not work.",this.handler.id),this.adPalSession?.sendPlaybackStart()}onPause(){const t=this.playerAdapter.getPosition();this.buffering||this.firstFileProceeded||(this.positionHistory[this.positionHistory.length-1].end=t),this.paused=!0,this.stop(),this.lastPosition===t?d.g.d(B,"Ignoring player position "+t+", already proceeded...",this.handler.id):this.onPositionUpdated(t),this.lastPosition=t,this.lastPositionBeforePause=this.lastPosition}onResume(){this.paused=!1,this.buffering||(this.lastPosition=this.playerAdapter.getPosition(),!1===this.firstFileProceeded&&this.positionHistory.push({start:this.lastPosition}),Math.abs(this.lastPosition-this.lastPositionBeforePause)<1e3&&(d.g.d(B,"Reverting position because of bad position when resuming...",this.handler.id),this.lastPosition=this.lastPositionBeforePause,this.lastPositionBeforePause=0),this.checkStart())}onBufferingStart(){const t=this.playerAdapter.getPosition();!1===this.buffering&&!1===this.firstFileProceeded&&(this.positionHistory[this.positionHistory.length-1].end=t),this.buffering=!0,this.stop(),this.lastPosition===t?d.g.d(B,"Ignoring player position "+t+", already proceeded...",this.handler.id):this.onPositionUpdated(t),this.lastPosition=t}onBufferingEnd(t){if(this.buffering=!1,!this.paused){const t=this.playerAdapter.getPosition();!1===this.firstFileProceeded&&(this.positionHistory.length>0&&void 0===this.positionHistory[this.positionHistory.length-1].end&&(this.positionHistory[this.positionHistory.length-1].end=this.lastPosition),this.positionHistory.push({start:t})),this.lastPosition!==t&&(d.g.d(B,"Position updated during buffering, period switch ?",this.handler.id),this.onPositionUpdated(t)),Math.abs(this.lastPosition-this.lastPositionAfterSeek)<1e3&&(d.g.d(B,"Reverting position because of seek...",this.handler.id),this.lastPosition=this.lastPositionAfterSeek,this.lastPositionAfterSeek=0),this.checkStart()}}handlePlayerSeek(t,i,e){if(i<t){if(t-i<m.IGNORE_BACKWARD_SEEK_DELTA)return d.g.d(B,"Ignoring seek...",this.handler.id),this.lastPosition=t,void this.onPositionUpdated(t);d.g.d(B,"Reset ad trackers with position "+i,this.handler.id),this.adData?.resetProgression(i)}else{d.g.d(B,"Small seek detected, proceeding events from "+e+" to "+i,this.handler.id);for(let t=e;t<=i;t+=m.POSITION_UPDATE_INTERVAL){const e=Math.min(t+m.POSITION_UPDATE_INTERVAL,i);d.g.d(B,"Between "+t+" and "+e,this.handler.id),this.lastPosition=t,this.onPositionUpdated(e)}}}onSeek(t,i){let e;!1===this.firstFileProceeded&&!1===this.buffering&&(this.positionHistory[this.positionHistory.length-1].end=t,this.positionHistory.push({start:i})),t<this.lastPosition&&this.lastPosition-t<m.POSITION_SEEK_ERROR_DELTA&&(d.g.d(B,"Updating seek start position from "+t+" to "+this.lastPosition,this.handler.id),t=this.lastPosition),this.buffering?(this.lastPositionAfterSeek=i,e=this.lastPosition):(Math.abs(this.lastPosition-t)<m.POSITION_SEEK_ERROR_DELTA&&(this.onPositionUpdated(t),this.lastPosition=t),e=t,this.lastPositionAfterSeek=0),this.lastPosition=i,Math.abs(i-t)<m.POSITION_SEEK_ERROR_DELTA?this.handlePlayerSeek(t,i,e):(void 0!==this.currentAdTracker&&(d.g.d(B,"Ad skipped (seek detected)",this.handler.id),this.notifyAdSkipped(this.adData.sessionToken,this.currentAdTracker)),this.onPositionUpdated(i),d.g.d(B,"Reset ad trackers with position "+i,this.handler.id),this.adData?.resetProgression(i))}onStop(t){this.stop(),this.lastPosition=this.playerAdapter.getPosition(),this.onPositionUpdated(this.lastPosition),this.stop(),void 0!==this.updateSessionJob&&o.A.getInstance().cancel(this.updateSessionJob),this.adPalSession?.sendPlaybackEnd()}addListener(t){void 0===t||this.listeners.includes(t)||this.listeners.push(t)}removeListener(t){let i=this.listeners.indexOf(t);-1!==i&&this.listeners.splice(i,1)}notifyEvent(t,i,e,s,a,r){"function"==typeof t[i]&&t[i](e,s,a,r)}notifyAdBreakData(t){this.listeners.forEach(i=>{this.notifyEvent(i,"onAdBreakData",t)})}notifyAdBreakBegin(t){this.listeners.forEach(i=>{this.notifyEvent(i,"onAdBreakBegin",t)})}notifyAdData(t){this.listeners.forEach(i=>{this.notifyEvent(i,"onAdData",t)})}notifyAdBegin(t,i){this.listeners.forEach(e=>{this.notifyEvent(e,"onAdBegin",t,i.creativeId,i.adId)}),this.adPalSession?.sendAdImpression()}notifyAdSkippable(t){this.listeners.forEach(i=>{this.notifyEvent(i,"onAdSkippable",t)})}notifyAdProgress(t,i,e){this.listeners.forEach(s=>{this.notifyEvent(s,"onAdProgress",t,i.creativeId,i.adId,e)})}notifyAdSkipped(t,i){const e=[];i.adBreak.ads.forEach(t=>{t.position>i.position&&this.lastPosition>=t.position+t.duration&&e.push(t.adId)}),this.listeners.forEach(s=>{this.notifyEvent(s,"onAdSkipped",t,i.creativeId,i.adId,e)})}notifyAdEnd(t,i){this.isLive()&&(void 0!==this.updateSessionJob&&o.A.getInstance().cancel(this.updateSessionJob),this.updateBkYouSession()),this.listeners.forEach(e=>{this.notifyEvent(e,"onAdEnd",t,i.creativeId,i.adId)})}notifyAdBreakEnd(t){this.listeners.forEach(i=>{this.notifyEvent(i,"onAdBreakEnd",t)})}notifyAdsUpdated(t){this.listeners.forEach(i=>{this.notifyEvent(i,"onAdsUpdated",t)})}notifyAdDataListener(t){const i=this.firstImageDate||Date.now(),e=0===this.podsSentNumber&&!1===this.firstFileProceeded&&Date.now()-i<=m.POSITION_START_DELTA;d.g.d(B,"On ad data (firstData: "+e+", dataUpdated: "+t+")",this.handler.id),!0!==e&&!0!==t||(this.podsSentNumber=this.adList.length,d.g.d(B,"On ad data (length: "+this.podsSentNumber+")",this.handler.id),void 0!==this.handler.adSession?.adDataListener?.onAdData&&this.handler.adSession.adDataListener.onAdData(this.adList))}notifyOutOfBandAdDataListener(t){void 0===this.handler.adSession?.adDataListener?.onOutOfBandAdData?d.g.i(B,"Out-of-band ad breaks updated, add onOutOfBandAdData listener to access current list",this.handler.id):(d.g.i(B,"Out-of-band ad breaks updated, notifying onOutOfBandAdData",this.handler.id),this.handler.adSession.adDataListener.onOutOfBandAdData(t))}requestOutOfBandAds(t,i,e,s){const a=p.A.clone(this.handler.sessionReport.redirectedURL);if(a.setParam("bk-ml","1.0"),a.setParam("bk-ooba",t),void 0!==i&&a.setParam("bk-ooba-dur",i),void 0!==s)for(const[t,i]of Object.entries(s))a.setParam(t,i);d.g.i(B,"Sending request to the ad gateway: "+a,this.handler.id);const r=h.A.getInstance().getHeaders();o.A.getInstance().asyncGet(a.href,r,m.OOBA_REQUEST_TIMEOUT,a=>{if(d.g.d(B,"Ad gateway responded "+a.statusCode,this.handler.id),a.statusCode>=200&&a.statusCode<300){let r;try{r=JSON.parse(a.body)}catch(t){return d.g.d(B,"Ad gateway file unreadable (parsing error: "+t.message+")",this.handler.id),void this.notifyOutOfBandAdDataListener([])}const n={name:t,duration:i,autoBegin:e,additionalQueryParams:s};this.parseAdPods(r,n),!0===e?(d.g.d(B,"requestOutOfBandAds autoBegin set to true, calling beginOutOfBandAdBreak now",this.handler.id),r.adpods.forEach(t=>{this.beginOutOfBandAdBreak(t.id)})):d.g.d(B,"requestOutOfBandAds autoBegin set to false, call beginOutOfBandAdBreak to begin ad breaks",this.handler.id)}else d.g.d(B,"Ad gateway response unreadable (status code)",this.handler.id),this.notifyOutOfBandAdDataListener([])})}sendTracker(t,i,e){d.g.i(B,"Calling sendTracker("+t+", "+i+(e?", "+e:"")+")",this.id);const s=[...this.adData.adBreaks,...this.adData.outOfBandAdBreaks].flatMap(t=>t.ads),a=void 0===i?this.currentAdTracker:s.find(t=>t.adId===i);if(void 0===a)return void d.g.e(B,"No match for adId: "+i,this.id);let r;a.nonLinearInfo.length>0&&(r=a.nonLinearInfo[0],void 0!==e&&(r=a.nonLinearInfo.find(t=>t.creativeId===e),void 0===r&&d.g.e(B,"No match for creativeId: "+e,this.id)));const n=r?.trackingEvents??[],o=[...a.events,...n].filter(i=>i.type===t);0===o.length&&d.g.e(B,"No match for trackingEventName: "+t,this.id),o.forEach(t=>{if(t instanceof S&&!t.canProcess())return void d.g.i(B,"Tracker "+t.type+" already sent, ignoring",this.id);const i=t.url||t.callbackurl;void 0!==i?(d.g.d(B,"Requesting "+i,this.handler.id),h.A.getInstance().adEvent(this.handler,i)):d.g.d(B,"No url found for event "+t.type,this.handler.id)})}applyRelativeUrl(t){return t.startsWith("/")||t.startsWith("../")?p.A.clone(this.baseURL).applyRelativeUrl(t).toString():t}}const v="BpkAdMetricsMgr";class D{handler;timeline;builder;adMetrics;firstImageDate;lastLayerBitrate;adBreakPlaying;adPlaying;adSkipped;adLastLayerSwitchDate;adLastBufferingStartDate;adBreakPosition;constructor(t){this.handler=t,this.timeline=this.handler.sessionReport.timeline,this.builder=new r,this.adMetrics={}}onStart(){this.adMetrics={},this.adLastLayerSwitchDate=0,this.firstImageDate=0,this.lastLayerBitrate=0,this.adLastBufferingStartDate=-1,this.adBreakPlaying=!1,this.adPlaying=!1,this.adSkipped=!1,this.adBreakPosition="midroll"}onFirstImage(t,i){this.lastLayerBitrate=t,this.adLastLayerSwitchDate=Date.now(),this.firstImageDate=Date.now()}onLayerSwitch(t){this.adBreakPlaying&&this.firstImageDate>0&&(this.builder.addTimeSpentPerLayer(this.lastLayerBitrate,Date.now()-this.adLastLayerSwitchDate),this.adLastLayerSwitchDate=Date.now(),this.lastLayerBitrate!==t&&this.builder.addLayerSwitch()),this.lastLayerBitrate=t}onBufferingStart(){this.adBreakPlaying&&(this.adLastBufferingStartDate=Date.now())}onStallEnd(){this.adBreakPlaying&&this.adLastBufferingStartDate>=0&&this.builder.addStall(Date.now()-this.adLastBufferingStartDate),this.adLastBufferingStartDate=-1}onRebufferingEnd(){this.adLastBufferingStartDate=-1}onSeek(t,i){this.adBreakPlaying&&(d.g.d(v,"Ad seeked from "+s.A.formatTime(t)+" to "+s.A.formatTime(i),this.handler?.id),Math.abs(i-t)<m.POSITION_SEEK_ERROR_DELTA?d.g.d(v,"Ignoring seek < "+m.POSITION_SEEK_ERROR_DELTA+"ms",this.handler?.id):(d.g.d(v,"Ad skipped (above seek threshold)",this.handler?.id),this.adSkipped=!0))}onStop(t){this.adBreakPlaying&&(this.handleAdEnd(),this.adBreakPlaying=!1)}onAdBreakData(t){Math.abs(t.position+t.duration-this.handler.playerAdapter?.getDuration())<1e4?this.adBreakPosition="postroll":Date.now()-this.firstImageDate<m.POSITION_START_DELTA?this.adBreakPosition="preroll":this.adBreakPosition="midroll",void 0!==t.ooba&&d.g.d(v,"Ad break position is "+this.adBreakPosition,this.handler?.id),this.adBreakPlaying=!0,void 0!==this.timeline&&this.timeline.pushEvent(n.A.analyticsModule?.SessionTrackerEvents.AdBreakStart)}onAdData(t){this.builder.isInitialized()&&this.adSkipped&&this.handleAdEnd();const i=!0===t.adBreak.live?-1:t.adBreak.ads.length;this.builder.reset().import(this.adMetrics[t.adId]).setCreativeId(t.creativeId).setAdId(t.adId).init(this.adBreakPosition,t.index,i),this.adSkipped=!1,this.adLastLayerSwitchDate=Date.now(),this.adPlaying=!0}onAdSkippable(t){this.builder.setAdSkippable(!0)}onAdSkipped(t,i,e,s){if(this.adSkipped=!0,s.length>0){d.g.d(v,"Ad break skipped",this.handler?.id);let t=1;s.forEach(i=>{this.adMetrics[i].forEach(i=>{if(i.impressionDate<=0){i.adSkipped=!0,i.adProgress=0,i.impressionDate=Date.now();const e=this.builder.adMetrics;i.adIndex=e.adIndex+t,i.adCount=e.adCount,i.adFormat=e.adFormat,t++}})})}}onAdProgress(t,i,e,s){this.builder.addProgress(s),s>0&&void 0===this.builder.quartiles[s-25]&&(d.g.d(v,"Ad skipped (no previous progress)",this.handler?.id),this.adSkipped=!0)}onAdEnd(t,i,e){this.handleAdEnd(),this.adPlaying=!1}onAdBreakEnd(t){!0===this.adPlaying&&(this.builder.setAdSkipped(!0),this.handleAdEnd()),this.adBreakPlaying=!1,void 0!==this.timeline&&this.timeline.pushEventProgress(n.A.analyticsModule?.SessionTrackerEvents.AdBreakStop,0)}onKeepaliveSessionReportUpdateRequested(t){if(this.adBreakPlaying){const t=this.builder.clone().addTimeSpentPerLayer(this.lastLayerBitrate,Date.now()-this.adLastLayerSwitchDate);this.adLastBufferingStartDate>=0&&t.addStall(Date.now()-this.adLastBufferingStartDate);const i=t.build();i.adId.length>0&&this.storeMetrics(i)}t.adMetrics=this.generateMetrics()}onEndSessionReportUpdateRequested(t){t.adMetrics=this.generateMetrics()}storeMetrics(t){const i=t.adId;void 0===this.adMetrics[i]&&(this.adMetrics[i]=[]);const e=this.adMetrics[i].findIndex(i=>i.impressionDate===t.impressionDate);-1===e?this.adMetrics[i].push(t):this.adMetrics[i][e]=t}generateMetrics(){let t=[];return Object.values(this.adMetrics).forEach(i=>{i.forEach(i=>t.push(i))}),t}handleAdEnd(){this.builder.setAdSkipped(this.adSkipped).addTimeSpentPerLayer(this.lastLayerBitrate,Date.now()-this.adLastLayerSwitchDate);const t=this.builder.build();t.adId.length>0&&this.storeMetrics(t),d.g.d(v,"Ad metrics : "+t.toString(),this.handler?.id),this.builder.reset(),this.adSkipped=!1}onAdsUpdated(t){t.adBreaks.forEach(t=>{t.ads.forEach(t=>{if(void 0===this.adMetrics[t.adId]){const i=(new r).setCreativeId(t.creativeId).setAdId(t.adId).build();this.adMetrics[t.adId]=[i],d.g.d(v,"Adding ad metrics report for ad id "+t.adId,this.handler?.id)}})})}}var E=e(1105),y=e(5305);const b="BpkOMSDKMgr";class I{static#t;smartLib;static getInstance(){return I.#t||(I.#t=new I),I.#t}constructor(){}init(){d.g.d(b,"Initializing OM SDK manager...")}release(){}attachInstance(t){this.smartLib=t}attachHandler(t){d.g.d(b,"Attaching OM SDK handler..."),this.omsdkHandler=t}isEnabled(){return void 0!==this.omsdkHandler&&null!==this.omsdkHandler}}const T="BpkOMSessionHandler";class O{handler;adSession;playerAdapter;internalAdManager;omsdkHandler;omAdSession;firstImageDate;adBreakPosition;pause;buffering;constructor(t,i){this.handler=t,this.adSession=t.adSession,this.playerAdapter=i,this.internalAdManager=this.handler.smartLib.internalAdManager,this.omsdkHandler=I.getInstance().omsdkHandler,this.firstImageDate=0,this.adBreakPosition="midroll",this.pause=!1,this.buffering=!1}onStart(){}onRedirectionEnd(){}onFirstImage(t,i){this.firstImageDate=Date.now()}onLayerSwitch(t){}onPause(){!1===this.pause&&this.omAdSession?.pause(),this.pause=!0}onResume(){!0===this.pause&&this.omAdSession?.resume(),this.pause=!1}onBufferingStart(){!1===this.buffering&&this.omAdSession?.bufferStart(),this.buffering=!0}onBufferingEnd(t){!0===this.buffering&&this.omAdSession?.bufferFinish(),this.buffering=!1}onStallEnd(){}onRebufferingEnd(){}onSeek(t,i){void 0!==this.adData&&Math.abs(i-t)>=1e3&&(i>=this.adData.position+this.adData.duration||i<this.adData.position)&&this.omAdSession?.skipped()}onStop(t){this.adData=void 0,void 0!==this.omAdSession&&(this.omAdSession.finish(),this.omAdSession=void 0),this.adBreakPosition="midroll"}onStartSessionReportUpdateRequested(t){}onKeepaliveSessionReportUpdateRequested(t){}onEndSessionReportUpdateRequested(t){}onAdBreakData(t){Math.abs(t.position+t.duration-this.playerAdapter.getDuration())<1e4?this.adBreakPosition="postroll":Date.now()-this.firstImageDate<m.POSITION_START_DELTA?this.adBreakPosition="preroll":this.adBreakPosition="midroll",d.g.d(T,"Ad break position is "+this.adBreakPosition,this.handler.id)}onPrepareAdBreak(t){}onAdBreakBegin(t){}startAdSession(t,i){this.omAdSession=t,void 0!==this.adSession?.adView&&this.omAdSession.setAdView(this.adSession.adView),this.adSession?.adFriendlyObstructionViews.length>0&&this.adSession.adFriendlyObstructionViews.forEach(t=>{this.omAdSession.registerAdFriendlyObstructionView(t.view,t.purpose,t.reason)}),this.omAdSession.start(),void 0!==this.adSession?.adViewState&&this.omAdSession.setAdViewState(this.adSession.adViewState),!0===i.skippable?this.omAdSession.loaded(i.skippablePosition-i.position,i.duration,this.adBreakPosition,this.playerAdapter.getVolume()):this.omAdSession.loaded(-1,i.duration,this.adBreakPosition,this.playerAdapter.getVolume()),d.g.d(T,"OM ad session loaded",this.handler.id)}onAdData(t){let i;void 0!==this.adData&&(this.omAdSession?.finish(),this.omAdSession=void 0),this.adData=t,i=void 0!==this.adSession?.adVerificationData?[...this.adSession.adVerificationData]:[],this.adData.verifications.forEach(t=>{const e=t.javascriptResources.find(t=>"omid"===t.apiframework);i.push({verificationVendor:t.vendor,verificationURL:e.url,verificationParameters:t.verificationParameters})});const e=this.omsdkHandler.createOMAdSession(this.internalAdManager.omPartnerName,this.internalAdManager.omPartnerVersion,this.adSession?.adCustomReference,i,i=>{this.startAdSession(i,t)});void 0!==e&&this.startAdSession(e,t)}onPrepareAd(t,i,e){}onAdBegin(t,i,e){}onAdSkippable(t){}onAdProgress(t,i,e,s){this.omAdSession?.progress(s)}onAdEnd(t,i,e){this.adData=void 0,this.omAdSession?.finish(),this.omAdSession=void 0}onAdBreakEnd(t){this.adData=void 0,void 0!==this.omAdSession&&(this.omAdSession.finish(),this.omAdSession=void 0),this.adBreakPosition="midroll"}onVolumeChanged(t){d.g.d(T,"Volume is now "+t,this.handler.id),this.omAdSession?.volumeChange(t)}onPlayerError(t,i){d.g.e(T,"Broadpeak status code "+t,this.handler.id),d.g.e(T,"Player error code "+i,this.handler.id),this.omAdSession?.error(t,i)}}n.A.adModule={AdMetrics:a,AdMetricsBuilder:r,AdMetricsManager:D,AdTrackingManager:m,AdDataTracker:A,AdBreakTracker:k,AdBreakEventTracker:f,AdTracker:P,AdEventTracker:S,AdManager:l.X2,AdViewState:l.up,AdFriendlyObstructionPurpose:l.D6,AdType:l.eQ,AdSession:E.A,InternalAdManager:y.A,OMSDKManager:I,OMSessionHandler:O}}},function(t){return t.O(0,[153],function(){return i=7575,t(t.s=i);var i}),t.O()}])});
+
+/***/ }),
+
+/***/ "./node_modules/@broadpeak/smartlib-analytics/analytics.smartlib.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@broadpeak/smartlib-analytics/analytics.smartlib.js ***!
+  \**************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+!function(t,e){ true?module.exports=e():0}("undefined"!=typeof self?self:__webpack_require__.g,function(){return(("undefined"!=typeof self?self:__webpack_require__.g).webpackChunkSmartLibModule=("undefined"!=typeof self?self:__webpack_require__.g).webpackChunkSmartLibModule||[]).push([[153],{7745(t,e,a){a.r(e),a.d(e,{AnalyticsRequestManager:function(){return i.bW},AnalyticsSession:function(){return i.Bw},BroadpeakCDNCacheKeepaliveManager:function(){return i._7},CacheHandler:function(){return o},CacheKeepaliveManager:function(){return i.sX},CacheManager:function(){return i.Go},GenericPlayerAdapter:function(){return i.qT},GenericPlayerApi:function(){return i.NQ},Metrics:function(){return i.K1},MetricsManager:function(){return i.pi},PlayerAdapter:function(){return i.nm},PlayerEventListener:function(){return i.Wy},PlayerManager:function(){return i.dx},SessionTrackerEvent:function(){return i.lX},SessionTrackerEvents:function(){return i.c5},SessionTrackerTimeline:function(){return i.EC}});var s=a(8100),i=a(5387);var r=a(1262);const n="sl-";class o{storage;constructor(){if(r.gD.d("BpkCacheHandler","Init cache handler, localStorage is "+("undefined"!=typeof localStorage?"available":"unavailable")+"..."),this.storage={},"undefined"!=typeof localStorage){let t=[];for(let e=0;e<localStorage.length;e++)t.push(localStorage.key(e));t.filter(t=>t.startsWith(n)).map(t=>({key:t,value:localStorage.getItem(t)})).forEach(t=>{void 0!==t.value&&(this.storage[t.key]=t.value)})}}set(t,e){t=n+t,this.storage[t]=e,setTimeout(()=>{localStorage?.setItem(t,e)},1)}get(t,e=!1){if(!1===e&&(t=n+t),t in this.storage)return this.storage[t];let a;return"undefined"!=typeof localStorage&&(a=localStorage.getItem(t)),null!=a?(this.storage[t]=a,a):void 0}delete(t){t=n+t,delete this.storage[t],setTimeout(()=>{localStorage?.removeItem(t)},1)}keys(){return void 0!==this.storage?Object.keys(this.storage).map(t=>t.replace(n,"")):[]}}s.A.analyticsModule={PlayerManagerHandler:class{#t;loadPlayerAdapters(){return this.#t={},this.#t.generic=i.qT,this.addAdapter("voplayer",s.A.voplayerModule?.VOPlayerAdapter),this.addAdapter("theoplayer",s.A.theoplayerModule?.THEOPlayerAdapter),this.addAdapter("shaka",s.A.shakaModule?.ShakaPlayerAdapter),this.addAdapter("dashjs",s.A.dashjsModule?.DashJsPlayerAdapter),this.addAdapter("html5",s.A.html5Module?.HTML5PlayerAdapter),this.addAdapter("avplay",s.A.avplayModule?.AVPlayAdapter),this.addAdapter("diw387",s.A.diw387Module?.SagemcomDIW387Adapter),this.addAdapter("hbbtv1",s.A.hbbtv1Module?.HbbTV1PlayerAdapter),this.addAdapter("kaltura",s.A.kalturaModule?.KalturaPlayerAdapter),this.addAdapter("connectplayer",s.A.connectplayerModule?.ConnectPlayerAdapter),this.addAdapter("rxplayer",s.A.rxplayerModule?.RxPlayerAdapter),this.addAdapter("videojs",s.A.videojsModule?.VideoJsPlayerAdapter),this.addAdapter("hlsjs",s.A.hlsjsModule?.HlsJsPlayerAdapter),this.addAdapter("bitmovin",s.A.bitmovinModule?.BitmovinPlayerAdapter),this.addAdapter("reactnativeconnectplayer",s.A.reactnativeconnectplayerModule?.ReactNativeConnectPlayerAdapter),this.addAdapter("reactnativetheoplayer",s.A.reactnativetheoplayerModule?.ReactNativeTHEOplayerAdapter),this.addAdapter("reactnativebitmovin",s.A.reactnativebitmovinModule?.ReactNativeBitmovinPlayerAdapter),this.addAdapter("chromecast",s.A.chromecastModule?.ChromecastPlayerAdapter),this.#t}addAdapter(t,e){void 0!==e&&(this.#t[t]=e)}attachPlayer(t,e){for(let a in this.#t)if(void 0!==this.#t[a]&&this.#t[a].checkPlayer(t,e)){const s=new this.#t[a];return s.attachPlayer(t,e),s}}},PlayerEventListener:i.Wy,GenericPlayerApi:i.NQ,CacheHandler:o},s.A.getInstance().registerPlayerAdapters()},5387(t,e,a){a.d(e,{bW:function(){return v.A},Bw:function(){return W},_7:function(){return Y},sX:function(){return X},Go:function(){return Q},qT:function(){return h},NQ:function(){return m},K1:function(){return E},pi:function(){return A},nm:function(){return n},Wy:function(){return d},dx:function(){return p},lX:function(){return C},c5:function(){return k},EC:function(){return F}});var s=a(8379),i=a(3473);const r="BpkPlayerAdapter";class n{handler;diversityPlugin;webOSVersion;constructor(){"undefined"!=typeof webOS&&webOS.deviceInfo(t=>{this.webOSVersion=t.sdkVersion})}getName(){return""}getVersion(){return""}getOSName(){return i.A.getInstance().osName}getOSVersion(){return i.A.getInstance().osVersion}getDeviceType(){return i.A.getInstance().deviceType}getBitrate(){return-1}getPosition(){return 0}getDuration(){return 0}getVolume(){return 1}getCapabilities(){return{adTracking:!1}}checkPlaybackState(){}initSessionPlayerObjects(){}releaseSessionPlayerObjects(){}initDiversityPlugin(t,e){s.g.i(r,"Diversity plugin not yet supported for player "+t)}initDiversitySession(t){}setDiversityManifest(t){}releaseDiversitySession(){}fillSessionReport(t){t.playerName=this.getName(),t.playerVersion=this.getVersion(),t.osName=this.getOSName(),t.osVersion=this.getOSVersion(),t.deviceType=this.getDeviceType()}onStart(){const t=this.handler.sessionReport;this.fillSessionReport(t)}onKeepaliveSessionReportUpdateRequested(t){this.fillSessionReport(t)}onEndSessionReportUpdateRequested(t){this.fillSessionReport(t)}notifyLoading(){void 0!==this.handler?this.handler.notifyLoading():s.g.e(r,"Implementation error: session.attachPlayer should be called prior to onLoading event. This event is called when the player starts buffering the first time.")}notifyPrecacheEnded(){void 0!==this.handler?this.handler.notifyPrecacheEnded():s.g.e(r,"Implementation error: session.attachPlayer should be called prior to onPrecachedEnded event. This event is called when the player starts buffering chunks.")}notifyFirstImage(){void 0!==this.handler?this.handler.notifyFirstImage(this.getBitrate(),this.getPosition()):s.g.e(r,"Implementation error: session.getURL(...) or session.getQuery()/session.startStreamingSession(...) should be called prior to onSessionStart event. This event is called when the first image is displayed.")}notifyPause(){void 0!==this.handler?this.handler.notifyPause():s.g.e(r,"Implementation error: session.getURL(...) or session.getQuery()/session.startStreamingSession(...) should be called prior to onSessionPause event.")}notifyResume(){void 0!==this.handler?this.handler.notifyResume():s.g.e(r,"Implementation error: session.getURL(...) or session.getQuery()/session.startStreamingSession(...) should be called prior to onSessionResume event.")}notifyLayerSwitch(t=this.getBitrate()){void 0!==this.handler?this.handler.notifyLayerSwitch(t):s.g.e(r,"Implementation error: session.getURL(...) or session.getQuery()/session.startStreamingSession(...) should be called prior to onLayerSwitch event.")}notifySeek(t,e){void 0!==this.handler?this.handler.notifySeek(t,e):s.g.e(r,"Implementation error: session.getURL(...) or session.getQuery()/session.startStreamingSession(...) should be called prior to onSeek event.")}notifyStallStart(){void 0!==this.handler?this.handler.notifyBufferingStart():s.g.e(r,"Implementation error: session.getURL(...) or session.getQuery()/session.startStreamingSession(...) should be called prior to onStallStart event.")}notifyStallEnd(t=!0){void 0!==this.handler?this.handler.notifyBufferingEnd(t):s.g.e(r,"Implementation error: session.getURL(...) or session.getQuery()/session.startStreamingSession(...) should be called prior to onStallEnd event.")}notifyClose(t=void 0){void 0!==this.handler?this.handler.notifyClose(t):s.g.e(r,"Implementation error: session.attachPlayer should be called prior to onSessionStart event. This event is called when the player is closing.")}notifyVolumeChanged(t){void 0!==this.handler?this.handler.notifyVolumeChanged(t):s.g.e(r,"Implementation error: session.getURL(...) or session.getQuery()/session.startStreamingSession(...) should be called prior to onVolumeChanged event.")}notifyPlayerError(t,e){void 0!==this.handler?this.handler.notifyPlayerError(t,e):s.g.e(r,"Implementation error: session.getURL(...) or session.getQuery()/session.startStreamingSession(...) should be called prior to onPlayerError event.")}static checkPlayer(t,e){return s.g.e(r,"Implementation error: static checkPlayer not implemented for this adapter."),!1}attachPlayer(t,e){return s.g.e(r,"Implementation error: attachPlayer not implemented for this adapter."),!1}detachPlayer(){s.g.e(r,"Implementation error: detachPlayer not implemented for this adapter.")}attachSession(t){this.handler=t}detachSession(){this.handler=void 0}setStatusCode(t){void 0!==this.handler&&(this.handler.sessionReport.statusCode=t)}setPlayerErrorCode(t){void 0!==this.handler&&(this.handler.sessionReport.playerErrorCode=String(t))}setCustomParameter(t,e){void 0!==this.handler&&(void 0===this.handler.streamingSession?s.g.e(r,"Set custom parameter on player adapter is only available when using StreamingSession API.",this.handler.id):this.handler.streamingSession.setCustomParameter(t,e))}}var o=a(4404);class h extends n{player;listener;constructor(){super()}getName(){return this.player.getPlayerName()}getVersion(){return this.player.getVersion()}getOSName(){return this.player.getOSName()}getOSVersion(){return this.player.getDeviceVersion()}getDeviceType(){return this.player.getDeviceType()}getBitrate(){return this.player.getCurrentBitrate()}getPosition(){return this.player.getCurrentPosition()}getDuration(){return this.player.getTotalDuration()}getCapabilities(){return"function"==typeof this.player.getCapabilities?this.player.getCapabilities():super.getCapabilities()}static checkPlayer(t,e){return o.A.hasMethods(t,["getPlayerName","getVersion","getOSName","getDeviceVersion","getDeviceType","getCurrentPosition","getTotalDuration","getCurrentBitrate"])}initDiversitySession(t){return this.player.initDiversitySession(t)}attachPlayer(t,e){return!!h.checkPlayer(t,e)&&(this.player=t,this.listener=e,this.player.playerAdapter=this,!0)}detachPlayer(){void 0!==this.player&&(this.player.playerAdapter=void 0),this.player=void 0,this.listener=void 0}}const l="BpkPlayerEventListener";class d{static playerAdapters=[];static addPlayerAdapter(t){-1===d.playerAdapters.indexOf(t)&&d.playerAdapters.push(t)}static removePlayerAdapter(t){let e=d.playerAdapters.indexOf(t);-1!==e&&d.playerAdapters.splice(e,1)}static isStarted(){const t=d.playerAdapters;return t.length>0&&(void 0!==t[t.length-1].handler&&t[t.length-1].handler.metricsManager.started)}static isPlaying(){const t=d.playerAdapters;return t.length>0&&(void 0!==t[t.length-1].handler&&t[t.length-1].handler.metricsManager.playing)}static isBuffering(){const t=d.playerAdapters;return t.length>0&&(void 0!==t[t.length-1].handler&&t[t.length-1].handler.metricsManager.buffering)}static onSessionStart(){const t=d.playerAdapters;t.length>0?t.forEach(t=>t.notifyFirstImage()):s.g.e(l,"Implementation error: SmartLib.attachPlayer(...) should be called prior to onSessionStart event. If you don't attach any player, please remove this call, SmartLib is now handling it automatically.")}static onSessionPause(){const t=d.playerAdapters;t.length>0?t.forEach(t=>t.notifyPause()):s.g.e(l,"Implementation error: SmartLib.attachPlayer(...) should be called prior to onSessionPause event.")}static onSessionResume(){const t=d.playerAdapters;t.length>0?t.forEach(t=>t.notifyResume()):s.g.e(l,"Implementation error: SmartLib.attachPlayer(...) should be called prior to onSessionResume event.")}static onLayerSwitch(t){const e=d.playerAdapters;e.length>0?e.forEach(e=>e.notifyLayerSwitch(t)):s.g.e(l,"Implementation error: SmartLib.attachPlayer(...) should be called prior to onLayerSwitch event.")}static onSeek(t,e){const a=d.playerAdapters;a.length>0?a.forEach(a=>a.notifySeek(t,e)):s.g.e(l,"Implementation error: SmartLib.attachPlayer(...) should be called prior to onSeek event.")}static onStallStart(){const t=d.playerAdapters;t.length>0?t.forEach(t=>t.notifyStallStart()):s.g.e(l,"Implementation error: SmartLib.attachPlayer(...) should be called prior to onStallStart event.")}static onStallEnd(t){const e=d.playerAdapters;e.length>0?e.forEach(e=>e.notifyStallEnd(t)):s.g.e(l,"Implementation error: SmartLib.attachPlayer(...) should be called prior to onStallEnd event.")}}const c="BpkPlayerMgr";class u{static loadPlayerAdapters(){return{}}}class p{static#e;smartLib;#a=u;#s={};#i;static getInstance(){return p.#e||(p.#e=new p),p.#e}init(t){this.#a===u&&(this.#a=t,this.#s=this.#a.loadPlayerAdapters(),s.g.v(c,"Compatible players: "+Object.keys(this.#s)))}release(){this.setPlayerAdapter(void 0)}attachInstance(t){this.smartLib=t}getAdapters(){return this.#s}setPlayerAdapter(t){void 0!==this.#i&&this.#i!==t&&(s.g.i(c,"Player "+this.#i.getName()+" detached"),this.#i.detachPlayer()),this.#i!==t&&void 0!==t?t instanceof h&&(s.g.d(c,"Attaching generic player to SmartLib singleton"),d.addPlayerAdapter(t)):this.#i!==t&&void 0===t&&this.#i instanceof h&&(s.g.d(c,"Detaching generic player from SmartLib singleton"),d.removePlayerAdapter(this.#i)),this.#i!==t?this.#i=t:void 0!==t&&s.g.i(c,"Player "+this.#i.getName()+" already attached"),void 0!==t&&s.g.i(c,"Player "+t.getName()+" attached")}getPlayerAdapter(){return this.#i}}const g="BpkGenericPlayerApi";class m{playerAdapter;constructor(){}getPlayerName(){return""}getVersion(){return""}getOSName(){return""}getDeviceVersion(){return""}getDeviceType(){return""}getCurrentPosition(){return 0}getTotalDuration(){return 0}getCurrentBitrate(){return 0}getCapabilities(){return{}}notifyPrecacheEnded(){void 0!==this.playerAdapter?this.playerAdapter.notifyPrecacheEnded():s.g.e(g,"Implementation error: session.attachPlayer(...) should be called prior to notifyPrecacheEnded. This event is called when the player starts buffering chunks.")}notifyFirstImage(){void 0!==this.playerAdapter?this.playerAdapter.notifyFirstImage():s.g.e(g,"Implementation error: session.attachPlayer(...) should be called prior to notifyFirstImage. This event is called when the first image is displayed.")}notifyPause(){void 0!==this.playerAdapter?this.playerAdapter.notifyPause():s.g.e(g,"Implementation error: session.attachPlayer(...) should be called prior to notifyPause.")}notifyResume(){void 0!==this.playerAdapter?this.playerAdapter.notifyResume():s.g.e(g,"Implementation error: session.attachPlayer(...) should be called prior to notifyResume.")}notifyLayerSwitch(t){void 0!==this.playerAdapter?this.playerAdapter.notifyLayerSwitch(t):s.g.e(g,"Implementation error: session.attachPlayer(...) should be called prior to notifyLayerSwitch.")}notifyStallStart(){void 0!==this.playerAdapter?this.playerAdapter.notifyStallStart():s.g.e(g,"Implementation error: session.attachPlayer(...) should be called prior to notifyStallStart.")}notifyStallEnd(t){void 0!==this.playerAdapter?this.playerAdapter.notifyStallEnd(t):s.g.e(g,"Implementation error: session.attachPlayer(...) should be called prior to notifyStallEnd.")}notifySeek(t,e){void 0!==this.playerAdapter?this.playerAdapter.notifySeek(t,e):s.g.e(g,"Implementation error: session.attachPlayer(...) should be called prior to notifySeek.")}setPlayerErrorCode(t){void 0!==this.playerAdapter?this.playerAdapter.setPlayerErrorCode(t):s.g.e(g,"Implementation error: session.attachPlayer(...) should be called prior to setPlayerErrorCode. This has to be called before stopStreamingSession when the player error code as a string.")}}var v=a(9880),S=a(4943);class y{static EMPTY=new this(0);index;buffer;constructor(t){this.index=0,this.buffer=new Uint8Array(t)}put(t){return this.buffer[this.index++]=t,this}putChar(t){return this.buffer[this.index++]=(65280&t)>>8,this.buffer[this.index++]=255&t,this}putByteBuffer(t,e=t.buffer.length){const a=t.buffer;return this.buffer.length>=this.index+e&&(this.buffer.set(a,this.index),this.index+=e),this}set(t,e){return this.buffer[e]=t,this}data(){return this.buffer}base64(){return S.A.bufferToBase64(this)}length(){return this.index}capacity(){return this.buffer.length}remaining(){return this.capacity()-this.length()}toString(){return S.A.bufferToString(this.buffer,this.index)+"(length:"+this.length()+")"}}var f=a(3445);class E{static PLAYBACK_TYPE_LIVE="LIVE";static PLAYBACK_TYPE_VOD="VOD";redirectionTime;startupTime;completion;playbackType;playbackDuration;sessionDuration;contentDuration;stallsNumber;maxStallDuration;totalStallsDuration;rebufferingsNumber;maxRebufferingDuration;totalRebufferingDuration;minBitrate;maxBitrate;averageBitrate;layerSwitchesNumber;timeSpentPerLayer;preStartupTime;constructor(t){void 0!==t?(this.redirectionTime=t.redirectionTime,this.startupTime=t.startupTime,this.completion=t.completion,this.playbackType=t.playbackType,this.playbackDuration=t.playbackDuration,this.sessionDuration=t.sessionDuration,this.contentDuration=t.contentDuration,this.stallsNumber=t.stallsNumber,this.maxStallDuration=t.maxStallDuration,this.totalStallsDuration=t.totalStallsDuration,this.rebufferingsNumber=t.rebufferingsNumber,this.maxRebufferingDuration=t.maxRebufferingDuration,this.totalRebufferingDuration=t.totalRebufferingDuration,this.minBitrate=t.minBitrate,this.maxBitrate=t.maxBitrate,this.averageBitrate=t.averageBitrate,this.layerSwitchesNumber=t.layerSwitchesNumber,this.timeSpentPerLayer=JSON.parse(JSON.stringify(t.timeSpentPerLayer)),this.preStartupTime=t.preStartupTime):(this.redirectionTime=0,this.startupTime=0,this.completion=0,this.playbackType="",this.playbackDuration=0,this.sessionDuration=0,this.contentDuration=0,this.stallsNumber=0,this.maxStallDuration=0,this.totalStallsDuration=0,this.rebufferingsNumber=0,this.maxRebufferingDuration=0,this.totalRebufferingDuration=0,this.minBitrate=0,this.maxBitrate=0,this.averageBitrate=0,this.layerSwitchesNumber=0,this.timeSpentPerLayer={},this.preStartupTime=0)}}class b{metrics;watchingRanges;constructor(t=new E){this.metrics=t,this.reset()}setRedirectionTime(t){return this.metrics.redirectionTime=t,this}setStartupTime(t){return this.metrics.startupTime=t,this}setSessionDuration(t){return this.metrics.sessionDuration=t,this}setContentDuration(t){return this.metrics.contentDuration=t,this}setPlaybackType(t){return this.metrics.playbackType=t,this}setFirstLayer(t){return t>0&&(this.metrics.maxBitrate=t,this.metrics.minBitrate=t),this}setPreStartupTime(t){return this.metrics.preStartupTime=t,this}addTimeSpentPerLayer(t,e){if((t=Math.round(t))>0){let a=this.metrics.timeSpentPerLayer[t];void 0===a&&(a=0),a+=e,this.metrics.timeSpentPerLayer[t]=a,this.metrics.maxBitrate<t&&(this.metrics.maxBitrate=t),(this.metrics.minBitrate>t||0===this.metrics.minBitrate)&&(this.metrics.minBitrate=t)}return this}addLayerSwitch(){return this.metrics.layerSwitchesNumber++,this}addPlaybackDuration(t){return this.metrics.playbackDuration+=t,this}addWatchingRange(t,e){return t<e&&(s.g.v("BpkMetrics","Add watching range, duration "+(e-t)+"ms"),this.watchingRanges.push({start:t,end:e,duration:e-t})),this}addStall(t){return this.metrics.stallsNumber++,this.metrics.totalStallsDuration+=t,this.metrics.maxStallDuration<t&&(this.metrics.maxStallDuration=t),this}addRebuffering(t){return this.metrics.rebufferingsNumber++,this.metrics.totalRebufferingDuration+=t,this.metrics.maxRebufferingDuration<t&&(this.metrics.maxRebufferingDuration=t),this}clone(){const t=new b(new E(this.metrics));return t.watchingRanges=JSON.parse(JSON.stringify(this.watchingRanges)),t}computeCompletion(){if(this.metrics.playbackType===E.PLAYBACK_TYPE_LIVE||0===this.metrics.contentDuration)return 1e3;const t=JSON.parse(JSON.stringify(this.watchingRanges));let e=t.slice(0);if(1===t.length)return Math.floor(1e3*e[0].duration/this.metrics.contentDuration);if(0===t.length)return 0;const a=[];let s=null;e=e.sort((t,e)=>parseInt(t.start,10)>parseInt(e.start,10)?1:parseInt(t.start,10)<parseInt(e.start,10)?-1:0),a.push(e[0]);for(let t=1;t<e.length;t++)s=a[a.length-1],parseInt(s.end,10)<parseInt(e[t].start,10)?a.push(e[t]):parseInt(s.end,10)<parseInt(e[t].end,10)&&(s.end=parseInt(e[t].end,10),s.duration=s.end-s.start,a.pop(),a.push(s));let i=0;for(let t=0;t<a.length;t++)a[t].duration=parseInt(a[t].end,10)-parseInt(a[t].start,10),i+=parseInt(a[t].duration,10);this.watchingRanges=a;let r=Math.floor(1e3*i/this.metrics.contentDuration);return r>1e3?1e3:r}build(){let t=0,e=0;for(let a in this.metrics.timeSpentPerLayer){const s=this.metrics.timeSpentPerLayer[a];t+=a*s,e+=s}return 0!==e&&(this.metrics.averageBitrate=Math.round(t/e)),this.metrics.completion=this.computeCompletion(),this.metrics.completion<0?this.metrics.completion=0:this.metrics.completion>1e3&&(this.metrics.completion=1e3),this.metrics.startupTime+=this.metrics.preStartupTime,this.metrics}reset(){return this.watchingRanges=[],this}}const D="BpkMetricsMgr";class A{static MAX_TIME_BETWEEN_SEEK_AND_REBUFFERING=1e3;handler;builder;playerAdapter;timeline;started;playing;buffering;seeking;bitrate;redirectionStartDate;playingStartDate;bufferingStartDate;lastLayerSwitchDate;lastSeekDate;playOnNextBufferingEnd;startPosition;constructor(t,e){this.handler=t,this.builder=new b,this.playerAdapter=e,this.timeline=this.handler.sessionReport.timeline,this.started=!1,this.playing=!1,this.buffering=!1,this.seeking=!1,this.bitrate=-1,this.redirectionStartDate=Date.now(),this.playingStartDate=Date.now(),this.bufferingStartDate=0,this.lastLayerSwitchDate=0,this.lastSeekDate=0,this.playOnNextBufferingEnd=!1,this.startPosition=0}onStart(){this.redirectionStartDate=Date.now()}onRedirectionEnd(){this.builder.setRedirectionTime(Date.now()-this.redirectionStartDate),this.playingStartDate=Date.now()}onPrecacheEnded(){this.playingStartDate=Date.now()}onFirstImage(t,e){s.g.i(D,"Streaming session started ("+t+"kbps,"+f.A.formatTime(e)+")",this.handler.id),this.started=!0,this.playing=!0,this.startPosition=e,this.builder.setContentDuration(this.playerAdapter.getDuration()).setPlaybackType(this.playerAdapter.getDuration()<=0?E.PLAYBACK_TYPE_LIVE:E.PLAYBACK_TYPE_VOD),this.builder.setStartupTime(Date.now()-this.redirectionStartDate),this.playingStartDate=Date.now(),this.builder.setFirstLayer(t),this.bitrate=t,this.lastLayerSwitchDate=Date.now()}onLayerSwitch(t){s.g.d(D,"Player changed layer to "+t+"kbps",this.handler.id),this.started&&(this.builder.addTimeSpentPerLayer(this.bitrate,Date.now()-this.lastLayerSwitchDate),this.lastLayerSwitchDate=Date.now(),this.bitrate!==t&&this.bitrate>0&&(s.g.d(D,"Player changed layer, before: "+this.bitrate+"kbps, now: "+t+"kbps",this.handler.id),this.timeline?.pushEventBitrate(k.LayerSwitch,t),this.builder.addLayerSwitch())),this.bitrate=t}onPause(){this.playing&&(s.g.d(D,"Player is paused",this.handler.id),this.timeline?.pushEvent(k.Pause),this.playing=!1,this.buffering||this.builder.addPlaybackDuration(Date.now()-this.playingStartDate),this.builder.addWatchingRange(this.startPosition,this.playerAdapter.getPosition()))}onResume(){this.started&&!this.playing&&(s.g.d(D,"Player is resumed",this.handler.id),this.timeline?.pushEvent(k.Resume),this.playing=!0,this.buffering=!1,this.playingStartDate=Date.now())}onBufferingStart(){if(!this.buffering&&this.started){s.g.d(D,"Player is buffering",this.handler.id),this.timeline?.pushEvent(k.BufferingStart);const t=Date.now();this.buffering=!0,this.seeking&&t-this.lastSeekDate>A.MAX_TIME_BETWEEN_SEEK_AND_REBUFFERING&&(this.seeking=!1),this.bufferingStartDate=t,this.playOnNextBufferingEnd=!1,this.playing&&this.builder.addPlaybackDuration(t-this.playingStartDate)}}onBufferingEnd(t){const e=Date.now();t&&this.playOnNextBufferingEnd&&!this.buffering&&(this.playingStartDate=e,this.playOnNextBufferingEnd=!1),this.started&&this.bufferingStartDate>0&&(this.buffering=!1,t?this.playingStartDate=e:this.playOnNextBufferingEnd=!0,this.seeking?(this.seeking=!1,this.handler.notifyRebufferingEnd()):this.handler.notifyStallEnd(),this.bufferingStartDate=0)}onStallEnd(){const t=Date.now()-this.bufferingStartDate;this.builder.addStall(t),this.timeline?.pushEvent(k.StallStop),s.g.d(D,"Player stalled for "+t+"ms",this.handler.id)}onRebufferingEnd(){const t=Date.now()-this.bufferingStartDate;this.builder.addRebuffering(t),this.timeline?.pushEvent(k.RebufferingStop),s.g.d(D,"Player buffered for "+t+"ms",this.handler.id)}onSeek(t,e){s.g.d(D,"Player seeked from "+f.A.formatTime(t)+" to "+f.A.formatTime(e),this.handler.id),this.timeline?.pushEventPositionStartEnd(k.Seek,t,e),this.builder.addWatchingRange(this.startPosition,t),this.startPosition=e,this.seeking=!0,this.lastSeekDate=Date.now()}onStop(t){if(this.started){const t=Date.now();this.playing&&!this.buffering&&this.builder.addPlaybackDuration(t-this.playingStartDate),this.buffering&&this.onBufferingEnd(!1),this.playing&&(this.builder.addWatchingRange(this.startPosition,this.playerAdapter.getPosition()),this.playing=!1),this.builder.setSessionDuration(t-this.redirectionStartDate).addTimeSpentPerLayer(this.bitrate,t-this.lastLayerSwitchDate),this.started=!1}}onStartSessionReportUpdateRequested(t){t.metrics=this.builder.build()}onKeepaliveSessionReportUpdateRequested(t){const e=Date.now(),a=this.builder.clone();if(this.playing&&!this.buffering&&a.addPlaybackDuration(e-this.playingStartDate),this.started&&this.bufferingStartDate>0){const t=Date.now()-this.bufferingStartDate;this.seeking?a.addRebuffering(t):a.addStall(t)}this.playing&&a.addWatchingRange(this.startPosition,this.playerAdapter.getPosition()),a.setSessionDuration(e-this.redirectionStartDate).addTimeSpentPerLayer(this.bitrate,e-this.lastLayerSwitchDate);const s=this.handler.getCustomParameters().pre_startup_time;let i=0;void 0===s||isNaN(s)||(i=parseInt(s,10)),a.setPreStartupTime(i),t.metrics=a.build()}onEndSessionReportUpdateRequested(t){const e=Date.now();this.builder.setSessionDuration(e-this.redirectionStartDate);const a=this.handler.getCustomParameters().pre_startup_time;let s=0;void 0===a||isNaN(a)||(s=parseInt(a,10)),this.builder.setPreStartupTime(s),t.metrics=this.builder.build()}}const k={None:0,Start:1,Stop:2,RedirectionEnd:3,FirstImage:4,Pause:5,Resume:6,BufferingStart:7,StallStart:8,StallStop:9,RebufferingStart:10,RebufferingStop:11,Seek:12,LayerSwitch:13,AdBreakStart:14,AdBreakStop:15,NetworkAvailable:16,NetworkLost:17,Mute:18,Unmute:19,Multicast:20,Unicast:21,PrecacheEnded:22,DataSummary:144,EmptySummary:145},I=[k.RedirectionEnd,k.Pause,k.Resume,k.BufferingStart,k.StallStart,k.StallStop,k.RebufferingStart,k.RebufferingStop,k.AdBreakStart,k.NetworkLost,k.Mute,k.Unmute,k.Multicast,k.Unicast,k.PrecacheEnded],P=[k.Start],w=[k.LayerSwitch],N=[k.FirstImage],R=[k.Seek],B=[k.Stop],T=[k.AdBreakStop],M=[k.NetworkAvailable],L="BpkSessionTrackerEvent";class C{eventId;eventDate;eventData;startStopEvent;startEventId;stopEventId;triggerStartEventId;keepLastOnly;attachEventId;attachMaxDurationBeforeStart;startEvent;stopEvent;attachedEvent;compressed;compressedData;constructor(t){this.eventId=t,this.eventDate=Date.now(),this.eventData={},this.startStopEvent=!1,this.startEventId=0,this.stopEventId=0,this.triggerStartEventId=0,this.keepLastOnly=!1,this.attachEventId=0,this.attachMaxDurationBeforeStart=-1,this.startEvent=null,this.stopEvent=null,this.attachedEvent=null,this.addDataSizeInTimeline=!1,this.compressed=!1,this.compressedData=void 0,this.updateMetadata()}updateMetadata(){switch(this.startStopEvent=!1,this.startEventId=k.None,this.stopEventId=k.None,this.triggerStartEventId=k.None,this.keepLastOnly=!1,this.attachEventId=k.None,this.attachMaxDurationBeforeStart=-1,this.eventId){case k.None:break;case k.Start:this.startStopEvent=!0,this.startEventId=k.Start,this.stopEventId=k.Stop,this.addDataSizeInTimeline=!0;break;case k.Stop:this.startStopEvent=!0,this.startEventId=k.Start,this.stopEventId=k.Stop;break;case k.RedirectionEnd:this.attachEventId=k.Start;break;case k.FirstImage:this.keepLastOnly=!0,this.attachEventId=k.RedirectionEnd;break;case k.Pause:case k.Resume:this.startStopEvent=!0,this.startEventId=k.Pause,this.stopEventId=k.Resume;break;case k.StallStart:this.startStopEvent=!0,this.startEventId=k.StallStart,this.stopEventId=k.StallStop;break;case k.StallStop:this.startStopEvent=!0,this.startEventId=k.StallStart,this.stopEventId=k.StallStop,this.triggerStartEventId=k.BufferingStart;break;case k.RebufferingStart:this.startStopEvent=!0,this.startEventId=k.RebufferingStart,this.stopEventId=k.RebufferingStop;break;case k.RebufferingStop:this.startStopEvent=!0,this.startEventId=k.RebufferingStart,this.stopEventId=k.RebufferingStop,this.triggerStartEventId=k.BufferingStart,this.attachEventId=k.Seek,this.attachMaxDurationBeforeStart=A.MAX_TIME_BETWEEN_SEEK_AND_REBUFFERING;break;case k.AdBreakStart:this.startStopEvent=!0,this.startEventId=k.AdBreakStart,this.stopEventId=k.AdBreakStop;break;case k.AdBreakStop:this.startStopEvent=!0,this.startEventId=k.AdBreakStart,this.stopEventId=k.AdBreakStop,this.attachEventId=k.Seek,this.attachMaxDurationBeforeStart=0;break;case k.BufferingStart:case k.Seek:case k.LayerSwitch:case k.NetworkAvailable:case k.NetworkLost:break;case k.Mute:case k.Unmute:case k.Multicast:case k.Unicast:case k.PrecacheEnded:this.addDataSizeInTimeline=!0}}getEventName(){switch(this.eventId){case k.None:return"None";case k.Start:return"Start";case k.Stop:return"Stop";case k.RedirectionEnd:return"RedirectionEnd";case k.FirstImage:return"FirstImage";case k.Pause:return"Pause";case k.Resume:return"Resume";case k.BufferingStart:return"BufferingStart";case k.StallStart:return"StallStart";case k.StallStop:return"StallStop";case k.RebufferingStart:return"RebufferingStart";case k.RebufferingStop:return"RebufferingStop";case k.Seek:return"Seek";case k.LayerSwitch:return"LayerSwitch";case k.AdBreakStart:return"AdBreakStart";case k.AdBreakStop:return"AdBreakStop";case k.NetworkAvailable:return"NetworkAvailable";case k.NetworkLost:return"NetworkLost";case k.Mute:return"Mute";case k.Unmute:return"Unmute";case k.Multicast:return"Multicast";case k.Unicast:return"Unicast";case k.PrecacheEnded:return"PrecacheEnded"}return""}isStartEvent(){return this.startStopEvent&&this.eventId===this.startEventId}isStopEvent(){return this.startStopEvent&&this.eventId===this.stopEventId}addEventData(t,e){"string"==typeof t&&(this.eventData[t]=e)}toData(t){const e=Math.abs(this.eventDate-t)/100,a=S.A.floor(e/65535),s=e%65535,i=Object.keys(this.eventData).length;let r=3*a+1+2+2*i+(this.addDataSizeInTimeline?1:0),n=new y(r);for(let t=0;t<a;t++)n.put(k.None),n.put(255),n.put(255);switch(n.put(this.eventId),n.putChar(s),this.addDataSizeInTimeline&&n.put(2*i),this.eventId){case k.Start:{const t=parseInt(this.eventData.networkType,10),e=parseInt(this.eventData.muteState,10);n.putChar(t),n.putChar(e)}break;case k.Stop:{const t=parseInt(this.eventData.statusCode,10);n.putChar(t)}break;case k.FirstImage:{const t=parseInt(this.eventData.bitrate,10),e=parseInt(this.eventData.position,10);n.putChar(t),n.putChar(e)}break;case k.Seek:{const t=parseInt(this.eventData.positionStart,10),e=parseInt(this.eventData.positionEnd,10);n.putChar(t),n.putChar(e)}break;case k.LayerSwitch:{const t=parseInt(this.eventData.bitrate,10);n.putChar(t)}break;case k.AdBreakStop:{const t=parseInt(this.eventData.progress,10);n.putChar(t)}break;case k.NetworkAvailable:{const t=parseInt(this.eventData.state,10);n.putChar(t)}}return n}formatDate(t){return f.A.formatDate(new Date(t))}print(){s.g.v(L,"   |"),s.g.v(L,"   ├--\x3e "+this.getEventName()+" -> "+(!0===this.compressed?"compressed":"not compressed")+" -> "+this.eventDate),s.g.v(L,"   |      date: "+this.formatDate(this.eventDate));for(let t in this.eventData)s.g.v(L,"   |      "+t+": "+this.eventData[t]);this.isStartEvent()&&null!==this.stopEvent&&s.g.v(L,"   |      stop event: "+this.stopEvent.getEventName()+" "+this.stopEvent.eventDate),this.isStopEvent()&&null!==this.startEvent&&s.g.v(L,"   |      start event: "+this.startEvent.getEventName()+" "+this.startEvent.eventDate),null!==this.attachedEvent&&s.g.v(L,"   |      attached event: "+this.attachedEvent.getEventName()+" "+this.attachedEvent.eventDate)}toString(){return this.getEventName()+" ("+this.formatDate(this.eventDate)+")"}}class x{static BUFFER_SIZE=28;timeline;minIndex;initialBitrate;builder;summaryDuration;pauseDuration;nbNetworkDisconnected;nbNetworkWifi;nbNetworkMobile;nbNetworkEthernet;lastNetworkState;muteDuration;lastMuteState;constructor(t,e){this.timeline=t,this.minIndex=e,this.initialBitrate=void 0,this.builder=void 0,this.summaryDuration=0,this.pauseDuration=0,this.nbNetworkDisconnected=0,this.nbNetworkWifi=0,this.nbNetworkMobile=0,this.nbNetworkEthernet=0,this.lastNetworkState=void 0,this.muteDuration=0,this.lastMuteState=void 0,this.init()}init(){for(let t=this.minIndex;t>=0;t--){const e=this.timeline.events[t];switch(e.eventId){case k.LayerSwitch:case k.FirstImage:void 0===this.initialBitrate&&(this.initialBitrate=parseInt(e.eventData.bitrate,10));break;case k.Start:void 0===this.lastNetworkState&&(this.lastNetworkState=parseInt(e.eventData.networkType,10)),void 0===this.lastMuteState&&(this.lastMuteState=parseInt(e.eventData.muteState,10));break;case k.NetworkAvailable:void 0===this.lastNetworkState&&(this.lastNetworkState=parseInt(e.eventData.state,10));break;case k.NetworkLost:void 0===this.lastNetworkState&&(this.lastNetworkState=0);break;case k.Mute:void 0===this.lastMuteState&&(this.lastMuteState=1);break;case k.Unmute:void 0===this.lastMuteState&&(this.lastMuteState=0)}}void 0!==this.initialBitrate&&0!==this.initialBitrate||(this.initialBitrate=-1),void 0===this.lastNetworkState&&(this.lastNetworkState=1),void 0===this.lastMuteState&&(this.lastMuteState=0)}update(t){if(this.minIndex>=this.timeline.events.length||t>=this.timeline.events.length)return;const e=this.timeline.events[this.minIndex],a=this.timeline.events[t];let s,i,r,n=this.initialBitrate,o=e.eventDate,h=1===this.lastMuteState?e.eventDate:-1;this.builder=new b,this.summaryDuration=a.eventDate-e.eventDate,this.pauseDuration=0,this.nbNetworkDisconnected=0,this.nbNetworkWifi=0,this.nbNetworkMobile=0,this.nbNetworkEthernet=0,this.muteDuration=0;for(let l=this.minIndex;l<=t;l++){const t=this.timeline.events[l];switch(t.eventId){case k.Pause:!1!==s&&void 0!==s||(null!==t.stopEvent&&t.stopEvent.eventDate<=a.eventDate&&(this.pauseDuration+=t.stopEvent.eventDate-t.eventDate),s=!0);break;case k.Resume:void 0===s&&(this.pauseDuration+=t.eventDate-e.eventDate),s=!1;break;case k.StallStart:!1!==i&&void 0!==i||(null!==t.stopEvent&&t.stopEvent.eventDate<=a.eventDate&&this.builder.addStall(t.stopEvent.eventDate-t.eventDate),i=!0);break;case k.StallStop:void 0===i&&this.builder.addStall(t.eventDate-e.eventDate),i=!1;break;case k.RebufferingStart:!1!==r&&void 0!==r||(null!==t.stopEvent&&t.stopEvent.eventDate<=a.eventDate&&this.builder.addRebuffering(t.stopEvent.eventDate-t.eventDate),r=!0);break;case k.RebufferingStop:void 0===r&&this.builder.addRebuffering(t.eventDate-e.eventDate),r=!1;break;case k.LayerSwitch:this.builder.addLayerSwitch(),-1!==n&&this.builder.addTimeSpentPerLayer(n,t.eventDate-o),n=parseInt(t.eventData.bitrate,10),o=t.eventDate;break;case k.NetworkAvailable:this.lastNetworkState=parseInt(t.eventData.state,10),this.lastNetworkState>=10&&this.lastNetworkState<20?this.nbNetworkWifi++:this.lastNetworkState>=20&&this.lastNetworkState<30?this.nbNetworkMobile++:this.lastNetworkState>=30&&this.lastNetworkState<40&&this.nbNetworkEthernet++;break;case k.NetworkLost:this.lastNetworkState=0,this.nbNetworkDisconnected++;break;case k.Mute:this.lastMuteState=1,h=t.eventDate;break;case k.Unmute:this.lastMuteState=0,-1!==h&&(this.muteDuration+=t.eventDate-h,h=-1)}}-1!==n&&this.builder.addTimeSpentPerLayer(n,a.eventDate-o),-1!==h&&(this.muteDuration+=a.eventDate-h),this.builder.build()}data(){if(void 0===this.builder)return y.EMPTY;const t=new y(x.BUFFER_SIZE),e=this.builder.metrics;return t.put(k.DataSummary).putChar(Math.round(this.summaryDuration/1e3)).put(x.BUFFER_SIZE-2-1-1).putChar(this.pauseDuration/100).put(e.stallsNumber).putChar(e.totalStallsDuration/100).put(e.rebufferingsNumber).putChar(e.totalRebufferingDuration/100).put(e.layerSwitchesNumber).putChar(e.minBitrate).putChar(e.maxBitrate).putChar(e.averageBitrate).put(this.nbNetworkDisconnected).put(this.nbNetworkWifi).put(this.nbNetworkMobile).put(this.nbNetworkEthernet).putChar(this.lastNetworkState).putChar(Math.round(this.muteDuration/1e3)).put(this.lastMuteState),t}toString(){if(void 0===this.builder)return"no data";const t=this.builder.metrics;return this.summaryDuration+", "+this.pauseDuration+", "+t.minBitrate+", "+t.maxBitrate+", "+t.layerSwitchesNumber+", "+t.averageBitrate+", "+t.stallsNumber+", "+t.totalStallsDuration+", "+t.rebufferingsNumber+", "+t.totalRebufferingDuration+", "+this.nbNetworkDisconnected+", "+this.nbNetworkWifi+", "+this.nbNetworkMobile+", "+this.nbNetworkEthernet+", "+this.lastNetworkState+", "+this.muteDuration+", "+this.lastMuteState}}const _="BpkSessionTrackerEncoder";class U{static DEFAULT_BUFFER_SIZE=384;static DEFAULT_END_EVENTS_DURATION=15e3;static DEFAULT_END_EVENTS_NUMBER=20;timeline;maxBufferSize;maxEndEventsDuration;maxEndEventsNumber;events;uncompressedData;uncompressedDataFull;compressedStartData;minSummaryIndex;maxEndBufferSize;summary;constructor(t,e=U.DEFAULT_BUFFER_SIZE,a=U.DEFAULT_END_EVENTS_DURATION,s=U.DEFAULT_END_EVENTS_NUMBER){this.maxBufferSize=e,this.maxEndEventsDuration=a,this.maxEndEventsNumber=s,this.timeline=t,this.events=this.timeline.events,this.uncompressedData=new y(this.maxBufferSize),this.uncompressedDataFull=!1,this.compressedStartData=void 0,this.minSummaryIndex=0,this.maxEndBufferSize=this.maxBufferSize,this.summary=void 0}onEventAdded(t){if(this.uncompressedDataFull)return;let e=t;this.events.length>=2&&(e=this.events[this.events.length-2]),t.compressedData=t.toData(e.eventDate),t.compressed=!0,t.compressedData.capacity()<=this.uncompressedData.remaining()?this.uncompressedData.putByteBuffer(t.compressedData):(this.uncompressedDataFull=!0,this.compressedStartData=new y(this.maxBufferSize))}onEventUpdated(){this.uncompressedData=new y(this.maxBufferSize);for(const t of this.events)void 0!==t.compressedData&&this.uncompressedData.putByteBuffer(t.compressedData)}encodeEndEvents(t){let e,a=[],s=0;for(let i=this.events.length-1;i>=0;i--){const r=this.events[i];if(!(t-r.eventDate<this.maxEndEventsDuration&&a.length<this.maxEndEventsNumber)){e=i;break}{let t;if(i<this.events.length-1){const e=this.events[i+1];t=r.toData(e.eventDate)}else t=r.toData(r.eventDate);if(!(s+t.length()<=this.maxEndBufferSize)){e=i;break}a.push(t),s+=t.length()}}return{endBuffers:a,maxSummaryIndex:e,size:s}}process(){const t=Date.now();if(!this.uncompressedDataFull)return s.g.d(_,"Timeline encoder generated uncompressed data ("+this.events.length+" events, "+this.uncompressedData.length()+" bytes)"),this.uncompressedData;let e="",{endBuffers:a,maxSummaryIndex:i,size:r}=this.encodeEndEvents(t);if(0===this.compressedStartData.length()){this.minSummaryIndex=i;const t=this.maxBufferSize-x.BUFFER_SIZE-r;for(let e=0;e<i;e++){const a=this.events[e];if(this.compressedStartData.length()+a.compressedData.length()>t){this.minSummaryIndex=e;break}this.compressedStartData.putByteBuffer(a.compressedData)}this.maxEndBufferSize=this.compressedStartData.remaining()-x.BUFFER_SIZE,this.uncompressedData=void 0,e+="first iteration, "}let n=new y(this.maxBufferSize);if(n.putByteBuffer(this.compressedStartData,this.compressedStartData.length()),this.minSummaryIndex===i)n.put(k.EmptySummary),e+="no summary";else{void 0===this.summary&&(this.summary=new x(this.timeline,this.minSummaryIndex)),this.summary.update(i);const t=this.summary.data();n.putByteBuffer(t),e+="summary {"+this.summary.toString()+"}"}for(const t of a)n.putByteBuffer(t);return s.g.d(_,"Timeline encoder generated compressed data ("+this.events.length+" events before encoding, "+(this.minSummaryIndex+a.length)+" events after encoding, "+n.length()+" bytes, ~"+(Date.now()-t)+"ms, "+e+")"),n}extend(){if(this.uncompressedDataFull)s.g.w(_,"Failed to extend size from "+U.DEFAULT_BUFFER_SIZE+" to "+this.maxBufferSize);else{this.maxBufferSize=768,this.maxEndEventsDuration=4e4,this.maxEndEventsNumber=40;let t=this.uncompressedData;this.uncompressedData=new y(this.maxBufferSize),this.uncompressedData.putByteBuffer(t,t.length()),s.g.v(_,"Extended size from "+U.DEFAULT_BUFFER_SIZE+" to "+this.maxBufferSize)}}}const O="BpkSessionTrackerTimeline";class F{session;startDate;stopDate;events;firstImageWithoutBitrateEvent;encoder;constructor(){this.startDate=null,this.stopDate=null,this.events=[],this.firstImageWithoutBitrateEvent=null,this.encoder=new U(this)}pushEvent(t){if(this.checkType(t,I)){const e=this.createEvent(t);this.encoder.onEventAdded(e)}}pushEventStart(t,e,a){if(this.checkType(t,P)){const s=this.createEvent(t);s.addEventData("networkType",e),s.addEventData("muteState",a),this.encoder.onEventAdded(s)}}pushEventBitrate(t,e){if(this.checkType(t,w)){const a=this.createEvent(t);a.addEventData("bitrate",e),null!==this.firstImageWithoutBitrateEvent&&(this.firstImageWithoutBitrateEvent.addEventData("bitrate",e),this.firstImageWithoutBitrateEvent=null),this.encoder.onEventAdded(a)}}pushEventBitratePosition(t,e,a){if(this.checkType(t,N)){const s=this.createEvent(t);s.addEventData("bitrate",e),s.addEventData("position",a),t===k.FirstImage&&e<=0&&(this.firstImageWithoutBitrateEvent=s),this.encoder.onEventAdded(s)}}pushEventPositionStartEnd(t,e,a){if(this.checkType(t,R)){const s=this.createEvent(t);s.addEventData("positionStart",e),s.addEventData("positionEnd",a),this.encoder.onEventAdded(s)}}pushEventStatusCode(t,e){if(this.checkType(t,B)){const a=this.createEvent(t);a.addEventData("statusCode",e),this.encoder.onEventAdded(a)}}pushEventProgress(t,e){if(this.checkType(t,T)){const a=this.createEvent(t);a.addEventData("progress",e),this.encoder.onEventAdded(a)}}pushEventState(t,e){if(this.checkType(t,M)){const a=this.createEvent(t);a.addEventData("state",e),this.encoder.onEventAdded(a)}}createEvent(t){const e=new C(t);return s.g.v(O,"Creating event "+e.getEventName()+"..."),this.applyKeepLastOnly(e),this.events.push(e),this.updateTimelineProperties(e),this.reconciliateStopWithStartEvent(e),e}checkType(t,e){return e.indexOf(t)>=0||(s.g.v(O,"Can't push event '"+t+"' to timeline, invalid parameters"),!1)}applyKeepLastOnly(t){if(t.keepLastOnly)for(let e=this.events.length-1;e>=0;e--){if(this.events[e].eventId===t.eventId)return this.events.splice(e,1),void this.encoder.onEventUpdated()}}attachEvent(t){if(t.attachEventId>k.None){let e=-1;null!==t.startEvent&&-1!==t.attachMaxDurationBeforeStart&&(e=t.startEvent.eventDate-t.attachMaxDurationBeforeStart);for(let a=this.events.length-1;a>=0;a--){const s=this.events[a];if(s.eventId===t.attachEventId&&(-1===e||s.eventDate>=e))return void(t.attachedEvent=s)}}}updateTimelineProperties(t){switch(t.eventId){case k.Start:this.startDate=Date.now();break;case k.Stop:this.stopDate=Date.now()}}reconciliateStopWithStartEvent(t){if(t.isStopEvent())for(let e=this.events.length-1;e>=0;e--){const a=this.events[e];if(a.eventId===t.startEventId)return a.stopEvent=t,void(t.startEvent=a);if(a.eventId===t.triggerStartEventId)return a.eventId=t.startEventId,a.startStopEvent=!0,a.startEventId=t.startEventId,a.stopEventId=t.stopEventId,void 0!==a.compressedData&&(a.compressedData.set(a.eventId,0),this.encoder.onEventUpdated()),a.stopEvent=t,void(t.startEvent=a)}}onStart(t,e){this.pushEventStart(k.Start,t,e)}onRedirectionEnd(){this.pushEvent(k.RedirectionEnd)}onPrecacheEnded(){this.pushEvent(k.PrecacheEnded)}onFirstImage(t,e){this.pushEventBitratePosition(k.FirstImage,t,e)}onStop(t){this.pushEventStatusCode(k.Stop,t)}onForeground(){s.g.d(O,"Received event onForeground but ignored")}onBackground(){s.g.d(O,"Received event onBackground but ignored")}onNetworkAvailable(t){s.g.v(O,"Received event onNetworkAvailable type:"+t),this.pushEventState(k.NetworkAvailable,t)}onNetworkLost(){s.g.d(O,"Received event onNetworkLost"),this.pushEvent(k.NetworkLost)}onMute(){s.g.d(O,"Received event onMute"),this.pushEvent(k.Mute)}onUnmute(){s.g.d(O,"Received event onUnmute"),this.pushEvent(k.Unmute)}onMulticastUsed(){this.pushEvent(k.Multicast)}onUnicastUsed(){this.pushEvent(k.Unicast)}data(){return this.encoder.process()}formatDate(t){return f.A.formatDate(new Date(t))}print(){s.g.v(O,"Timeline (startDate:"+this.formatDate(this.startDate)+", stopDate:"+this.formatDate(this.stopDate)+")");for(let t=0;t<this.events.length;t++)this.events[t].print()}toString(){let t=[];for(let e=0;e<this.events.length;e++)t.push(this.events[e].toString());return t.join(", ")}}var V=a(828);const H="BpkAnalyticsSession";class W extends V.f{started;constructor(t,e){super(t,e),this.getURL=void 0,this.getQuery=void 0,this.startStreamingSession=void 0,this.stopAnalyticsSession=this.stopStreamingSession,this.stopStreamingSession=void 0,this.started=!1}attachPlayer(t,e){super.attachPlayer(t,e),void 0===this.handler&&(this.handler=this.smartLib.sessionManager.createSessionHandler(this),this.handler.initPlayerAdapter(),this.handler.addListener(this))}onLoading(){s.g.i(H,"Session is loading...",this.id),!1===this.started?(this.started=!0,this.handler.adSession=this.adSession,void 0!==this.adSession&&(this.adSession.handler=this.handler),this.handler.start("").catch(t=>{})):s.g.d(H,"Exception: onLoading, the session is already running.",this.id)}updateSessionReportValue(t){const e=this.handler.sessionReport;void 0!==this.customParameters["report."+t]&&(e[t]=this.customParameters["report."+t])}onClose(t){s.g.i(H,"Session is closing (status code: "+t+")...",this.id),void 0!==this.handler.sessionReport.metrics&&(this.handler.sessionReport.metrics.redirectionTime=-1),this.updateSessionReportValue("requestedURL"),this.updateSessionReportValue("redirectedURL"),this.stopAnalyticsSession(t)}}var K=a(1142),z=a(7418),j=a(1134);const q="BpkCacheMgr";class J{set(t,e){}get(t){}delete(t){}keys(){return[]}}class Q{static CACHE_DURATION=1728e5;static CACHE_LIMIT=20;static#e;smartLib;cacheHandler;static getInstance(){return Q.#e||(Q.#e=new Q),Q.#e}constructor(){this.cacheHandler=new J}init(t){this.cacheHandler=t}attachInstance(t){s.g.d(q,"Init cache manager..."),this.smartLib=t,this.getCacheData("report-").forEach(t=>{void 0!==t&&(t.value.sending=!1,this.store(t.key,t.value))})}get(t){let e=this.cacheHandler.get(t);if(void 0!==e)try{return e.startsWith("{")||(e=S.A.base64ToString(e)),e=JSON.parse(e),e}catch(e){return s.g.e(q,"Error while parsing "+t+" ("+e.message+")"),void this.cacheHandler.delete(t)}}store(t,e){this.cacheHandler.set(t,S.A.stringToBase64(JSON.stringify(e)))}update(t,e,a){const i=this.get(t);void 0!==i&&(s.g.d(q,"Updating "+t+", set "+e+" to "+a),i[e]=a,this.store(t,i))}storeSessionReport(t,e,a=!0,i=Date.now(),r=!1){const n="report-"+S.A.randomIntFromInterval(1e6,9999999)+i;s.g.i(q,"Storing "+n+" in cache...");let o={version:this.smartLib.getVersion(),date:i,sending:r,address:t,report:e};return this.store(n,o),!0===a&&this.cleanCache(),n}deleteSessionReport(t){s.g.i(q,"Deleting "+t+" from cache..."),this.cacheHandler.delete(t)}storeKeepaliveReport(t,e){s.g.i(q,"Storing keepalive-"+e.session_id+" in cache...");let a={version:this.smartLib.getVersion(),date:Date.now(),address:t,report:e};this.store("keepalive-"+e.session_id,a)}deleteKeepaliveReport(t){s.g.i(q,"Deleting keepalive-"+t+" from cache..."),this.cacheHandler.delete("keepalive-"+t)}getCacheData(t=""){return this.cacheHandler.keys().filter(e=>e.startsWith(t)).map(t=>{const e=this.get(t);return void 0===e?void 0:{key:t,value:e}})}push(){this.cleanCache(),s.g.i(q,"Sending cache content if any..."),this.getCacheData("report-").forEach(t=>{void 0!==t&&(!0===t.value.sending?s.g.d(q,"Sending cache "+t.key+" already in progress..."):(s.g.d(q,"Sending cache "+t.key+"..."),t.value.sending=!0,t.value.report.delay=Math.round((Date.now()-t.value.date)/1e3),this.store(t.key,t.value),K.A.analyticsModule?.AnalyticsRequestManager.getInstance().endSessionCache(t.value.address,t.value.report,this.smartLib.getParameters()).then(e=>{!0===e?this.deleteSessionReport(t.key):(t.value.sending=!1,this.store(t.key,t.value))})))})}cleanExpiredData(t){return this.getCacheData(t).map(t=>void 0!==t&&(void 0===t.value.date||Date.now()-t.value.date>Q.CACHE_DURATION)?(s.g.d(q,"Cleaning "+t.key+" (cache duration reached)..."),void this.cacheHandler.delete(t.key)):t).filter(t=>void 0!==t).sort((t,e)=>e.value.date-t.value.date)}cleanCache(){s.g.i(q,"Clean expired data if any...");const t=this.cleanExpiredData("keepalive-"),e=this.smartLib.sessionManager.sessions.map(t=>t.handler?.sessionReport?.sessionId);t.forEach(t=>{if(-1===e.indexOf(t.value.report.session_id)){s.g.d(q,"Migrating keepalive "+t.value.report.session_id+" to session..."),t.value.report.timeout=!0;t.value.address.split(",").forEach(e=>{0===e.indexOf(v.A.NOCACHE_PREFIX)?s.g.d(q,v.A.NOCACHE_PREFIX+" option used, no need to store the report in cache"):this.storeSessionReport(v.A.getInstance().buildAnalyticsAddress(e),t.value.report,!1,t.value.date)}),this.cacheHandler.delete(t.key)}});const a=this.cleanExpiredData("report-");if(a.length>=Q.CACHE_LIMIT)for(let t=Q.CACHE_LIMIT;t<a.length;t++)this.deleteSessionReport(a[t].key)}clean(){j.A.getInstance().asyncDelay(0,()=>{this.cleanCache()})}release(){this.cleanCache()}}class X extends z.E{analyticsAddress;constructor(t){super(t),this.analyticsAddress=this.handler.smartLib.getParameters().analyticsAddress,s.g.d(q,"Using cache keepalive manager...",this.handler.id)}start(){super.start(),this.store()}callback(t,e=!0){this.store(),!0===e&&this.next()}stop(){super.stop(),this.delete()}store(){K.A.analyticsModule?.CacheManager.getInstance().storeKeepaliveReport(this.analyticsAddress,this.handler.sessionReport.toEndSessionJSON())}delete(){K.A.analyticsModule?.CacheManager.getInstance().deleteKeepaliveReport(this.handler.sessionReport.sessionId)}}class Y extends z.q{cacheKeepaliveManager;constructor(t){super(t),this.cacheKeepaliveManager=new X(t),this.cacheKeepaliveManager.next=()=>{}}start(){super.start(),this.cacheKeepaliveManager.store()}callback(t){this.cacheKeepaliveManager.callback(t),super.callback(t)}stop(){super.stop(),this.cacheKeepaliveManager.delete()}}K.A.analyticsModule={PlayerManager:p,PlayerAdapter:n,GenericPlayerAdapter:h,PlayerEventListener:d,GenericPlayerApi:m,AnalyticsRequestManager:v.A,SessionTrackerTimeline:F,SessionTrackerEvent:C,SessionTrackerEvents:k,Metrics:E,MetricsManager:A,AnalyticsSession:W,CacheManager:Q,CacheKeepaliveManager:X,BroadpeakCDNCacheKeepaliveManager:Y}},9880(t,e,a){a.d(e,{A:function(){return o}});var s=a(8379),i=a(1134),r=a(1142);const n="BpkAnalyticsRequestMgr";class o{static METRICS_RECEIVER_PATH="fservices/metricsReceiver";static POST_SESSION_REQUEST_TIMEOUT=5e3;static NOCACHE_PREFIX="nocache=";static#e;static getInstance(){return o.#e||(o.#e=new o),o.#e}buildAnalyticsAddress(t){return(t=t.trim()).endsWith("/")||(t+="/"),t+=o.METRICS_RECEIVER_PATH}endSession(t,e){const a=t.sessionReport;if(0!==e.analyticsAddress.length){const i=e.analyticsAddress.split(",");let h=[];return i.forEach(i=>{const l=0===i.indexOf(o.NOCACHE_PREFIX);l?(s.g.d(n,o.NOCACHE_PREFIX+" option used, no need to store the report in cache"),i=this.buildAnalyticsAddress(i.substring(o.NOCACHE_PREFIX.length))):i=this.buildAnalyticsAddress(i),s.g.i(n,"Posting metrics to "+i,t.id);const d=this.postSession(i,a.toEndSessionJSON(),e).then(e=>(s.g.i(n,"Send session metrics ended with status code "+e.httpStatus+" ("+i+")",t.id),e.httpStatus>=200&&e.httpStatus<300?(r.A.analyticsModule.CacheManager.getInstance().push(),!0):(l||r.A.analyticsModule.CacheManager.getInstance().storeSessionReport(i,a.toEndSessionJSON(),!0,Date.now()),!1)));h.push(d)}),Promise.all(h).then(()=>{s.g.d(n,"Send session metrics done",t.id)})}return s.g.w(n,"Metrics platform URL is null, metrics won't be posted anywhere.",t.id),Promise.resolve(!1)}endSessionCache(t,e,a){return 0!==t.length?(s.g.i(n,"Posting cache to "+t),this.postSession(t,e,a).then(e=>(s.g.i(n,"Send cache ended with status code "+e.httpStatus+" ("+t+")"),e.httpStatus>=200&&e.httpStatus<300))):(s.g.w(n,"Metrics platform URL is null, cache won't be posted anywhere."),Promise.resolve(!1))}postSession(t,e,a){return new Promise((r,h)=>{let l={Connection:"close"};void 0!==a.userAgent&&(l["User-Agent"]=a.userAgent);let d=JSON.stringify(e);s.g.v(n,"Executing POST request with body: "+d),i.A.getInstance().asyncPost(t,l,d,o.POST_SESSION_REQUEST_TIMEOUT,t=>{let e=0;void 0!==t.statusCode&&(e=parseInt(t.statusCode,10)),r({httpStatus:e})})})}}},4404(t,e,a){a.d(e,{A:function(){return s}});class s{static hasMethods(t,e){let a=!0;return void 0!==t&&(e.forEach(e=>{"function"!=typeof t[e]&&(a=!1)}),a)}static count(t,e){let a=0;for(const s in t){!0===e(s,t[s])&&a++}return a}}}},function(t){var e;return e=7745,t(t.s=e)}])});
+
+/***/ }),
+
+/***/ "./node_modules/@broadpeak/smartlib-bitmovin/bitmovin.smartlib.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/@broadpeak/smartlib-bitmovin/bitmovin.smartlib.js ***!
+  \************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+!function(t,e){ true?module.exports=e():0}("undefined"!=typeof self?self:__webpack_require__.g,function(){return(("undefined"!=typeof self?self:__webpack_require__.g).webpackChunkSmartLibModule=("undefined"!=typeof self?self:__webpack_require__.g).webpackChunkSmartLibModule||[]).push([[511],{2533(t,e,i){i.r(e),i.d(e,{BitmovinPlayerAdapter:function(){return l}});var s=i(1262),r=i(5387),a=i(3740);const n="BpkBitmovinPlayerAdapter";class l extends r.nm{player;listener;diversityHandler;started;paused;waiting;seeking;bitrate;playerStateManager;playerListeners;onPlayEvent(){this.started&&this.notifyResume(),this.paused=!1}onPlayingEvent(){this.started?(this.paused&&this.notifyResume(),this.waiting&&this.notifyStallEnd(),this.seeking&&this.player.isLive()&&(this.playerStateManager.forcePollPlayerPosition(),this.notifyStallEnd(!0)),this.setStatusCode(s.x6.BPSessionEndsNormally),this.setPlayerErrorCode("")):(this.playerStateManager.start(),this.started=!0,this.notifyFirstImage()),this.paused=!1}onPausedEvent(t){this.started&&(-1===t.issuer.indexOf("seek")&&!1===this.paused?(this.notifyPause(),this.paused=!0):-1!==t.issuer.indexOf("seek")&&(this.notifyStallStart(),this.playerStateManager.forcePollPlayerPosition(),this.seeking=!0))}onStallStartedEvent(){this.started&&(this.notifyStallStart(),this.waiting=!0)}onStallEndedEvent(){this.started&&(!0!==this.waiting&&!0!==this.seeking||!this.player.isPaused()||!1!==this.paused)&&(this.notifyStallEnd(!this.paused),this.waiting=!1,this.setStatusCode(s.x6.BPSessionEndsNormally),this.setPlayerErrorCode(""))}onSeekEvent(){this.started&&(this.notifyStallStart(),this.playerStateManager.forcePollPlayerPosition(),this.seeking=!0)}onSeekedEvent(){this.started&&(this.playerStateManager.forcePollPlayerPosition(),this.notifyStallEnd(!this.paused),this.seeking=!1,this.setStatusCode(s.x6.BPSessionEndsNormally),this.setPlayerErrorCode(""))}onSegmentRequestFinished(t){this.started&&!0===t.success&&this.paused&&this.waiting&&(this.notifyStallEnd(!1),this.setStatusCode(s.x6.BPSessionEndsNormally),this.setPlayerErrorCode(""),this.waiting=!1)}onVideoPlaybackQualityChangedEvent(){const t=this.getBitrate();t!==this.bitrate&&(this.bitrate=t,this.notifyLayerSwitch(t))}onVolumeChangedEvent(t){this.started&&this.notifyVolumeChanged(t.targetVolume/100)}onMuted(t){this.started&&this.player.getVolume()>0&&this.notifyVolumeChanged(0)}onUnmuted(t){this.started&&this.player.getVolume()>0&&this.notifyVolumeChanged(this.player.getVolume()/100)}handleSeek(t,e){this.started&&this.notifySeek(t,e)}onErrorEvent(t){s.gD.e(n,"On player error: "+t.name+" ("+t.code+")");const e=t.code;e>=1e3&&e<=1099||e>=1100&&e<=1199?this.setStatusCode(s.x6.BPUnspecifiedError):e>=1200&&e<=1299?this.setStatusCode(s.x6.BPFormatNotSupportedError):e>=1300&&e<=1399?this.setStatusCode(s.x6.BPDecodingError):e>=1400&&e<=1499?this.setStatusCode(s.x6.BPNetworkingError):e>=2e3&&e<=2099?this.setStatusCode(s.x6.BPAccessRightError):this.setStatusCode(s.x6.BPUnspecifiedError),this.setPlayerErrorCode(e)}getName(){return"Bitmovin"}getVersion(){return void 0!==this.player?this.player.version:"Unknown"}getBitrate(){if(void 0!==this.player){const t=this.player.getPlaybackAudioData().bitrate,e=this.player.getPlaybackVideoData().bitrate;let i=0;return isNaN(t)||(i+=Math.round(t/1e3)),isNaN(e)||(i+=Math.round(e/1e3)),i=100*Math.round(i/100),i}return 0}getPosition(){return void 0!==this.player?Math.round(1e3*this.player.getCurrentTime("absolute")):0}getDuration(){return void 0===this.player||this.player.isLive()?0:Math.round(1e3*this.player.getDuration())}getCapabilities(){return{adTracking:!0}}initSessionPlayerObjects(){this.started=!1,this.paused=!1,this.waiting=!1,this.seeking=!1,this.bitrate=0,void 0!==this.player&&(void 0!==this.playerStateManager&&this.playerStateManager.stop(),this.playerStateManager=new a.A(this,this),this.playerListeners=[this.onPlayEvent.bind(this),this.onPlayingEvent.bind(this),this.onPausedEvent.bind(this),this.onStallStartedEvent.bind(this),this.onStallEndedEvent.bind(this),this.onVideoPlaybackQualityChangedEvent.bind(this),this.onSegmentRequestFinished.bind(this),this.onSeekEvent.bind(this),this.onSeekedEvent.bind(this),this.onErrorEvent.bind(this),this.onVolumeChangedEvent.bind(this),this.onMuted.bind(this),this.onUnmuted.bind(this)],this.player.on("play",this.playerListeners[0]),this.player.on("playing",this.playerListeners[1]),this.player.on("paused",this.playerListeners[2]),this.player.on("stallstarted",this.playerListeners[3]),this.player.on("stallended",this.playerListeners[4]),this.player.on("videoplaybackqualitychanged",this.playerListeners[5]),this.player.on("segmentrequestfinished",this.playerListeners[6]),this.player.on("seek",this.playerListeners[7]),this.player.on("seeked",this.playerListeners[8]),this.player.on("error",this.playerListeners[9]),this.player.on("volumechanged",this.playerListeners[10]),this.player.on("muted",this.playerListeners[11]),this.player.on("unmuted",this.playerListeners[12]))}releaseSessionPlayerObjects(){void 0!==this.playerStateManager&&(this.playerStateManager.stop(),this.playerStateManager=void 0),void 0!==this.player&&void 0!==this.playerListeners&&this.playerListeners.length>0&&(this.player.off("play",this.playerListeners[0]),this.player.off("playing",this.playerListeners[1]),this.player.off("paused",this.playerListeners[2]),this.player.off("stallstarted",this.playerListeners[3]),this.player.off("stallended",this.playerListeners[4]),this.player.off("videoplaybackqualitychanged",this.playerListeners[5]),this.player.off("segmentrequestfinished",this.playerListeners[6]),this.player.off("seek",this.playerListeners[7]),this.player.off("seeked",this.playerListeners[8]),this.player.off("error",this.playerListeners[9]),this.player.off("volumechanged",this.playerListeners[10]),this.player.off("muted",this.playerListeners[11]),this.player.off("unmuted",this.playerListeners[12]))}initDiversityPlugin(t,e){const i=s.x6.diversityModule.DiversityPluginManager.getInstance().handler;let r;try{r=new i.BitmovinDiversityPlugin(e)}catch(e){s.gD.e(n,"failed to load "+t+" Diversity plugin")}return r}initDiversitySession(t){return s.gD.d(n,"initDiversitySession options "+JSON.stringify(t)),this.diversityHandler=this.initDiversityPlugin("bitmovin",this.player),void 0!==this.diversityHandler&&(this.diversityHandler.setConfiguration(t),this.diversityHandler.init()),this.diversityHandler}setDiversityManifest(t){void 0!==this.diversityHandler&&this.diversityHandler.setSteeringManifest(t)}releaseDiversitySession(){s.gD.d(n,"releaseDiversitySession")}onKeepaliveSessionReportUpdateRequested(t){if(void 0!==this.diversityHandler){const e=this.diversityHandler.onKeepaliveSessionReportUpdateRequestedWrapper();t.diversity=e}}onEndSessionReportUpdateRequested(t){if(void 0!==this.diversityHandler){const e=this.diversityHandler.onEndSessionReportUpdateRequestedWrapper();t.diversity=e}}static checkPlayer(t,e){return"function"==typeof t.getSupportedTech&&"function"==typeof t.castStop&&"object"==typeof t.buffer}attachPlayer(t,e){return!!l.checkPlayer(t,e)&&(this.player=t,this.listener=e,!0)}detachPlayer(){this.releaseSessionPlayerObjects(),this.player=void 0,this.listener=void 0}}i(8100).A.bitmovinModule={BitmovinPlayerAdapter:l}},3740(t,e,i){i.d(e,{A:function(){return r}});var s=i(1262);class r{static POLLING_PERIOD=500;playerAdapter;listener;pollPeriod;pollLastDate;pollPlayerInterval;lastPosition;expectedPosition;pollBitrate;lastBitrate;constructor(t,e,i=!1){this.playerAdapter=t,this.listener=e,this.pollPeriod=r.POLLING_PERIOD,this.pollPlayerInterval=null,this.expectedPosition=0,this.pollLastDate=0,this.pollBitrate=i}start(){this.lastPosition=this.playerAdapter.getPosition(),this.lastBitrate=this.playerAdapter.getBitrate(),this.expectedPosition=this.lastPosition+this.pollPeriod,this.pollLastDate=Date.now(),null!==this.pollPlayerInterval&&clearInterval(this.pollPlayerInterval),this.pollPlayerInterval=setInterval(()=>{this.pollPlayerPosition(),!0===this.pollBitrate&&this.pollPlayerBitrate()},this.pollPeriod)}stop(){null!==this.pollPlayerInterval&&(clearInterval(this.pollPlayerInterval),this.pollPlayerInterval=null)}forcePollPlayerPosition(){this.expectedPosition=this.expectedPosition-this.pollPeriod+(Date.now()-this.pollLastDate),this.pollPlayerPosition()}pollPlayerPosition(){this.lastPosition=this.playerAdapter.getPosition();const t=this.expectedPosition+2*this.pollPeriod,e=this.expectedPosition-2*this.pollPeriod;if((this.lastPosition<e||this.lastPosition>t)&&void 0!==this.listener&&"function"==typeof this.listener.handleSeek){!0===this.listener.handleSeek(this.expectedPosition,this.lastPosition)&&s.gD.d("BpkPlayerStateManager","Player is seeking ("+s.Em.formatTime(this.expectedPosition)+" to "+s.Em.formatTime(this.lastPosition)+")")}this.expectedPosition=this.lastPosition+this.pollPeriod,void 0!==this.listener&&"function"==typeof this.listener.handlePoll&&this.listener.handlePoll(),this.pollLastDate=Date.now()}pollPlayerBitrate(){const t=this.playerAdapter.getBitrate();t!==this.lastBitrate&&(void 0!==this.listener&&"function"==typeof this.listener.handleBitrateChange&&this.listener.handleBitrateChange(t),this.lastBitrate=t)}getPositionBeforeSeek(){return this.lastPosition}}}},function(t){return t.O(0,[153],function(){return e=2533,t(t.s=e);var e}),t.O()}])});
+
+/***/ }),
+
+/***/ "./node_modules/@broadpeak/smartlib-simid/simid.smartlib.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@broadpeak/smartlib-simid/simid.smartlib.js ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+!function(e,i){ true?module.exports=i():0}("undefined"!=typeof self?self:__webpack_require__.g,function(){return(("undefined"!=typeof self?self:__webpack_require__.g).webpackChunkSmartLibModule=("undefined"!=typeof self?self:__webpack_require__.g).webpackChunkSmartLibModule||[]).push([[19],{5905(e,i,r){r.r(i),r.d(i,{BrowserSimidControllerAdapter:function(){return k},GenericSimidControllerApi:function(){return M},SimidControllerManager:function(){return d},SimidControllerManagerHandler:function(){return v}});var t=r(8100),s=r(8379);const o="BpkSimidControllerMgr";class n{static loadSimidControllerAdapters(){return{}}}class d{static#e;smartLib;#i=n;#r={};#t;static getInstance(){return d.#e||(d.#e=new d),d.#e}init(e){this.#i===n&&(this.#i=e,this.#r=this.#i.loadSimidControllerAdapters(),s.g.v(o,"Compatible SIMID controllers: "+Object.keys(this.#r)))}release(){this.setSimidControllerAdapter(void 0)}attachInstance(e){this.smartLib=e}getSimidControllerAdapters(){return this.#r}getSimidControllerAdapter(){return this.#t}setSimidControllerAdapter(e){void 0!==this.#t&&this.#t!==e&&(s.g.i(o,"SIMID controller "+this.#t.getName()+" detached"),this.#t.detachSimidController()),this.#t!==e?this.#t=e:void 0!==e&&s.g.i(o,"SIMID controller "+this.#t.getName()+" already attached"),void 0!==e&&s.g.i(o,"SIMID controller "+e.getName()+" attached")}}var a=r(7832);const l="BpkSimidControllerAdapter",m="SIMID:Creative:clickThru",c="SIMID:Player:startCreative",h="SIMID:Player:adStopped",g="createSession",p="resolve";class C{handler;constructor(){this.simidSessions={}}getName(){return""}onMessageSent(e){if(!e||"string"!=typeof e)return;let i;try{i=JSON.parse(e),i.messageId=parseInt(i.messageId,10)}catch(e){return void s.g.e(l,"Error: "+e.message)}if(i.type===c){if(void 0===this.simidSessions[i.sessionId])return void s.g.e(l,"Send startCreative message for an uninitialized SIMID session");this.simidSessions[i.sessionId].startMessageId=i.messageId}else if(i.type===h){if(void 0===this.simidSessions[i.sessionId])return void s.g.d(l,"Send adStopped message for an uninitialized SIMID session");this.simidSessions[i.sessionId].stopMessageId=i.messageId}}onMessageReceived(e){if(!e||"string"!=typeof e)return;let i;try{i=JSON.parse(e),i.messageId=parseInt(i.messageId,10)}catch(e){return void s.g.e(l,"Error: "+e.message)}const r=this.simidSessions[i.sessionId];switch(i.type){case m:if(void 0===r)return void s.g.e(l,"Received a clickthru message for a uninitialized SIMID session");this.handler?.notifySimidClickthrough(i.args);break;case g:if(void 0!==r)return void s.g.e(l,"SIMID session already created");this.simidSessions[i.sessionId]={id:i.sessionId},s.g.d(l,"SIMID session created with id "+i.sessionId);break;case p:if(void 0===r)return void s.g.e(l,"Received a resolve message for a uninitialized SIMID session");void 0!==i.args?.messageId&&i.args?.messageId===r.startMessageId&&!0===this.handler?.streamingSession?.options.get(a.H.AD_TRACKERS_NON_LINEAR_AUTO_SEND)&&(this.handler?.adTrackingManager?.sendTracker("creativeView"),this.handler?.adTrackingManager?.sendTracker("impression")),void 0!==i.args?.messageId&&i.args?.messageId===r.stopMessageId&&(s.g.i(l,"SIMID session stopped with id "+i.sessionId),delete this.simidSessions[i.sessionId])}}static checkSimidController(e){return s.g.e(l,"Implementation error: static checkSimidController not implemented for this adapter."),!1}attachSimidController(e,i){return s.g.e(l,"Implementation error: attachSimidController not implemented for this adapter."),!1}detachSimidController(e){return s.g.e(l,"Implementation error: detachSimidController not implemented for this adapter."),!1}attachSession(e){this.handler=e}detachSession(){this.handler=void 0,this.simidSessions={}}}var S=r(4404);class u extends C{simidController;constructor(){super()}getName(){return this.simidController.getSimidControllerName()}static checkSimidController(e){return S.A.hasMethods(e,["getSimidControllerName"])}attachSimidController(e,i){return!!u.checkSimidController(e)&&(this.simidController=e,this.simidController.simidControllerAdapter=this,!0)}detachSimidController(){this.simidController=void 0,this.handler=void 0,this.simidSessions={}}}const I="BpkGenericSimidControllerApi";class M{simidControllerAdapter;constructor(){}getSimidControllerName(){return""}onMessageReceived(e){void 0!==this.simidControllerAdapter?this.simidControllerAdapter.onMessageReceived(e):s.g.e(I,"Implementation error: session.attachSimidController(...) should be called prior to onMessageReceived.")}onMessageSent(e){void 0!==this.simidControllerAdapter?this.simidControllerAdapter.onMessageSent(e):s.g.e(I,"Implementation error: session.attachSimidController(...) should be called prior to onMessageSent.")}}r(1142).A.simidModule={SimidControllerManager:d,SimidControllerAdapter:C,GenericSimidControllerAdapter:u,GenericSimidControllerApi:M};class v{#s;loadSimidControllerAdapters(){return this.#s={},this.#s.generic=u,this.addAdapter("browser",t.A.simidModule?.BrowserSimidControllerAdapter),this.#s}addAdapter(e,i){void 0!==i&&(this.#s[e]=i)}attachSimidController(e,i){for(let r in this.#s)if(void 0!==this.#s[r]&&this.#s[r].checkSimidController(e)){const t=new this.#s[r];return t.attachSimidController(e,i),t}}}var f=r(1262);const A="BpkBrowserSimidControllerAdapter";class k extends C{simidController;allowedOrigin;postMessageCallback;getName(){return"Browser SIMID Controller"}static checkSimidController(e){return e?.setInterval&&e?.contentWindow?.self===e.contentWindow}attachSimidController(e,i){return!!k.checkSimidController(e)&&(void 0===i&&f.gD.getInstance().printWarnLogs(A,"Messages origin not specified, use at your own risk"),this.postMessageCallback=e=>{e.origin===this.allowedOrigin||void 0===this.allowedOrigin?this.onMessageReceived(e.data):f.gD.getInstance().printWarnLogs(A,"Message was meant for "+e.origin+", ignoring...")},this.allowedOrigin=i,this.simidController=e,this.simidController.addEventListener("message",this.postMessageCallback),!0)}detachSimidController(){void 0!==this.simidController&&(this.simidController.removeEventListener("message",this.postMessageCallback),this.simidController=void 0,this.allowedOrigin=void 0,this.postMessageCallback=void 0)}}t.A.simidModule={SimidControllerManagerHandler:v,BrowserSimidControllerAdapter:k,SimidControllerManager:d,GenericSimidControllerApi:M},t.A.getInstance().registerSimidControllerAdapters()}},function(e){return e.O(0,[256,153],function(){return i=5905,e(e.s=i);var i}),e.O()}])});
+
+/***/ }),
+
+/***/ "./node_modules/@broadpeak/smartlib/base.smartlib.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@broadpeak/smartlib/base.smartlib.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+!function(e,t){ true?module.exports=t():0}("undefined"!=typeof self?self:__webpack_require__.g,function(){return function(){"use strict";var __webpack_modules__={8100(e,t,s){s.d(t,{A:function(){return R}});var i=s(1262);class a{log(e,t,s){const a=i.Em.formatDate();switch(e){case 0:console.log(a+" V/"+t+": "+s);break;case 1:console.log(a+" D/"+t+": "+s);break;case 2:console.log(a+" I/"+t+": "+s);break;case 3:console.log(a+" W/"+t+": "+s);break;case 4:console.log(a+" E/"+t+": "+s);break;default:console.log(a+" ?/"+t+": "+s)}}}const r="BpkRequestHandler";class n{get(e,t,s,a){const n=new XMLHttpRequest;let o=!1,d={};n.onreadystatechange=function(){if(n.readyState===n.DONE){const e=n.getAllResponseHeaders()?.trim().split(/[\r\n]+/);e?.forEach(function(e){let t=e.split(": "),s=t.shift().toLowerCase();d[s]=t.join(": ")}),n.status>=200&&n.status<300?a({body:n.responseText,headers:d,statusCode:n.status,message:n.statusText,responseURL:n.responseURL}):0!==n.status&&a({body:"",headers:d,statusCode:n.status,message:n.statusText})}},n.onerror=function(){o||(n.status<=0&&i.gD.e(r,"Request ended with error (CORS error, connection error...)"),a({body:"",headers:d,statusCode:n.status,message:n.statusText}))},n.ontimeout=function(){i.gD.d(r,"Request ended with timeout (xhr)"),a({body:"",headers:d,statusCode:n.status,message:n.statusText})},n.open("GET",e,!0),n.timeout=s,this.deleteUnsafeHeaders(t);for(let e in t)n.setRequestHeader(e,t[e]);n.send(),setTimeout(()=>{n.readyState!==n.DONE&&(o=!0,n.abort(),i.gD.d(r,"Request ended with timeout (setTimeout)"),a({body:"",headers:d,statusCode:n.status,message:n.statusText}))},s+100)}post(e,t,s,a,n){const o=new XMLHttpRequest;let d=!1,l={};o.onreadystatechange=function(){if(o.readyState===o.DONE){const e=o.getAllResponseHeaders()?.trim().split(/[\r\n]+/);e?.forEach(function(e){let t=e.split(": "),s=t.shift().toLowerCase();l[s]=t.join(": ")}),o.status>=200&&o.status<300?n({body:o.responseText,headers:l,statusCode:o.status,message:o.statusText,responseURL:o.responseURL}):0!==o.status&&n({body:"",headers:l,statusCode:o.status,message:o.statusText})}},o.onerror=function(){d||(o.status<=0&&i.gD.e(r,"Request ended with error (CORS error, connection error...)"),n({body:"",headers:l,statusCode:o.status,message:o.statusText}))},o.ontimeout=function(){i.gD.d(r,"Request ended with timeout (xhr)"),n({body:"",headers:l,statusCode:o.status,message:o.statusText})},o.open("POST",e,!0),o.timeout=a,this.deleteUnsafeHeaders(t);for(let e in t)o.setRequestHeader(e,t[e]);o.send(s),setTimeout(()=>{o.readyState!==o.DONE&&(d=!0,o.abort(),i.gD.d(r,"Request ended with timeout (setTimeout)"),n({body:"",headers:l,statusCode:o.status,message:o.statusText}))},a+100)}deleteUnsafeHeaders(e){"object"!=typeof window&&"function"!=typeof XMLHttpRequest||(delete e["User-Agent"],delete e["Accept-Charset"],delete e["Accept-Encoding"],delete e["Access-Control-Request-Headers"],delete e["Access-Control-Request-Method"],delete e.Connection,delete e["Content-Length"],delete e.Cookie,delete e.Cookie2,delete e.Date,delete e.DNT,delete e.Expect,delete e.Host,delete e["Keep-Alive"],delete e.Origin,delete e.Referer,delete e.TE,delete e.Trailer,delete e["Transfer-Encoding"],delete e.Upgrade,delete e.Via)}}var o=s(4623);const d="BpkBrowserAppStateMgr";class l{initialized;listeners;init(){i.gD.d(d,"Initializing browser app state manager..."),this.initialized||(i.CE.getInstance().setDeviceInfo(this.getOSName(),this.getOSVersion(),this.getDeviceType()),i.CE.getInstance().bind(),this.listeners={},"undefined"!=typeof window&&void 0===window.addEventListener&&i.gD.w(d,"Are you running a React Native app? If yes, please import module '@broadpeak/smartlib-react-native'"),this.registerNetworkObserver(),this.initialized=!0)}getOSName(){return"undefined"!=typeof device&&void 0!==device.platform?device.platform:"undefined"!=typeof window&&void 0!==window.navigator&&void 0!==window.navigator.platform?window.navigator.platform:"NA"}getOSVersion(){let e;"undefined"!=typeof device&&void 0!==device.version?e=device.version:"undefined"!=typeof window&&void 0!==window.navigator&&void 0!==window.navigator.appVersion&&(e=window.navigator.appVersion),void 0===e&&(e="");let t=e.replace(/ /g,"_").replace(/;/g,"_");return t.length>=30?t.substring(0,30):0===t.length?"NA":t}getDeviceType(){return"undefined"!=typeof cast&&void 0!==cast.receiver?"chromecast":"browser"}release(){this.initialized&&(this.unregisterNetworkObserver(),this.initialized=!1)}registerNetworkObserver(){this.listeners[0]=this.onNetworkOnline.bind(this),this.listeners[1]=this.onNetworkOffline.bind(this),"undefined"!=typeof window&&void 0!==window.navigator&&void 0!==window.navigator.onLine&&(!0===window.navigator.onLine?i.CE.getInstance().notifyNetworkAvailable(1):i.CE.getInstance().notifyNetworkLost()),window.addEventListener("online",this.listeners[0]),window.addEventListener("offline",this.listeners[1])}unregisterNetworkObserver(){window.removeEventListener("online",this.listeners[0]),window.removeEventListener("offline",this.listeners[1]),this.listeners[0]=void 0,this.listeners[1]=void 0}onNetworkOnline(){i.CE.getInstance().notifyNetworkAvailable(1)}onNetworkOffline(){i.CE.getInstance().notifyNetworkLost()}registerLifecycleEvents(){this.listeners[2]=this.onMoveToForeground.bind(this),this.listeners[3]=this.onMoveToBackground.bind(this),window.addEventListener("focus",this.listeners[2]),window.addEventListener("blur",this.listeners[3])}unregisterLifecycleEvents(){window.removeEventListener("focus",this.listeners[2]),window.removeEventListener("blur",this.listeners[3]),this.listeners[2]=void 0,this.listeners[3]=void 0}onMoveToForeground(){i.CE.getInstance().notifyForeground()}onMoveToBackground(){i.CE.getInstance().notifyBackground()}}const h="BpkWebOSAppStateMgr";class c{initialized;subscriptionHandle;webOSVersion;init(){i.gD.d(h,"Initializing webOS app state manager..."),this.initialized||(this.webOSVersion="",webOS.deviceInfo(e=>{this.webOSVersion=e.sdkVersion,void 0!==this.webOSVersion?(i.gD.d(h,"Receiving sdk version through deviceInfo: "+this.webOSVersion),this.registerNetworkObserver(),i.CE.getInstance().setDeviceInfo("webOS",this.webOSVersion,"tv"),i.CE.getInstance().bind()):webOS.service.request("luna://com.webos.service.tv.systemproperty",{method:"getSystemInfo",parameters:{keys:["sdkVersion"]},onSuccess:e=>{void 0!==e.sdkVersion&&(this.webOSVersion=e.sdkVersion,i.gD.d(h,"Receiving sdk version through luna API: "+this.webOSVersion),this.registerNetworkObserver(),i.CE.getInstance().setDeviceInfo("webOS",this.webOSVersion,"tv"),i.CE.getInstance().bind())},onFailure:e=>{i.gD.d(h,"Error while receiving webOS version ("+JSON.stringify(e)+")")}})}),this.initialized=!0)}release(){this.initialized&&(this.unregisterNetworkObserver(),this.initialized=!1)}updateNetworkState(e){let t="yes"===e.wifi?.onInternet;!0===("yes"===e.wired?.onInternet)?i.CE.getInstance().notifyNetworkAvailable(30):!0===t?i.CE.getInstance().notifyNetworkAvailable(10):i.CE.getInstance().notifyNetworkLost()}registerNetworkObserver(){let e=this.webOSVersion.startsWith("3")?"luna://com.webos.service.connectionmanager":"luna://com.palm.connectionmanager";const t=this;webOS.service.request(e,{method:"getStatus",onSuccess:function(e){t.updateNetworkState(e)},onFailure:function(e){i.gD.e(h,"Failed to get network state"),i.gD.e(h,"["+e.errorCode+"]: "+e.errorText)}}),this.subscriptionHandle=webOS.service.request(e,{method:"getStatus",parameters:{subscribe:!0},onSuccess:function(e){void 0===e.subscribed||e.subscribed?t.updateNetworkState(e):i.gD.e(h,"Failed to subscribe network state")},onFailure:function(e){i.gD.e(h,"Failed to get network state"),i.gD.e(h,"["+e.errorCode+"]: "+e.errorText)}})}unregisterNetworkObserver(){void 0!==this.subscriptionHandle&&(this.subscriptionHandle.cancel(),this.subscriptionHandle=void 0)}}const u="BpkTizenAppStateMgr";class g{initialized;networkInitializer;networkInitializerNumber;listeners;init(){i.gD.d(u,"Initializing tizen app state manager..."),this.initialized||(i.CE.getInstance().setDeviceInfo("Tizen",this.getOSVersion(),"tv"),i.CE.getInstance().bind(),this.listeners={},this.startNetworkInitializer(),this.initialized=!0)}getOSVersion(){return"undefined"!=typeof tizen&&void 0!==tizen.systeminfo?tizen.systeminfo.getCapability("http://tizen.org/feature/platform.version"):"NA"}release(){this.initialized&&(this.unregisterNetworkObserver(),this.initialized=!1)}onNetworkChange(e){let t=null;try{t=webapis.network.getActiveConnectionType()}catch(e){i.gD.e(u,"getActiveConnectionType exception ["+e.code+"] message: "+e.message)}if(null!=t){switch(t){case webapis.network.NetworkActiveConnectionType.DISCONNECTED:i.CE.getInstance().notifyNetworkLost();break;case webapis.network.NetworkActiveConnectionType.WIFI:i.CE.getInstance().notifyNetworkAvailable(10);break;case webapis.network.NetworkActiveConnectionType.ETHERNET:i.CE.getInstance().notifyNetworkAvailable(30)}i.gD.d(u,"Active connection type: "+t)}}startNetworkInitializer(){void 0!==this.networkInitializer&&clearInterval(this.networkInitializer),this.networkInitializerNumber=0,this.networkInitializer=setInterval(()=>{void 0!==webapis.network?(i.gD.d(u,"Network API is now available"),clearInterval(this.networkInitializer),this.networkInitializer=void 0,this.registerNetworkObserver()):this.networkInitializerNumber>30?(i.gD.e(u,"The webapis.js script is required in order to get the network type."),clearInterval(this.networkInitializer),this.networkInitializer=void 0):this.networkInitializerNumber++},100)}registerNetworkObserver(){void 0===webapis.network&&i.gD.e(u,"The webapis.js script is required in order to get the network type."),this.onNetworkChange(void 0);try{this.listeners[0]=webapis.network.addNetworkStateChangeListener(this.onNetworkChange)}catch(e){i.gD.e(u,"addNetworkStateChangeListener exception ["+e.code+"] name: "+e.name+" message: "+e.message)}}unregisterNetworkObserver(){try{webapis.network.removeNetworkStateChangeListener(this.listeners[0])}catch(e){i.gD.e(u,"removeNetworkStateChangeListener exception ["+e.code+"] name: "+e.name+" message: "+e.message)}this.listeners[0]=void 0}}class E extends i.r2{nonceManager;constructor(e){super(),this.nonceManager=e}getNonce(){return this.nonceManager.getNonce()}sendAdClick(){"function"==typeof this.nonceManager.sendAdClick&&this.nonceManager.sendAdClick()}sendAdImpression(){"function"==typeof this.nonceManager.sendAdImpression&&this.nonceManager.sendAdImpression()}sendPlaybackStart(){"function"==typeof this.nonceManager.sendPlaybackStart&&this.nonceManager.sendPlaybackStart()}sendPlaybackEnd(){"function"==typeof this.nonceManager.sendPlaybackEnd&&this.nonceManager.sendPlaybackEnd()}sendTouch(e){"function"==typeof this.nonceManager.sendAdTouch&&this.nonceManager.sendAdTouch(e)}}const p="BpkBrowserAdPalManager";class S extends i.GM{palSDK;consentSettings;nonceLoader;descriptionURL;partnerName;partnerVersion;omidVersion;playerType;playerVersion;ppid;videoPlayerHeight;videoPlayerWidth;willAdAutoPlay;willAdPlayMuted;supportedApiFrameworks;sessionId;continuousPlayback;iconsSupported;constructor(){super()}loadPALSDK(){this.palSDK=i.X2.getInstance().palSDK}setConsentSettings(e){this.loadPALSDK(),void 0!==this.palSDK?(this.consentSettings=e,this.nonceLoader=new this.palSDK.pal.NonceLoader(e)):i.gD.e(p,"PAL SDK not attached, please set it through AdManager.getInstance().attachPALSDK(...)")}generateAdPalSession(e){if(void 0===this.nonceLoader||void 0===this.consentSettings)return i.gD.e(p,"Cannot generate a nonce, please set a ConsentSettings through AdManager.getInstance().setConsentSettings(...)"),void e(void 0);const t=new this.palSDK.pal.NonceRequest;i.gD.d(p,"Setting NonceRequest with:"),void 0!==this.descriptionURL&&(t.descriptionUrl=this.descriptionURL,i.gD.d(p,"      descriptionURL="+t.descriptionUrl)),void 0!==this.partnerName&&(t.omidPartnerName=this.partnerName,i.gD.d(p,"      omidPartnerName="+t.omidPartnerName)),void 0!==this.partnerVersion&&(t.omidPartnerVersion=this.partnerVersion,i.gD.d(p,"      omidPartnerVersion="+t.omidPartnerVersion)),void 0!==this.omidVersion&&(t.omidVersion=this.omidVersion,i.gD.d(p,"      omidVersion="+t.omidVersion)),void 0!==this.playerType&&(t.playerType=this.playerType,i.gD.d(p,"      playerType="+t.playerType)),void 0!==this.playerVersion&&(t.playerVersion=this.playerVersion,i.gD.d(p,"      playerVersion="+t.playerVersion)),void 0!==this.ppid&&(t.ppid=this.ppid,i.gD.d(p,"      ppid="+t.ppid)),void 0!==this.videoPlayerHeight&&(t.videoHeight=this.videoPlayerHeight,i.gD.d(p,"      videoHeight="+t.videoHeight)),void 0!==this.videoPlayerWidth&&(t.videoWidth=this.videoPlayerWidth,i.gD.d(p,"      videoWidth="+t.videoWidth)),void 0!==this.willAdAutoPlay&&(t.adWillAutoPlay=this.willAdAutoPlay,i.gD.d(p,"      adWillAutoPlay="+t.adWillAutoPlay)),void 0!==this.willAdPlayMuted&&(t.adWillPlayMuted=this.willAdPlayMuted,i.gD.d(p,"      adWillPlayMuted="+t.adWillPlayMuted)),void 0!==this.supportedApiFrameworks&&(t.supportedApiFrameworks=this.supportedApiFrameworks,i.gD.d(p,"      supportedApiFrameworks="+t.supportedApiFrameworks)),void 0!==this.sessionId&&(t.sessionId=this.sessionId,i.gD.d(p,"      sessionId="+t.sessionId)),void 0!==this.continuousPlayback&&(t.continuousPlayback=this.continuousPlayback,i.gD.d(p,"      continuousPlayback="+t.continuousPlayback)),void 0!==this.iconsSupported&&(t.iconsSupported=this.iconsSupported,i.gD.d(p,"      iconsSupported="+t.iconsSupported)),this.nonceLoader.loadNonceManager(t).then(t=>{const s=new E(t);e(s)}).catch(t=>{i.gD.e(p,"Error when generating the nonce"),console.log(t),e(void 0)})}release(){this.consentSettings=void 0,this.nonceLoader=void 0,this.descriptionURL=void 0,this.partnerName=void 0,this.partnerVersion=void 0,this.omidVersion=void 0,this.playerType=void 0,this.playerVersion=void 0,this.ppid=void 0,this.videoPlayerHeight=void 0,this.videoPlayerWidth=void 0,this.willAdAutoPlay=void 0,this.willAdPlayMuted=void 0,this.supportedApiFrameworks=void 0,this.sessionId=void 0,this.continuousPlayback=void 0,this.iconsSupported=void 0}setDescriptionURL(e){this.descriptionURL=e}setOmidPartner(e,t){this.partnerName=e,this.partnerVersion=t}setOmidVersion(e){this.omidVersion=e}setPlayerType(e){this.playerType=e}setPlayerVersion(e){this.playerVersion=e}setPpid(e){this.ppid=e}setVideoPlayerHeight(e){this.videoPlayerHeight=e}setVideoPlayerWidth(e){this.videoPlayerWidth=e}setWillAdAutoPlay(e){this.willAdAutoPlay=e}setWillAdPlayMuted(e){this.willAdPlayMuted=e}setSupportedApiFrameworks(e){this.supportedApiFrameworks=e}setSessionId(e){this.sessionId=e}setContinuousPlayback(e){this.continuousPlayback=e}setIconsSupported(e){this.iconsSupported=e}}class _{initialized;init(){i.gD.d("BpkNodeAppStateMgr","Initializing Node.js app state manager..."),this.initialized||(i.CE.getInstance().setDeviceInfo(this.getOSName(),this.getOSVersion(),this.getDeviceType()),i.CE.getInstance().bind(),this.initialized=!0)}getOSName(){return"undefined"!=typeof process?process.platform:"NA"}getOSVersion(){const e=(0,o.t)("os");return void 0!==e?e.release():"NA"}getDeviceType(){return"nodejs"}release(){this.initialized&&(this.initialized=!1)}}class A{static CLICK="click";static INVITATION_ACCEPTED="invitationAccept"}const N="BpkCoreEngine";class R{static#e;static modular=!0;static analyticsModule;static reactNativeModule;static omsdkModule;static simidModule;static shakaModule;static dashjsModule;static html5Module;static avplayModule;static diw387Module;static hbbtv1Module;static kalturaModule;static connectplayerModule;static rxplayerModule;static hlsjsModule;static bitmovinModule;static theoplayerModule;static videojsModule;static voplayerModule;static reactnativeconnectplayerModule;static reactnativetheoplayerModule;static reactnativebitmovinModule;static chromecastModule;#t;#s;#i;#a;#r;#n;#o;#d;#l;#h;#c;static getInstance(){return R.#e||(R.#e=new R),R.#e}constructor(){this.#t=!1,this.#s=void 0,this.#i=new a}init(){if(!this.#t){this.#t=!0;const e=Date.now();this.log(i.$b.VERBOSE,N,"Loading engine..."),this.log(i.$b.VERBOSE,N,"Version: 861c04c"),this.registerSystemFunctions(),"object"==typeof window?this.registerSmartLibFunctions(window):"object"==typeof quickjs?this.registerSmartLibFunctions(quickjs.global):(this.registerSmartLibFunctions(),"undefined"==typeof XMLHttpRequest&&(s.g.XMLHttpRequest=(0,o.t)("xmlhttprequest").XMLHttpRequest)),this.log(i.$b.VERBOSE,N,"Took "+(Date.now()-e)+"ms to load")}}registerSystemFunctions(){this.log(i.$b.VERBOSE,N,"Registering system functions..."),i.gD.getInstance().init(this.#i),"object"==typeof quickjs?i.Je.getInstance().init({get:(e,t,s,i)=>{setTimeout(()=>{quickjs.request.get(e,t,s,i)},0)},post:(e,t,s,i,a)=>{setTimeout(()=>{quickjs.request.post(e,t,s,i,a)},0)}}):i.Je.getInstance().init(new n),i.x6.getInstance().internalAdManager.setPalManager(new S)}registerPlayerAdapters(){void 0!==R.analyticsModule&&(this.#a=new R.analyticsModule.PlayerManagerHandler,"object"==typeof window&&(window.PlayerEventListener=R.analyticsModule.PlayerEventListener,window.GenericPlayerApi=R.analyticsModule.GenericPlayerApi))}registerSimidControllerAdapters(){"object"==typeof window&&(window.GenericSimidControllerApi=R.simidModule.GenericSimidControllerApi)}loadModules(){"object"==typeof window?(i.x6.analyticsModule=this.getBrowserModule("analyticsSmartLibModule","Analytics",i.x6.analyticsModule),i.x6.adModule=this.getBrowserModule("adSmartLibModule","Ad",i.x6.adModule),i.x6.nanoCDNModule=this.getBrowserModule("nanocdnSmartLibModule","nanoCDN",i.x6.nanoCDNModule),i.x6.monitoringModule=this.getBrowserModule("monitoringSmartLibModule","Monitoring",i.x6.monitoringModule),i.x6.diversityModule=this.getBrowserModule("diversitySmartLibModule","Diversity",i.x6.diversityModule),R.reactNativeModule=this.getBrowserModule("reactnativeSmartLibModule","React Native",R.reactNativeModule),R.omsdkModule=this.getBrowserModule("omsdkModuleSmartLibModule","OMSDK",R.omsdkModule),void 0!==R.omsdkModule&&(window.OMSDKHandler=R.omsdkModule.OMSDKHandler),R.simidModule=this.getBrowserModule("simidSmartLibModule","SIMID",R.simidModule),R.shakaModule=this.getBrowserModule("shakaSmartLibModule","Shaka Player",R.shakaModule),void 0!==R.shakaModule&&(window.ShakaPlayerAdapter=R.shakaModule.ShakaPlayerAdapter),R.dashjsModule=this.getBrowserModule("dashjsSmartLibModule","Dash.js",R.dashjsModule),void 0!==R.dashjsModule&&(window.DashJsPlayerAdapter=R.dashjsModule.DashJsPlayerAdapter),R.html5Module=this.getBrowserModule("html5SmartLibModule","HTML5 player",R.html5Module),R.avplayModule=this.getBrowserModule("avplaySmartLibModule","AVPlay",R.avplayModule),R.diw387Module=this.getBrowserModule("diw387SmartLibModule","Sagemcom",R.diw387Module),R.hbbtv1Module=this.getBrowserModule("hbbtv1SmartLibModule","HbbTV1",R.hbbtv1Module),R.kalturaModule=this.getBrowserModule("kalturaSmartLibModule","Kaltura",R.kalturaModule),R.connectplayerModule=this.getBrowserModule("connectplayerSmartLibModule","CONNECT Player",R.connectplayerModule),void 0!==R.connectplayerModule&&(window.ConnectPlayerAdapter=R.connectplayerModule.ConnectPlayerAdapter),R.rxplayerModule=this.getBrowserModule("rxplayerSmartLibModule","RxPlayer",R.rxplayerModule),R.hlsjsModule=this.getBrowserModule("hlsjsModule","HLS.js",R.hlsjsModule),R.bitmovinModule=this.getBrowserModule("bitmovinModule","Bitmovin",R.bitmovinModule),R.theoplayerModule=this.getBrowserModule("theoplayerModule","THEOplayer",R.theoplayerModule),void 0!==R.theoplayerModule&&(window.THEOPlayerAdapter=R.theoplayerModule.THEOPlayerAdapter),R.videojsModule=this.getBrowserModule("videojsSmartLibModule","Video.js",R.videojsModule),void 0!==R.videojsModule&&(window.VideoJsPlayerAdapter=R.videojsModule.VideoJsPlayerAdapter),R.voplayerModule=this.getBrowserModule("voplayerModule","VOPlayer",R.voplayerModule),R.reactnativeconnectplayerModule=this.getBrowserModule("reactnativeconnectplayerModule","React Native CONNECT Player",R.reactnativeconnectplayerModule),R.reactnativetheoplayerModule=this.getBrowserModule("reactnativetheoplayerModule","React Native THEOplayer",R.reactnativetheoplayerModule),R.reactnativebitmovinModule=this.getBrowserModule("reactnativebitmovinModule","React Native Bitmovin",R.reactnativebitmovinModule),R.chromecastModule=this.getBrowserModule("chromecastModule","Chromecast",R.chromecastModule)):!0===R.modular&&(i.x6.analyticsModule=this.getNodeModule("analytics","Analytics"),i.x6.adModule=this.getNodeModule("ad","Ad"),i.x6.nanoCDNModule=this.getNodeModule("nanocdn","nanoCDN"),i.x6.monitoringModule=this.getNodeModule("monitoring","Monitoring"),i.x6.diversityModule=this.getNodeModule("diversity","Diversity"),R.reactNativeModule=this.getNodeModule("reactnative","React Native"),R.omsdkModule=this.getNodeModule("omsdkModule","OMSDK"),R.simidModule=this.getNodeModule("simid","SIMID"),R.shakaModule=this.getNodeModule("shaka","Shaka Player"),R.dashjsModule=this.getNodeModule("dashjs","Dash.js"),R.html5Module=this.getNodeModule("html5","HTML5 player"),R.avplayModule=this.getNodeModule("avplay","AVPlay"),R.diw387Module=this.getNodeModule("diw387","Sagemcom"),R.hbbtv1Module=this.getNodeModule("hbbtv1","HbbTV1"),R.kalturaModule=this.getNodeModule("kaltura","Kaltura"),R.connectplayerModule=this.getNodeModule("connectplayer","CONNECT Player"),R.rxplayerModule=this.getNodeModule("rxplayer","RxPlayer"),R.hlsjsModule=this.getNodeModule("hlsjs","HLS.js"),R.bitmovinModule=this.getNodeModule("bitmovin","Bitmovin"),R.theoplayerModule=this.getNodeModule("theoplayer","THEOplayer"),R.videojsModule=this.getNodeModule("videojs","Video.js"),R.voplayerModule=this.getNodeModule("voplayer","VOPlayer"),R.reactnativeconnectplayerModule=this.getNodeModule("reactnativeconnectplayer","React Native CONNECT Player"),R.reactnativetheoplayerModule=this.getNodeModule("reactnativetheoplayer","React Native THEOplayer"),R.reactnativebitmovinModule=this.getNodeModule("reactnativebitmovin","React Native Bitmovin"),R.chromecastModule=this.getNodeModule("chromecast","Chromecast")),void 0!==this.#s&&(void 0!==i.x6.monitoringModule&&(this.#s.RealTimeMonitoringManager=i.x6.monitoringModule.RealTimeMonitoringManager),void 0!==i.x6.diversityModule&&(this.#s.DiversityPluginManager=i.x6.diversityModule.DiversityPluginManager,this.#s.DiversityOptions=i.x6.diversityModule.DiversityOptions))}getBrowserModule(e,t,s){if(void 0!==s)return i.gD.i(N,t+" module loaded (from index)"),s;i.gD.i(N,t+" module not loaded")}getNodeModule(e,t){try{const s=(0,o.C)("@broadpeak/smartlib-"+e);return i.gD.i(N,t+" module loaded"),s}catch(s){try{const s=(0,o.t)("./"+e+".smartlib.browser");return i.gD.i(N,t+" module loaded"),s}catch(e){i.gD.i(N,t+" module not loaded")}}}registerSmartLibFunctions(e){const t=this;this.#s=e;const s=function(){"undefined"!=typeof webOS?(void 0===t.#d&&(t.#d=new c),t.#d.init()):"undefined"!=typeof tizen&&"undefined"!=typeof webapis?(void 0===t.#l&&(t.#l=new g),t.#l.init()):"undefined"!=typeof sagem||(void 0!==R.reactNativeModule?.ReactNativeAppStateManager.platform?(void 0===t.#c&&(t.#c=new R.reactNativeModule.ReactNativeAppStateManager),t.#c.init()):"undefined"!=typeof window?(void 0===t.#o&&(t.#o=new l),t.#o.init()):"undefined"!=typeof process&&"node"===process.release.name&&(void 0===t.#h&&(t.#h=new _),t.#h.init())),t.loadModules(),void 0!==t.#c?t.#n=new R.reactNativeModule.ReactNativeCacheHandler(R.reactNativeModule.ReactNativeAppStateManager.asyncCache):void 0!==R.analyticsModule&&(t.#n=new R.analyticsModule.CacheHandler),i.x6.analyticsModule?.CacheManager.getInstance().init(t.#n),void 0!==R.omsdkModule&&i.x6.adModule.OMSDKManager.getInstance().attachHandler(new R.omsdkModule.OMSDKHandler),void 0!==R.simidModule&&(t.#r=new R.simidModule.SimidControllerManagerHandler)};i.x6.prototype.defaultInit=i.x6.prototype.init,i.x6.prototype.init=function(e,t,i,a){s(),this.defaultInit(e,t,i,a)},i.x6.prototype.defaultInitAnalytics=i.x6.prototype.initAnalytics,i.x6.prototype.initAnalytics=function(e){s(),this.defaultInitAnalytics(e)},i.x6.prototype.defaultAttachPlayer=i.x6.prototype.attachPlayer,i.x6.prototype.attachPlayer=function(e,s){i.x6.analyticsModule?.PlayerManager.getInstance().init(t.#a);const a=t.#a?.attachPlayer(e,s);this.defaultAttachPlayer(a)},i.x6.prototype.defaultRelease=i.x6.prototype.release,i.x6.prototype.release=function(){this.defaultRelease(),void 0!==t.#o&&(t.#o.release(),t.#o=void 0),void 0!==t.#d&&(t.#d.release(),t.#d=void 0),void 0!==t.#l&&(t.#l.release(),t.#l=void 0),void 0!==t.#h&&(t.#h.release(),t.#h=void 0),void 0!==t.#c&&(t.#c.release(),t.#c=void 0)},i.fF.prototype.defaultAttachPlayer=i.fF.prototype.attachPlayer,i.fF.prototype.attachPlayer=function(e,s){i.x6.analyticsModule?.PlayerManager.getInstance().init(t.#a);const a=t.#a?.attachPlayer(e,s);this.defaultAttachPlayer(a)},i.fF.prototype.defaultAttachSimidController=i.fF.prototype.attachSimidController,i.fF.prototype.attachSimidController=function(e,s){R.simidModule?.SimidControllerManager.getInstance().init(t.#r);const i=t.#r?.attachSimidController(e,s);this.defaultAttachSimidController(i,s)},"object"==typeof e&&(e.SmartLib=Object.assign(i.x6.getInstance(),i.x6),e.SmartLib.getInstance=()=>i.x6.getInstance(),e.LoggerManager=i.gD,e.PlayerEventListener=R.analyticsModule?.PlayerEventListener,e.GenericPlayerApi=R.analyticsModule?.GenericPlayerApi,e.GenericSimidControllerApi=R.simidModule?.GenericSimidControllerApi,e.PlayerApiImp={getVersion:()=>{const e=i.x6.analyticsModule?.PlayerManager.getInstance().getPlayerAdapter();return void 0!==e&&"function"==typeof e.getVersion?e.getVersion():"undefined"},getErrorCode:e=>{const t=i.x6.analyticsModule?.PlayerManager.getInstance().getPlayerAdapter();return void 0!==t&&"function"==typeof t.getErrorCode?t.getErrorCode(e):i.x6.BPUnspecifiedError}},e.StreamingSession=i.fF,e.StreamingSessionOptions=i.H1,e.StreamingSessionResult=i.Sy,e.AdManager=i.X2,e.AdInteractionType=A)}log(e,t,s){this.#i.log(e,t,s)}}},4623(__unused_webpack_module,__nested_webpack_exports__,__nested_webpack_require_26132__){function nativeRequire(lib){return eval("require")(lib)}function nativeMainRequire(lib){return eval("require").main.require(lib)}__nested_webpack_require_26132__.d(__nested_webpack_exports__,{C:function(){return nativeMainRequire},t:function(){return nativeRequire}})},1142(e,t,s){s.d(t,{A:function(){return R}});var i=s(8379),a=s(6506),r=s(5866),n=s(5941),o=s(8724),d=s(2765),l=s(7832),h=s(828),c=s(1262),u=s(4943);const g="BpkSessionMgr";class E{static UNSTARTED_SESSION_MAX_DURATION=36e4;smartLib;sessions;init(e){this.smartLib=e,this.sessions=[]}createStreamingSession(e=void 0,t=void 0){this.cleanFinishedSessions();const s=new h.f(this.smartLib,l.H.create(e,t));return this.sessions.push(s),this.sessions.length>10&&c.gD.w(g,"There are "+this.sessions.length+" active sessions. Use session.stopStreamingSession() to free up memory."),s}createAnalyticsSession(e=void 0,t=void 0){this.cleanFinishedSessions();const s=new R.analyticsModule.AnalyticsSession(this.smartLib,l.H.create(e,t));return this.sessions.push(s),this.sessions.length>10&&c.gD.w(g,"There are "+this.sessions.length+" active sessions. Use session.stopStreamingSession() to free up memory."),s}cleanFinishedSessions(){for(let e=this.sessions.length-1;e>=0;e--){let t=this.sessions[e];void 0===t.handler&&Date.now()-t.date>E.UNSTARTED_SESSION_MAX_DURATION?(t.playerAdapter?.detachPlayer(),t.simidControllerAdapter?.detachSimidController(),this.sessions.splice(e,1)):(!0===t.handler?.stopped||!0===t.stopped)&&this.sessions.splice(e,1)}}createSessionHandler(e=void 0){const t=new o.A(this.smartLib,e);return void 0!==e?(t.id=e.id,t.options=e.options,t.playerAdapter=e.playerAdapter):(t.id="main-"+u.A.randomIntFromInterval(10,99),t.options=new l.H),t}createProxySessionHandler(e=void 0){const t=new d.A(this.smartLib,e);return void 0!==e?(t.id=e.id,t.options=e.options,t.playerAdapter=e.playerAdapter):(t.id="main-"+u.A.randomIntFromInterval(10,99),t.options=new l.H),t}release(){this.cleanFinishedSessions(),this.sessions.forEach(e=>{void 0!==R.analyticsModule&&e instanceof R.analyticsModule.AnalyticsSession?e.stopAnalyticsSession():e.stopStreamingSession()}),this.sessions=[]}}var p=s(3473),S=s(5690),_=s(5305),A=s(1105);const N="BpkSmartLib";class R{static#e;static FORCE_TEARDOWN_DISABLED=-1;static FORCE_TEARDOWN_DEFAULT=0;static FORCE_TEARDOWN_ENABLED=1;static BPSessionEndsNormally=200;static BPFormatNotSupportedError=3001;static BPDecodingError=3002;static BPNetworkingError=3003;static BPAccessRightError=3004;static BPUnspecifiedError=3005;static analyticsModule;static adModule;static nanoCDNModule;static diversityModule;static monitoringModule;#t=!1;#u=!1;#g;options;sessionManager;nanoCDNHostManager;adManager;internalAdManager;monitoringManager;handler;nanoCDNReceiver;nanoCDNHttpsEnabled;nanoCDNHttpsEnabledStrict=!1;static getInstance(){return R.#e||(R.#e=new R),R.#e}constructor(){this.#g={analyticsAddress:"",nanoCDNHost:"",broadpeakDomainNames:"",forceTeardown:R.FORCE_TEARDOWN_DEFAULT,uuid:"",userAgent:void 0,deviceType:"",customParameters:{}},this.options=new l.H,this.sessionManager=new E,this.adManager=new S.X2,this.internalAdManager=new _.A}init(e,t,s,o){return i.g.i(N,"Init SmartLib..."),i.g.i(N,"Version: "+r.A),this.#t||this.#u?(i.g.e(N,"Error: SmartLib already initialized, please use SmartLib.release() before initializing."),!1):void 0!==o?(i.g.e(N,"Error: this init method has been removed, please use SmartLib.init(analyticsAddress, nanoCDNHost, broadpeakDomainNames) instead."),!1):n.A.typeOrNullParameter(e,"string","Error: analyticsAddress should be a string or null")&&n.A.typeOrNullParameter(t,"string","Error: nanoCDNHost should be a string or null")&&n.A.typeOrNullParameter(s,"string","Error: broadpeakDomainNames should be a string or null")?(this.#E(e),this.#p(t),this.#S(s),this.setForceTeardown(R.FORCE_TEARDOWN_DEFAULT),i.g.i(N,"Parameters:analyticsAddress="+e+", nanoCDNHost="+t+", broadpeakDomainNames="+s),void 0!==R.nanoCDNModule&&void 0===this.nanoCDNHostManager&&(this.nanoCDNHostManager=new R.nanoCDNModule.NanoCDNHostManager,void 0!==this.nanoCDNReceiver&&(this.nanoCDNHostManager.registerNanoCDNReceiver(this.nanoCDNReceiver),this.nanoCDNReceiver=void 0),void 0!==this.nanoCDNHttpsEnabled&&(this.nanoCDNHostManager.setNanoCDNHttpsEnabled(this.nanoCDNHttpsEnabled,this.nanoCDNHttpsEnabledStrict),this.nanoCDNHttpsEnabled=void 0,this.nanoCDNHttpsEnabledStrict=!1)),this.sessionManager.init(this),this.nanoCDNHostManager?.init(this,t),this.adManager.init(this),this.internalAdManager.init(this),void 0!==R.monitoringModule&&(this.monitoringManager=new R.monitoringModule.RealTimeMonitoringManager(this)),a.A.getInstance().attachInstance(this),R.analyticsModule?.CacheManager.getInstance().attachInstance(this),R.analyticsModule?.PlayerManager.getInstance().attachInstance(this),R.nanoCDNModule?.MdnsManager.getInstance().attachInstance(this),R.diversityModule?.DiversityPluginManager.getInstance().attachInstance(this),R.adModule?.OMSDKManager.getInstance().attachInstance(this),R.simidModule?.SimidControllerManager.getInstance().attachInstance(this),p.A.getInstance().init(this),p.A.getInstance().addListener(this.nanoCDNHostManager),R.analyticsModule?.CacheManager.getInstance().clean(),this.#t=!0,!0):(i.g.e(N,"Error: initialization aborted"),!1)}initAnalytics(e){return i.g.i(N,"Init SmartLib analytics..."),i.g.i(N,"Version: "+r.A),this.#u||this.#t?(i.g.e(N,"Error: SmartLib analytics already initialized, please use SmartLib.release() before initializing."),!1):void 0===R.analyticsModule?(i.g.e(N,"Error: Analytics module not loaded, please import it."),!1):n.A.typeOrNullParameter(e,"string","Error: analyticsAddress should be a string or null")?(this.#E(e),this.options=new l.H,i.g.i(N,"Parameters:analyticsAddress="+e),this.sessionManager.init(this),this.adManager.init(this),this.internalAdManager.init(this),void 0!==R.monitoringModule&&(this.monitoringManager=new R.monitoringModule.RealTimeMonitoringManager(this)),a.A.getInstance().attachInstance(this),R.analyticsModule?.CacheManager.getInstance().attachInstance(this),R.analyticsModule?.PlayerManager.getInstance().attachInstance(this),R.adModule?.OMSDKManager.getInstance().attachInstance(this),R.simidModule?.SimidControllerManager.getInstance().attachInstance(this),p.A.getInstance().init(this),R.analyticsModule?.CacheManager.getInstance().clean(),this.#u=!0,!0):(i.g.e(N,"Error: initialization aborted"),!1)}getURL(e,t){return void 0!==this.handler&&(i.g.e(N,"Exception: A session is already running, please use SmartLib.stopStreamingSession(...) before. Stopping the current one...",this.handler.id),this.stopStreamingSession()),i.g.i(N,"getURL with "+e,this.handler?.id),void 0===t&&(t=()=>{}),n.A.typeParameter(t,"function","Error: callback should be a function")?this.#t?n.A.typeParameter(e,"string","Error: requestedURL should be a string")&&n.A.stringNonEmpty(e,"Error: requestedURL is empty")?(this.handler=this.sessionManager.createSessionHandler(),this.handler.options=l.H.create(this.options),this.handler.playerAdapter=R.analyticsModule?.PlayerManager.getInstance().getPlayerAdapter(),this.handler.adSession=this.internalAdManager.adSession,void 0!==this.internalAdManager.adSession&&(this.internalAdManager.adSession.handler=this.handler),this.internalAdManager.adSession=new A.A,this.internalAdManager.adSession.setEventCallbackEnabled(this.internalAdManager.eventCallbackEnabled),this.internalAdManager.adSession.setAdEventsListener(this.internalAdManager.adEventsListener),this.handler.start(e,t)):(t(""),Promise.resolve("")):(i.g.e(N,"Exception: Implementation error, SmartLib.init(...) should be called prior to SmartLib.getURL(...)",this.handler?.id),t(""),Promise.resolve("")):Promise.resolve("")}getQuery(){return void 0!==this.handler&&(i.g.e(N,"Exception: A session is already running, please use SmartLib.stopStreamingSession(...) before. Stopping the current one..."),this.stopStreamingSession()),i.g.i(N,"getQuery"),this.#t?(this.handler=this.sessionManager.createProxySessionHandler(),this.handler.options=l.H.create(this.options),this.handler.playerAdapter=R.analyticsModule?.PlayerManager.getInstance().getPlayerAdapter(),this.handler.getQuery()):(i.g.e(N,"Exception: Implementation error, SmartLib.init(...) should be called prior to SmartLib.getQuery(...)"),"")}startStreamingSession(e,t){return i.g.i(N,"startStreamingSession with "+e+" and "+t,this.handler?.id),this.#t?!(!n.A.typeParameter(e,"string","Error: contentURL should be a string")||!n.A.typeParameter(t,"string","Error: redirectedURL should be a string"))&&(void 0===this.handler?(i.g.e(N,"Exception: Implementation error, SmartLib.getQuery() should be called prior to SmartLib.startStreamingSession(...)",this.handler?.id),!1):this.handler instanceof d.A?(this.handler.start(e,t),!0):(i.g.e(N,"Exception: Implementation error, SmartLib.startStreamingSession(...) cannot be called with SmartLib.getURL(...)",this.handler?.id),!1)):(i.g.e(N,"Exception: Implementation error, SmartLib.init(...) should be called prior to SmartLib.startStreamingSession(...)",this.handler?.id),!1)}stopStreamingSession(e){void 0===e?i.g.i(N,"Stopping streaming session...",this.handler?.id):i.g.i(N,"Stopping streaming session with statusCode "+e+"...",this.handler?.id);let t=this.handler;return void 0===this.handler?i.g.d(N,"Stopping streaming session aborted, no session started"):(this.handler.stop(e),this.handler=void 0),t}createStreamingSession(e){if(this.#t){const t=void 0===e;t&&(e=this.options);const s=this.sessionManager.createStreamingSession(this.options,e);return t?i.g.i(N,"Creating streaming session...",s.id):(i.g.i(N,"Creating streaming session with options...",s.id),e.printUpdates(N,"",s.id)),s}i.g.e(N,"Exception: Implementation error, SmartLib.init(...) should be called prior to SmartLib.createStreamingSession(...)")}getStreamingSession(e){let t;return this.#t?(this.sessionManager.cleanFinishedSessions(),t=this.sessionManager.sessions.find(t=>t.id===e),void 0===t&&i.g.w(N,"Streaming session with id "+e+" not found")):i.g.e(N,"Exception: Implementation error, SmartLib.init(...) should be called prior to SmartLib.getStreamingSession(...)"),t}createAnalyticsSession(e){if(this.#u){const t=void 0===e;t&&(e=this.options);const s=this.sessionManager.createAnalyticsSession(this.options,e);return t?i.g.i(N,"Creating analytics session...",s.id):(i.g.i(N,"Creating analytics session with options...",s.id),e.printUpdates(N,"",s.id)),s}i.g.e(N,"Exception: Implementation error, SmartLib.initAnalytics(...) should be called prior to SmartLib.createAnalyticsSession(...)")}release(){this.#t&&(i.g.i(N,"Releasing SmartLib..."),this.stopStreamingSession(),this.internalAdManager.release(),this.adManager.release(),this.nanoCDNHostManager?.release(),this.sessionManager.release(),this.monitoringManager?.release(),p.A.getInstance().release(),R.nanoCDNModule?.MdnsManager.getInstance().release(),R.analyticsModule?.PlayerManager.getInstance().release(),R.analyticsModule?.CacheManager.getInstance().release(),a.A.getInstance().release(),R.diversityModule?.DiversityPluginManager.getInstance().release(),R.adModule?.OMSDKManager.getInstance().release(this),R.simidModule?.SimidControllerManager.getInstance().release(),this.#t=!1),this.#u&&(i.g.i(N,"Releasing SmartLib analytics..."),this.stopStreamingSession(),this.internalAdManager.release(),this.adManager.release(),this.sessionManager.release(),this.monitoringManager?.release(),p.A.getInstance().release(),R.analyticsModule?.PlayerManager.getInstance().release(),R.analyticsModule?.CacheManager.getInstance().release(),a.A.getInstance().release(),R.adModule?.OMSDKManager.getInstance().release(this),R.simidModule?.SimidControllerManager.getInstance().release(),this.#u=!1),this.options=new l.H,this.#E(""),this.#p(""),this.#S(""),this.nanoCDNReceiver=void 0,this.nanoCDNHttpsEnabled=void 0,this.nanoCDNHttpsEnabledStrict=!1}attachPlayer(e,t){void 0===e?void 0===R.analyticsModule?i.g.w(N,"Try to attach a player, but analytics module not loaded",this.handler?.id):i.g.w(N,"Try to attach a player, but it is not recognized",this.handler?.id):(R.analyticsModule?.PlayerManager.getInstance().setPlayerAdapter(e),void 0!==this.handler&&i.g.e(N,"Exception: You cannot attach a player when a session is running, this player will be used for the next session.",this.handler.id))}detachPlayer(){return void 0!==this.handler?(i.g.e(N,"Exception: You cannot detach the player when a session is running",this.handler.id),!1):(R.analyticsModule?.PlayerManager.getInstance().setPlayerAdapter(void 0),!0)}isInitialized(){return this.#t}isAnalyticsInitialized(){return this.#u}getMetricsManager(){if(void 0!==this.handler)return this.handler.metricsManager}getListener(){return R.analyticsModule?.PlayerManager.getInstance().getPlayerAdapter()}getVersion(){return r.A}getParameters(){return this.#g}setUUID(e){n.A.typeParameter(e,"string","Error: uuid should be a string")&&(this.#g.uuid=n.A.toBkAString(e.substring(0,36)))}setUserAgent(e){n.A.typeOrUndefinedParameter(e,"string","Error: userAgent should be a string")&&(this.#g.userAgent=e)}setDeviceType(e){n.A.typeParameter(e,"string","Error: deviceType should be a string")&&(this.#g.deviceType=e,p.A.getInstance().deviceType=e)}setCustomParameter(e,t){"string"==typeof e?this.#g.customParameters[e]=n.A.toBkAString(String(t)):i.g.e(N,"Error: Only string values are accepted for custom parameters")}resetCustomParameters(){this.#g.customParameters={}}setForceTeardown(e){"number"==typeof e?this.#g.forceTeardown=e>=1?R.FORCE_TEARDOWN_ENABLED:e<=-1?R.FORCE_TEARDOWN_DISABLED:R.FORCE_TEARDOWN_DEFAULT:i.g.e(N,"Exception: parameter forceTeardown must be SmartLib.FORCE_TEARDOWN_DISABLED, SmartLib.FORCE_TEARDOWN_DEFAULT or SmartLib.FORCE_TEARDOWN_ENABLED")}setNanoCDNResolvingRetryDelay(e){void 0===this.nanoCDNHostManager?i.g.e(N,"Exception: Implementation error, SmartLib.init(...) should be called prior to SmartLib.setNanoCDNResolvingRetryDelay(...)"):(i.g.v(N,"Updating nanoCDN resolving retry asyncDelay to "+e+"ms"),this.nanoCDNHostManager?.setNanoCDNResolvingRetryDelay(e))}registerNanoCDNReceiver(e){void 0===this.nanoCDNHostManager?this.nanoCDNReceiver=e:(this.nanoCDNReceiver=void 0,this.nanoCDNHostManager.registerNanoCDNReceiver(e))}setNanoCDNHttpsEnabled(e,t=!1){let s="";e&&(s=t?" (HTTP fallback disabled)":" with HTTP fallback"),i.g.v(N,"Updating nanoCDN https enabled to "+e+s),void 0===this.nanoCDNHostManager?(this.nanoCDNHttpsEnabled=e,this.nanoCDNHttpsEnabledStrict=t):(this.nanoCDNHttpsEnabled=void 0,this.nanoCDNHostManager.setNanoCDNHttpsEnabled(e,t))}restartNanoCDNResolving(){this.nanoCDNHostManager?.restartNanoCDNResolving()}setOption(e,t){i.g.d(N,"Setting global option "+l.H.optionToString(e)+" to "+l.H.valueToString(e,t)),this.options.set(e,t)}#E=e=>{null!=e&&0!==e.length?this.#g.analyticsAddress=e:this.#g.analyticsAddress=""};#p=e=>{null!=e&&0!==e.length?(void 0===R.nanoCDNModule&&i.g.w(N,"Warning: nanoCDNHost is set while the module is not loaded."),this.#g.nanoCDNHost=e.replaceAll(/\s/g,"")):this.#g.nanoCDNHost=""};#S=e=>{null!=e&&0!==e.length?this.#g.broadpeakDomainNames=e.replaceAll(/\s/g,""):this.#g.broadpeakDomainNames=""}}},5866(e,t){t.A="06.00.03.861c04c"},5690(e,t,s){s.d(t,{D6:function(){return n},X2:function(){return l},eQ:function(){return o},up:function(){return r}});var i=s(1142),a=s(8379);class r{static MINIMIZED="minimized";static COLLAPSED="collapsed";static NORMAL="normal";static EXPANDED="expanded";static FULLSCREEN="fullscreen";static isAdViewState(e){switch(e){case r.MINIMIZED:case r.COLLAPSED:case r.NORMAL:case r.EXPANDED:case r.FULLSCREEN:return!0}return!1}}class n{static VIDEO_CONTROLS=0;static CLOSE_AD=1;static NOT_VISIBLE=2;static OTHER=3;static isAdFriendlyObstructionPurpose(e){return e>=0&&e<=3}}class o{static AD_LINEAR="linear";static AD_NON_LINEAR="nonlinear";static AD_LINEAR_AND_NON_LINEAR="linear_and_nonlinear";static UNSUPPORTED="unsupported";static getAdType(e){switch(e){case this.AD_LINEAR:case this.AD_NON_LINEAR:case this.AD_LINEAR_AND_NON_LINEAR:return e;case void 0:return this.AD_LINEAR;default:return this.UNSUPPORTED}}}const d="BpkAdMgr";class l{smartLib;palSDK;static getInstance(){return i.A.getInstance().adManager}init(e){this.smartLib=e}release(){}getVersion(){return"05.02.03"}attachPALSDK(e){"object"==typeof e.pal?(a.g.d(d,"PAL SDK attached"),this.palSDK=e):a.g.e(d,"Try to attach PAL SDK, but it is not recognized")}setConsentSettings(e){this.smartLib.internalAdManager.setConsentSettings(e)}setPalParameters(e,t,s,i,a,r,n,o,d,l,h,c,u,g,E){this.smartLib.internalAdManager.setPalParameters(e,t,s,i,a,r,n,o,d,l,h,c,u,g,E)}activateAdvertising(){this.smartLib.internalAdManager.adSession.activateAdvertising()}setAdParameter(e,t){this.smartLib.internalAdManager.adSession.setAdParameter(e,t)}setEventCallbackEnabled(e){this.smartLib.internalAdManager.eventCallbackEnabled=e,this.smartLib.internalAdManager.adSession.setEventCallbackEnabled(e)}setAdEventsListener(e){this.smartLib.internalAdManager.adEventsListener=e,this.smartLib.internalAdManager.adSession.setAdEventsListener(e)}}},1105(e,t,s){s.d(t,{A:function(){return n}});var i=s(8379),a=s(5690);const r="BpkAdSession";class n{handler;adEventsListener;adDataListener;adActivated;adParameters;eventCallbackEnabled;adView;adViewState;adFriendlyObstructionViews;adCustomReference;adVerificationData;adPalSession;constructor(){this.adEventsListener={onAdBreakBegin:e=>{},onAdBegin:(e,t)=>{},onAdEnd:(e,t)=>{},onAdBreakEnd:e=>{},onAdSkippable:(e,t,s,i,a)=>{}},this.adActivated=!1,this.adParameters={},this.eventCallbackEnabled=!0,this.adView=void 0,this.adViewState=a.up.NORMAL,this.adFriendlyObstructionViews=[],this.adCustomReference="",this.adVerificationData=[]}setAdEventsListener(e){Object.assign(this.adEventsListener,e),i.g.d(r,"Ad events listener "+(void 0!==e?"set":"unset"),this.handler?.id)}setAdDataListener(e){this.adDataListener=e,i.g.d(r,"Ad data listener "+(void 0!==e?"set":"unset"),this.handler?.id)}activateAdvertising(){!0!==this.adActivated&&(this.adActivated=!0,i.g.d(r,"Ad session activated",this.handler?.id))}setAdParameter(e,t){this.activateAdvertising(),this.adParameters[e]=String(t),i.g.d(r,"Adding parameter "+e+"="+t,this.handler?.id)}setEventCallbackEnabled(e){this.eventCallbackEnabled=e}isAdActivated(){return!0===this.adActivated}getAdAllowedQuery(){const e=["ad_allowed","adallowed"],t=["0","false"];let s=!0;return Object.keys(this.adParameters).forEach(i=>{e.indexOf(i.toLowerCase())>=0&&t.indexOf(this.adParameters[i].toLowerCase())>=0&&(s=!1)}),s}resetAdParameters(){this.adParameters={}}hasAdParameters(){return Object.keys(this.adParameters).length>0}onDashEvent(e){this.isAdActivated()?this.eventCallbackEnabled?i.g.d(r,"Event received but legacy mode has been deprecated",this.handler.id):i.g.d(r,"Event received but callbacks are disabled",this.handler.id):i.g.d(r,"Event received but ad not enabled (advertising not activated)",this.handler.id)}}},5305(e,t,s){s.d(t,{A:function(){return l}});var i=s(8379),a=s(1134);const r="BpkAdPalSessionRequest";class n{static TIMEOUT_DELAY=5e3;active;timeout;adPalManager;adPalSession;generating;waitNonceResolveCallback;constructor(e){this.active=!0,this.timeout=!1,this.adPalManager=e,this.generating=!1}setAdPalSession(e){this.adPalSession=e,this.active=!1}generateAdPalSession(){i.g.d(r,"Generating nonce...");const e=()=>{i.g.d(r,"Nonce generation timeout"),this.timeout=!0,void 0!==this.waitNonceResolveCallback&&(this.setAdPalSession(void 0),this.waitNonceResolveCallback(void 0))};this.generating=!0,a.A.getInstance().asyncNonce(n.TIMEOUT_DELAY,e=>{const t=e.adPalSession;i.g.d(r,"Generated (async) nonce="+t?.getNonce()),this.setAdPalSession(t)},e,()=>{const t=setTimeout(e,n.TIMEOUT_DELAY);this.adPalManager.generateAdPalSession(e=>{clearTimeout(t),i.g.d(r,"Generated (legacy) nonce="+e?.getNonce()),this.setAdPalSession(e),void 0!==this.waitNonceResolveCallback&&!1===this.timeout?this.waitNonceResolveCallback(e):void 0!==this.waitNonceResolveCallback&&!0===this.timeout&&this.waitNonceResolveCallback(void 0)})})}getAdPalSession(){return void 0===this.adPalSession&&!0===this.active?(i.g.getInstance().printDebugLogs(r,"Trying to get nonce, but not yet ready"),new Promise((e,t)=>{a.A.getInstance().waitNonce(n.TIMEOUT_DELAY,t=>{const s=t.adPalSession;i.g.d(r,"Found nonce="+s?.getNonce()),this.setAdPalSession(s),e(this.adPalSession)},()=>{this.active=!1,this.timeout=!0,this.waitNonceResolveCallback=void 0,e(this.adPalSession)},()=>{!0===this.generating?this.waitNonceResolveCallback=e:(this.waitNonceResolveCallback=e,this.generateAdPalSession())})})):new Promise((e,t)=>{e(this.adPalSession)})}}var o=s(1105);const d="BpkInternalAdMgr";class l{static AD_NONCE_QUERY_PARAMETER="paln";smartLib;initialized;adPalManager;omPartnerName;omPartnerVersion;firstAdPalSessionRequest;palSessionEnabled=!1;adSession;eventCallbackEnabled;adEventsListener;constructor(){this.initialized=!1,this.palSessionEnabled=!1,this.adSession=new o.A,this.eventCallbackEnabled=!0,this.adEventsListener=void 0}init(e){this.smartLib=e,this.initialized||(this.initialized=!0,this.adSession=new o.A,this.eventCallbackEnabled=!0,this.adEventsListener=void 0,this.omPartnerName="Broadpeak_tv",this.omPartnerVersion=e.adManager.getVersion(),i.g.d(d,"Ad manager version: "+this.omPartnerVersion),i.g.d(d,"Ad manager loaded"))}setPalManager(e){i.g.d(d,"Native PAL manager registered"),this.adPalManager=e}getAdPalSessionRequest(){let e=this.firstAdPalSessionRequest;return void 0!==e&&void 0===e.adPalSession&&!0===e.active&&!1===e.timeout?(i.g.d(d,"Nonce generation in progress, will use it"),this.firstAdPalSessionRequest=void 0,e):(this.firstAdPalSessionRequest=void 0,e=new n(this.adPalManager),this.initialized&&this.palSessionEnabled?(e.generateAdPalSession(),void 0===this.adPalManager&&e.setAdPalSession(void 0)):e.setAdPalSession(void 0),e)}release(){this.initialized=!1,this.palSessionEnabled=!1,this.adSession=new o.A,this.eventCallbackEnabled=!0,this.adEventsListener=void 0,void 0!==this.firstAdPalSessionRequest&&(this.firstAdPalSessionRequest.setAdPalSession(void 0),this.firstAdPalSessionRequest=void 0),void 0!==this.adPalManager&&this.adPalManager.release()}setConsentSettings(e){this.adPalManager?.setConsentSettings(e)}setPalParameters(e,t,s,a,r,o,l,h,c,u,g,E,p,S,_){void 0!==this.adPalManager?(void 0!==e&&this.adPalManager.setDescriptionURL(e),void 0!==t&&void 0!==s&&this.adPalManager.setOmidPartner(t,s),void 0!==a&&this.adPalManager.setOmidVersion(a),void 0!==r&&this.adPalManager.setPlayerType(r),void 0!==o&&this.adPalManager.setPlayerVersion(o),void 0!==l&&this.adPalManager.setPpid(l),void 0!==h&&this.adPalManager.setVideoPlayerHeight(h),void 0!==c&&this.adPalManager.setVideoPlayerWidth(c),void 0!==u&&this.adPalManager.setWillAdAutoPlay(u),void 0!==g&&this.adPalManager.setWillAdPlayMuted(g),void 0!==E&&this.adPalManager.setSupportedApiFrameworks(E),void 0!==p&&this.adPalManager.setSessionId(p),void 0!==S&&this.adPalManager.setContinuousPlayback(S),void 0!==_&&this.adPalManager.setIconsSupported(_),this.palSessionEnabled||(this.palSessionEnabled=!0,this.firstAdPalSessionRequest=new n(this.adPalManager),this.firstAdPalSessionRequest.generateAdPalSession())):i.g.e(d,"Google PAL manager not set, cannot set parameters")}}},1262(e,t,s){s.d(t,{X2:function(){return o.X2},GM:function(){return l},r2:function(){return c},CE:function(){return n.A},Em:function(){return p.A},$b:function(){return r.$},gD:function(){return r.g},Je:function(){return a.A},x6:function(){return i.A},fF:function(){return u.f},H1:function(){return g.H},Sy:function(){return E.S}});var i=s(1142),a=s(6506),r=s(8379),n=(s(1134),s(3473)),o=s(5690);const d="BpkAdPalMgr";class l{setConsentSettings(e){r.g.e(d,"setConsentSettings not implemented")}registerPalManagerCallback(e){r.g.e(d,"registerPalManagerCallback not implemented")}unregisterPalManagerCallback(){r.g.e(d,"unregisterPalManagerCallback not implemented")}generateAdPalSession(e){r.g.e(d,"generateAdPalSession not implemented")}reset(){r.g.e(d,"reset not implemented")}release(){r.g.e(d,"release not implemented")}setValue(e,t,s){r.g.e(d,"setValue for "+e+" not implemented")}setDescriptionURL(e){this.setValue("setDescriptionURL",e)}setOmidPartner(e,t){this.setValue("setOmidPartner",e,t)}setOmidVersion(e){this.setValue("setOmidVersion",e)}setPlayerType(e){this.setValue("setPlayerType",e)}setPlayerVersion(e){this.setValue("setPlayerVersion",e)}setPpid(e){this.setValue("setPpid",e)}setVideoPlayerHeight(e){this.setValue("setVideoPlayerHeight",e)}setVideoPlayerWidth(e){this.setValue("setVideoPlayerWidth",e)}setWillAdAutoPlay(e){this.setValue("setWillAdAutoPlay",e)}setWillAdPlayMuted(e){this.setValue("setWillAdPlayMuted",e)}setSupportedApiFrameworks(e){this.setValue("setSupportedApiFrameworks",e)}setSessionId(e){this.setValue("setSessionId",e)}setContinuousPlayback(e){this.setValue("setContinuousPlayback",e)}setIconsSupported(e){this.setValue("setIconsSupported",e)}}const h="BpkAdPalSession";class c{getNonce(){return r.g.e(h,"getNonce not implemented"),""}sendAdClick(){r.g.e(h,"sendAdClick not implemented")}sendAdImpression(){r.g.e(h,"sendAdImpression not implemented")}sendPlaybackStart(){r.g.e(h,"sendPlaybackStart not implemented")}sendPlaybackEnd(){r.g.e(h,"sendPlaybackEnd not implemented")}sendTouch(e){r.g.e(h,"sendTouch not implemented")}setAdView(e){r.g.d(h,"setAdView not implemented")}}var u=s(828),g=s(7832),E=s(3121),p=s(3445)},7418(e,t,s){s.d(t,{E:function(){return d},q:function(){return l}});var i=s(6506),a=s(8379),r=s(1134),n=s(7832);const o="BpkKeepAliveMgr";class d{handler;active;delay;job;constructor(e){this.handler=e,this.active=!0,this.delay=e.options.get(n.H.SESSION_KEEPALIVE_FREQUENCY)}start(){this.job=r.A.getInstance().asyncDelay(this.delay,()=>{this.process()})}callback(e,t=!0){a.g.e(o,"callback method should be overridden")}process(e=!0){if(this.active){this.handler.notifyKeepaliveSessionReportRequested(this.handler.sessionReport),this.handler.sessionReport.keepaliveRequestDate=Date.now();const t={userAgent:this.handler.smartLib.getParameters().userAgent};this.callback(t,e)}}next(e=!0){this.job=r.A.getInstance().asyncDelay(this.delay,()=>{this.process()})}stop(){this.active=!1,r.A.getInstance().cancel(this.job)}isActive(){return this.active}}class l extends d{method;constructor(e){super(e),this.method="POST",a.g.d(o,"Using Broadpeak CDN keepalive manager...",this.handler.id)}callback(e,t=!0){i.A.getInstance().keepalive(this.handler,e,this.method).then(e=>{if(this.method=e.method,e.httpStatus>0&&(e.httpStatus<200||e.httpStatus>=300))a.g.d(o,"Stopping keepalive...",this.handler.id),this.stop();else{let s="";try{s=JSON.parse(e.body.trim())}catch(t){s=e.body.trim()}this.handler.notifyKeepaliveRequestEnded(e.httpStatus,s),!0===t&&this.next()}})}}},6506(e,t,s){s.d(t,{A:function(){return u}});var i=s(8379),a=s(5866),r=s(1134),n=s(1262),o=s(5305),d=s(1142),l=s(3641);const h="BpkRequestMgr";class c{static get(e,t,s,i){i({body:void 0,headers:void 0,statusCode:-1,message:"",responseURL:null})}static post(e,t,s,i,a){a({body:void 0,headers:void 0,statusCode:-1,message:"",responseURL:null})}}class u{static TEARDOWN_PATH="/teardown/";static TEARDOWN_METRICS_QUERY="metrics";static TEARDOWN_TIMELINE_QUERY="metricsTL";static KEEPALIVE_PATH="/keepalive";static QUERY_PARAMETER_SESSION_ID="bk-session_id";static QUERY_PARAMETER_SESSION_CREATED="bk-session";static HEADER_CDN_DETAILED_ERROR_CODE="x-bpk-error";static HEADER_CDN_TIMING="x-bpk-timing";static CDN_REQUEST_TIMEOUT=2e4;static BKS_REQUEST_TIMEOUT=5e3;static KEEPALIVE_REQUEST_INTERVAL=5e3;static PAL_TIMEOUT=150;static#e;requestHandler=c;smartLib;static getInstance(){return u.#e||(u.#e=new u),u.#e}constructor(){}init(e){this.requestHandler=e}attachInstance(e){this.smartLib=e}release(){}getHeaders(e=this.smartLib.getParameters()){let t={};return void 0!==e.userAgent&&(t["User-Agent"]=e.userAgent),t}async getURL(e,t,s){const l=s.options,c=void 0!==t.nanoCDNDescr&&!0===l.get(n.H1.REQUEST_NANO_CDN),g=u.isBroadpeakDomainName(e,t.broadpeakDomainNames)&&!0===l.get(n.H1.REQUEST_BROADPEAK_CDN),E=!0===l.get(n.H1.MULTICAST_ONLY)||!0===l.get(n.H1.LEGACY_MULTICAST_ONLY);let p,S,_;if(c?"*"===t.broadpeakDomainNames?i.g.i(h,"Workflow 5.2 (v"+a.A+")",s.id):""===t.broadpeakDomainNames?i.g.i(h,"Workflow 5.4 (v"+a.A+")",s.id):g?i.g.i(h,"Workflow 5.6 => 5.2 (v"+a.A+")",s.id):i.g.i(h,"Workflow 5.6 => 5.4 (v"+a.A+")",s.id):"*"===t.broadpeakDomainNames?i.g.i(h,"Workflow 5.1 (v"+a.A+")",s.id):""===t.broadpeakDomainNames?i.g.i(h,"Workflow 5.3 (v"+a.A+")",s.id):g?i.g.i(h,"Workflow 5.5 => 5.1 (v"+a.A+")",s.id):i.g.i(h,"Workflow 5.5 => 5.3 (v"+a.A+")",s.id),i.g.i(h,"   Parameters",s.id),i.g.i(h,"      analyticsAddress="+t.analyticsAddress,s.id),i.g.i(h,"      nanoCDNHost="+(void 0===t.nanoCDNDescr?"":t.nanoCDNDescr.hostIP),s.id),i.g.i(h,"      broadpeakDomainNames="+t.broadpeakDomainNames,s.id),l.print(h,"   ",s.id),c){if(void 0===d.A.nanoCDNModule)return i.g.e(h,"Error: detected nanoCDN session but nanoCDNModule not loaded."),n.Sy.error(n.Sy.RESULT_REQUESTED_URL_NOT_FOUND_ON_NANOCDN);if(p=await d.A.nanoCDNModule.NanoCDNRequestManager.getInstance().requestNanoCDNSession(e,t,s),p.result.isError())if(g)i.g.d(h,"nanoCDN responded an error, requesting the BkM (using nanoCDN: "+p.nanoCDNHostIP+")",s.id);else{if(!0===E)return p.noFallbackResult;p.result=n.Sy.success(e)}}else if(!0===E)return i.g.e(h,"Error: multicast only option enabled but session is not using nanoCDN."),n.Sy.error(n.Sy.RESULT_REQUESTED_URL_NOT_FOUND_ON_NANOCDN);if(!0===s.adSession?.getAdAllowedQuery()&&(S=this.smartLib.internalAdManager.getAdPalSessionRequest()),(!E||!c||p?.result.isError())&&(_=await this.requestBkM(e,t,p?.nanoCDNHostIP,s),_.isError()))return _;if(void 0===p||p.result.isError()||(void 0!==_&&!0===g&&!1===E?_.url.getHostname()===p.nanoCDNHostIP&&(_.nanoCDNUsed=!0,_.nanoCDNDescr=p.nanoCDNDescr,!0===s.options.get(n.H1.ULTRA_LOW_LATENCY_SUPPORT)&&_.url.setParam("ulls","1")):_=p.result),void 0!==_&&void 0!==s.adSession&&s.adSession.isAdActivated()){const e=s.adSession.adParameters;for(let t in e)_.url.addParam(t,encodeURIComponent(e[t]));let i;void 0!==S&&(!0!==S.generating||g||await r.A.getInstance().asyncDelayPromise(u.PAL_TIMEOUT),i=await S.getAdPalSession(),void 0!==i&&(_.url.addParam(o.A.AD_NONCE_QUERY_PARAMETER,i.getNonce()),s.adSession.adPalSession=i,i.setAdView(s.adSession.adView))),await this.requestBkYou(_,t,s,g,i)}return void 0===_?n.Sy.error(n.Sy.RESULT_NO_STREAMING_URL_FOUND):_}requestBkM(e,t,s,a){let r=l.A.clone(e);const o=a.options,c=u.isBroadpeakDomainName(e,t.broadpeakDomainNames);if(c&&!0===o.get(n.H1.REQUEST_BROADPEAK_CDN)||!0===o.get(n.H1.REQUEST_REDIRECT_THIRD_PARTY_CDN)){r.addParam("response","200"),r.addParam("bk-ml","1"),"string"==typeof s&&0!==s.length&&r.addParam("nanocdnhost",s),!0===o.get(n.H1.SESSION_PRECACHE)&&r.addParam("bk-precache","1");let g=null;return!0===a.diversitySession?.activated?g=d.A.diversityModule.DiversityRequestManager.getInstance().requestDiversitySession(e,u.CDN_REQUEST_TIMEOUT,t,a):(c?i.g.d(h,"Sending request to the BkM/umbrella: "+r.toString(),a.id):i.g.d(h,"Sending request to third party CDN: "+r.toString(),a.id),g=this.getRedirectionLocation(r,u.CDN_REQUEST_TIMEOUT,t,a)),g.then(t=>(c?i.g.d(h,"BkM/umbrella responded with status code "+t.httpStatus,a.id):i.g.d(h,"Third party CDN responded with status code "+t.httpStatus,a.id),this.parseCDNTiming(t,a),a.sessionReport.cdnStatusCode=t.httpStatus,t.httpStatus>=200&&t.httpStatus<400?""===t.redirectedURL?n.Sy.error(n.Sy.RESULT_CDN_RESPONSE_UNREADABLE,this.getBkMDetailedErrorMessage(t,a)):t.redirectedURL.startsWith("/")||t.redirectedURL.startsWith("../")?(i.g.i(h,"Redirected URL is relative, patching to absolute URL",a.id),n.Sy.success(l.A.clone(e).applyRelativeUrl(t.redirectedURL))):n.Sy.success(l.A.parse(t.redirectedURL)):t.httpStatus<=0?n.Sy.error(n.Sy.RESULT_CDN_RESPONSE_UNREADABLE):t.httpStatus>=400&&t.httpStatus<500?n.Sy.error(n.Sy.RESULT_REQUESTED_URL_NOT_FOUND_ON_CDN,this.getBkMDetailedErrorMessage(t,a)):t.httpStatus>=500&&t.httpStatus<600?n.Sy.error(n.Sy.RESULT_REQUESTED_URL_CDN_ERROR,this.getBkMDetailedErrorMessage(t,a)):n.Sy.error(n.Sy.RESULT_NO_STREAMING_URL_FOUND,this.getBkMDetailedErrorMessage(t,a)))).then(e=>(e.isError()&&(a.sessionReport.cdnStatusCode=e.getDetailedErrorCode()),e))}return Promise.resolve(n.Sy.success(r))}parseCDNTiming(e,t){const s=e.headers[u.HEADER_CDN_TIMING];if(void 0!==s&&"string"==typeof s)for(const e of s.split(";"))if(e.startsWith("bpkhttpserver,")){let s=e;try{let s=Number.parseInt(e.split(",")[1],10);if(!Number.isNaN(s))return i.g.d(h,"bpkhttpserver response timing: "+s+"ms",t.id),void(t.sessionReport.bpkhttpserverTiming=s)}catch(e){}return void i.g.e(h,"BkM/umbrella is providing a bpkhttpserver response timing but it cannot be parsed ("+s+")",t.id)}i.g.d(h,"BkM/umbrella is not providing a response timing",t.id)}getBkMDetailedErrorMessage(e,t){if(!0===e.headers.hasOwnProperty(u.HEADER_CDN_DETAILED_ERROR_CODE)){const s=e.headers[u.HEADER_CDN_DETAILED_ERROR_CODE];return i.g.d(h,"Reading detailed error code from header: "+s,t.id),s}return i.g.d(h,"Reading detailed error code from http status: "+e.httpStatus+" "+e.httpMessage,t.id),String(e.httpStatus+" "+e.httpMessage)}requestBkYou(e,t,s,a,r){s.simidControllerAdapter?.attachSession(s);const o=void 0!==s.adSession?.adDataListener?.onAdData;let d=l.A.clone(e.url);if(d.addParam("bk-ml","1.0"),!1===s.options.get(n.H1.REQUEST_BKYOU_IF_BROADPEAK_CDN)&&a&&!o)return s.adTrackingManager?.initBkYouSession(d,void 0,{},r,r?.getNonce()),e;const c=l.A.clone(e.url);return c.addParam("bk-ml",o?"2.0":"1.0"),this.adTracking(s,t,c,!1).then(t=>{if(!(t.httpStatus>=200&&t.httpStatus<300))return i.g.d(h,"BkYou response unreadable (status code), falling back to legacy mode",s.id),s.adTrackingManager?.notifyAdDataListener(!0),e;{let n;!a&&t.responseURL&&(i.g.d(h,"Using BkYou redirection: "+t.responseURL,s.id),e.url=t.responseURL,d=l.A.clone(e.url),d.setParam("bk-ml","1.0"));try{n=JSON.parse(t.content)}catch(t){return i.g.d(h,"BkYou file parsing failed ("+t.message+"), falling back to legacy mode",s.id),s.adTrackingManager?.notifyAdDataListener(!0),e}const o=n.sessiontoken;if(void 0===o)return e;i.g.d(h,"BkYou session token: "+o,s.id);const c=n.playbackqueries;Array.isArray(c)&&c.forEach(t=>{if(t.includes("=")){const s=t.split("=");e.url.setParam(s[0],s[1]),d.setParam(s[0],s[1])}}),s.adTrackingManager?.initBkYouSession(d,o,n,r,r?.getNonce())}return e})}getRedirectionLocation(e,t,s,a){return new Promise((n,o)=>{let d=this.getHeaders(s);d.Connection="close";let l=r.A.getInstance().asyncGet(e.toString(),d,t,e=>{let t=0,s="";void 0!==e.statusCode&&(t=Number.parseInt(e.statusCode,10)),void 0!==e.headers&&void 0!==e.headers.location?s=e.headers.location:t>=200&&t<400&&i.g.e(h,'Location header cannot be read, please ensure "Access-Control-Expose-Headers: Location" is configured.',a.id),n({httpStatus:t,httpMessage:e.message,headers:e.headers,redirectedURL:s})});a.jobs.push(l)})}requestSession(e,t,s,a){const o=t.sessionReport,d=l.A.clone(o.redirectedURL);d.setPath(d.getPath()+e),d.clearParams();const c=t.options.get(n.H1.SESSION_REPORTING_MODE),g=c===n.H1.SESSION_REPORTING_MODE_DEFAULT||c===n.H1.SESSION_REPORTING_MODE_KEEPALIVE_TEARDOWN;return!0===g?(void 0!==o.timeline&&o.gdpr!==n.H1.GDPR_DELETE&&d.addParam(u.TEARDOWN_TIMELINE_QUERY,o.timeline.data().base64()),d.addParam(u.TEARDOWN_METRICS_QUERY,o.toQuery()),!0===t.isPrecached()&&d.addParam("precache",!0===t.sessionReport.precacheEnded?0:1),i.g.i(h,"Sending session request using method "+a+" with metrics to "+d.toString(),t.id)):i.g.i(h,"Sending session request using method "+a+" without metrics to "+d.toString(),t.id),new Promise((n,l)=>{let c=this.getHeaders(s);const E=r=>{i.g.i(h,"Send session request ends with status code: "+r.statusCode,t.id);let o="";void 0!==r.body&&(o=r.body),"POST"===a&&(r.statusCode<200||r.statusCode>=300)?this.requestSession(e,t,s,"GET").then(e=>{n({httpStatus:e.httpStatus,body:e.body,method:"GET"})}):n({httpStatus:r.statusCode,body:o,method:a})};if("GET"===a)r.A.getInstance().asyncGet(d.toString(),c,u.BKS_REQUEST_TIMEOUT,E);else if("POST"===a){c["Content-Type"]="application/json";let e="";!0===g&&(e=JSON.stringify({Player:o.toEndSessionJSON()})),i.g.v(h,"Executing POST request with body: "+e),r.A.getInstance().asyncPost(d.toString(),c,e,u.BKS_REQUEST_TIMEOUT,E)}})}keepalive(e,t,s){return this.requestSession(u.KEEPALIVE_PATH,e,t,s)}teardown(e,t,s){const i=u.TEARDOWN_PATH+e.sessionReport.statusCode;return this.requestSession(i,e,t,s)}adEvent(e,t,s=!1){let a=this.getHeaders();const o=e.options.get(n.H1.USERAGENT_AD_EVENT);void 0!==o&&(a["User-Agent"]=o),r.A.getInstance().asyncGet(t,a,2e4,t=>{i.g.i(h,"Ad "+(s?"Break ":"")+"event request ends with status code: "+t.statusCode,e.id)})}adTracking(e,t,s,a=!1){return i.g.d(h,"Sending request to the BkYou (async:"+a+"): "+s,e.id),new Promise((t,n)=>{let o=this.getHeaders();if(!1===a){let a=r.A.getInstance().asyncGet(s.toString(),o,u.BKS_REQUEST_TIMEOUT,s=>{i.g.d(h,"BkYou responded with status code "+s.statusCode,e.id),t({httpStatus:s.statusCode,content:s.body,responseURL:l.A.parse(s.responseURL)})});e.jobs.push(a)}else r.A.getInstance().asyncGet(s.toString(),o,u.BKS_REQUEST_TIMEOUT,s=>{i.g.d(h,"BkYou responded with status code "+s.statusCode,e.id),t({httpStatus:s.statusCode,content:s.body,responseURL:l.A.parse(s.responseURL)})})})}static isBroadpeakDomainName(e,t){if(null===t||""===t)return!1;if("*"===t)return!0;if(!e)return!1;return t.split(",").includes(e.getHostname())}}},3473(e,t,s){s.d(t,{A:function(){return r}});var i=s(1262);const a="BpkAppStateMgr";class r{static#e;smartLib;listeners;bound;networkAvailable;appInBackground;networkType=99;mute=0;osName="";osVersion="";deviceType="";static getInstance(){return r.#e||(r.#e=new r),r.#e}constructor(){this.bound=!1,this.release()}init(e){i.gD.d(a,"Initializing core app state manager..."),this.smartLib=e,!1===this.bound?(this.networkAvailable=!0,this.appInBackground=!1):i.gD.d(a,"Core app state manager is bound to the target, skipping default values..."),this.release()}release(){this.listeners=[]}setDeviceInfo(e,t,s){this.osName=e,this.osVersion=t,this.deviceType=s}bind(){i.gD.i(a,"Device:osName="+this.osName+", osVersion="+this.osVersion),i.gD.i(a,"Device:type="+this.deviceType),this.bound=!0}isConnectedToWifi(){return this.networkType>=10&&this.networkType<=12}addListener(e){void 0===e||this.listeners.includes(e)||this.listeners.push(e)}removeListener(e){let t=this.listeners.indexOf(e);-1!==t&&this.listeners.splice(t,1)}notifyEvent(e,t,s,i){"function"==typeof e[t]&&e[t](s,i)}notifyForeground(){i.gD.d(a,"App is in foreground"),this.appInBackground=!1,this.listeners.forEach(e=>{this.notifyEvent(e,"onForeground")})}notifyBackground(){i.gD.d(a,"App is in background"),this.appInBackground=!0,this.listeners.forEach(e=>{this.notifyEvent(e,"onBackground")})}notifyNetworkAvailable(e){void 0===e?(i.gD.d(a,"Network is available (networkType:"+e+")"),this.networkAvailable=!0,this.listeners.forEach(e=>{this.notifyEvent(e,"onNetworkAvailable",99)})):this.networkType!==e&&(i.gD.d(a,"Network is available (networkType:"+e+")"),this.networkAvailable=!0,this.networkType=e,this.listeners.forEach(t=>{this.notifyEvent(t,"onNetworkAvailable",e)}))}notifyNetworkLost(){!1!==this.networkAvailable&&(i.gD.d(a,"Network is unavailable"),this.networkAvailable=!1,this.networkType=0,this.listeners.forEach(e=>{this.notifyEvent(e,"onNetworkLost")}))}notifyMute(){i.gD.d(a,"Volume is muted"),this.mute=1,this.listeners.forEach(e=>{this.notifyEvent(e,"onMute")})}notifyUnmute(){i.gD.d(a,"Volume is unmuted"),this.mute=0,this.listeners.forEach(e=>{this.notifyEvent(e,"onUnmute")})}}},1134(e,t,s){s.d(t,{A:function(){return o}});var i=s(4943),a=s(1262),r=s(6506);const n="BpkJobMgr";class o{static#e;worker;jobs;static getInstance(){return o.#e||(o.#e=new o),o.#e}constructor(){this.jobs={}}async(e,t,s,i){return this.start(e,0,-1,t,s,i)}asyncGet(e,t,s,i){return this.start("get",0,-1,()=>{r.A.getInstance().requestHandler.get(e,t,s,i)},()=>({url:e,headers:t,timeout:s}),i)}asyncPost(e,t,s,i,a){return this.start("post",0,-1,()=>{r.A.getInstance().requestHandler.post(e,t,s,i,a)},()=>({url:e,headers:t,body:s,timeout:i}),a)}asyncDelay(e,t){let s;const i=this.start("delay",e,-1,t=>{s=setTimeout(t,e)},void 0,t);return i.task=s,i}asyncDelayPromise(e){return new Promise((t,s)=>{o.getInstance().asyncDelay(e,()=>{t()})})}asyncNonce(e,t,s,i=void 0){let r;void 0===i&&(i=()=>{a.gD.d(n,"ios async nonce"),r=setTimeout(s,e)});const o=this.start("waitNonce",0,e,i,void 0,t,s,!0);return o.task=r,o}waitNonce(e,t,s,i=void 0){let r;void 0===i&&(i=()=>{a.gD.d(n,"ios wait nonce"),r=setTimeout(s,e)});const o=this.start("waitNonce",0,e,i,void 0,t,s,!1);return o.task=r,o}start(e,t,s,i,r,o,d=()=>{},l=!0){if(void 0===this.worker&&("function"==typeof CoreWorker?this.worker=new CoreWorker:"object"==typeof CoreWorker&&(this.worker=CoreWorker)),void 0!==this.worker){const i=this.createJob();return i.active=!0,i.command=e,i.startDelay=t,i.timeoutDelay=s,i.requestInfo=r,i.result=o,i.timeout=d,i.async=l,a.gD.v(n,'Starting job "'+e+'" (id: '+i.id+", async: "+i.async+")..."),l?this.worker.async(i.id,i.command,i.startDelay,i.timeoutDelay):this.worker.sync(i.id,i.command,i.startDelay,i.timeoutDelay),i}return i(o),{command:e}}interrupt(e){void 0!==e&&void 0!==this.worker&&(a.gD.v(n,'Interrupting job "'+e.command+'"...'),this.worker.interrupt(e.id))}cancel(e){void 0!==e&&(void 0!==this.worker&&(a.gD.v(n,'Cancelling job "'+e.command+'"...'),e.active=!1,this.worker.cancel(e.id),delete this.jobs[e.id]),void 0!==e.task&&clearTimeout(e.task))}requestInfo(e){const t=this.jobs[e];return void 0!==t&&"function"==typeof t.requestInfo?t.requestInfo():{}}result(e,t){const s=this.jobs[e];void 0!==s&&"function"==typeof s.result&&!0===s.active&&(s.active=!1,s.result(t)),delete this.jobs[e]}timeout(e){const t=this.jobs[e];void 0!==t&&"function"==typeof t.timeout&&!0===t.active&&(a.gD.v(n,'Job "'+t.command+'" timeout...'),t.active=!1,t.timeout()),delete this.jobs[e]}createJob(){let e=i.A.randomIntFromInterval(1e6,9999999);for(;void 0!==this.jobs[e];)e=i.A.randomIntFromInterval(1e6,9999999);return this.jobs[e]={id:e},this.jobs[e]}}},2765(e,t,s){s.d(t,{A:function(){return l}});var i=s(8724),a=s(1262),r=s(5866),n=s(1142),o=s(3641);const d="BpkProxySessionHandler";class l extends i.A{startCalled;constructor(e,t=void 0){super(e,t),this.startCalled=!1}getQuery(){const e=this.smartLib.nanoCDNHostManager?.getCurrentNanoCDNDescr(),t=void 0!==e?"nanoCDN host: "+e.hostIP:"No nanoCDN found";a.gD.i(d,t+" ("+r.A+")",this.id),this.options.print(d,"",this.id),this.initPlayerAdapter(),this.initManagers(),this.notifyStart();let s="bk-ml=1";return void 0!==e?n.A.nanoCDNModule.NanoCDNRequestManager.getInstance().getQuery(e,this).then(e=>(s+=e,a.gD.i(d,"getQuery result : "+s,this.id),s)):(a.gD.i(d,"getQuery result : "+s,this.id),Promise.resolve(s))}start(e,t){if(this.startCalled)a.gD.e(d,"Implementation error: SmartLib.startStreamingSession(...) already called.",this.id);else{a.gD.i(d,"Starting streaming session...",this.id),this.startCalled=!0,this.sessionReport.startSessionDate=Date.now(),this.sessionReport.requestedURL=o.A.parse(e),this.sessionReport.redirectedURL=o.A.parse(t),this.sessionReport.precached=this.isPrecached(),this.sessionResult=a.Sy.success(t);const s=this.smartLib.getParameters(),i={broadpeakDomainNames:s.broadpeakDomainNames,forceTeardown:s.forceTeardown};this.handleRedirectedURL(i)}}}},8724(e,t,s){s.d(t,{A:function(){return _}});var i=s(1142),a=s(8379),r=s(6506),n=s(3641),o=s(4943),d=s(5866),l=s(5305),h=s(7832),c=s(3121);class u{static SESSION_ID="session_id";static IS_START="start";static STATUS_CODE="status_code";static STARTUP_TIME="startup_time";static REDIRECTION_TIME="redirection_time";static COMPLETION="completion";static PLAYED_TIME="played_time";static DURATION="duration";static PLAYBACK_TYPE="playback_type";static NUMBER_OF_STALLS="cnt_stall";static TOTAL_STALL_TIME="total_stall_time";static MAX_STALL_TIME="max_stall_time";static NUMBER_OF_REBUFFERING="cnt_rebuffering";static TOTAL_REBUFFERING_TIME="total_rebuffering_time";static MAX_REBUFFERING_TIME="max_rebuffering_time";static REDIRECT_URL="redirect_url";static CONTENT_URL="content_url";static MAX_BITRATE="max_bitrate";static MIN_BITRATE="min_bitrate";static AVERAGE_BITRATE="average_bitrate";static NUMBER_OF_LAYER_SWITCH="cnt_layer_switch";static TIME_SPENT_PER_LAYER="time_spent_per_layer";static PLAYER_NAME="player_name";static PLAYER_VERSION="player_version";static DEVICE_OS="device_os";static DEVICE_VERSION="device_version";static DEVICE_TYPE="device_type";static DIVERSITY="diversity";static UUID="uuid";static NANOCDN_STATUS="nano_status";static CUSTOM_PARAMETERS="custom_parameters";static TIMELINE="timeline";static SMARTLIB_VERSION="smartlib_version";static AD_METRICS="ad_metrics";static NETWORK_TYPE="network_type_list";static PLAYER_ERROR_CODE="player_error_code";static CDN_STATUS_CODE="cdn_status_code";static NANOCDN_STATUS_CODE="nanocdn_status_code";static BPKHTTPSERVER_TIMING="bpkhttpserver_timing";static GDPR="gdpr";static PRECACHED="precached";static PRECACHE_ENDED="precache_ended";static PRECACHE_DURATION="precache_duration";requestedURL;redirectedURL;sessionRunning;sessionCreated;sessionId;teardownActivated;smartLibParameters;customParameters;playerName;playerVersion;osName;osVersion;deviceType;smartLibVersion;networkTypeList;nanoCDNStatus;statusCode;cdnStatusCode;nanoCDNStatusCode;nanoCDNErrorCode;bpkhttpserverTiming;playerErrorCode;metrics;adMetrics;timeline;diversity;startSessionDate;endSessionDate;keepaliveRequestDate;teardownRequestDate;endSessionRequestDate;precached;precacheEnded;precacheDuration;constructor(){this.requestedURL=null,this.redirectedURL=null,this.sessionRunning=!1,this.sessionCreated=!1,this.sessionId="",this.teardownActivated=!1,this.smartLibParameters={},this.customParameters={},this.playerName="",this.playerVersion="",this.osName="",this.osVersion="",this.deviceType="",this.smartLibVersion=d.A,this.networkTypeList=[],this.nanoCDNStatus=_.NANOCDN_STATUS_UNAVAILABLE,this.statusCode=i.A.BPSessionEndsNormally,this.cdnStatusCode=-1,this.nanoCDNStatusCode=-1,this.nanoCDNErrorCode=c.S.RESULT_NO_ERROR,this.bpkhttpserverTiming=-1,this.playerErrorCode="",this.gdpr=h.H.GDPR_CLEAR,void 0!==i.A.analyticsModule&&(this.timeline=new i.A.analyticsModule.SessionTrackerTimeline),this.startSessionDate=0,this.endSessionDate=0,this.keepaliveRequestDate=0,this.teardownRequestDate=0,this.endSessionRequestDate=0,this.precached=!1,this.precacheEnded=!1,this.precacheDuration=0}toQuery(){const e=""===this.playerName?"Generic":this.playerName;let t,s=this.customParameters.pre_startup_time;if(this.gdpr===h.H.GDPR_DELETE)return"+++++++++++++++++++++++++++++++++++++++1";if(t=void 0===this.metrics?"-1+"+encodeURIComponent(e)+"+"+encodeURIComponent(this.playerVersion)+"+"+encodeURIComponent(this.osName)+"+"+encodeURIComponent(this.osVersion)+"+"+(""!==this.smartLibParameters.deviceType?encodeURIComponent(this.smartLibParameters.deviceType):encodeURIComponent(this.deviceType))+"+-1+-1+-1++-1+-1+-1+-1+-1+-1+-1+-1+-1+-1+-1++":this.metrics.redirectionTime+"+"+encodeURIComponent(e)+"+"+encodeURIComponent(this.playerVersion)+"+"+encodeURIComponent(this.osName)+"+"+encodeURIComponent(this.osVersion)+"+"+(""!==this.smartLibParameters.deviceType?encodeURIComponent(this.smartLibParameters.deviceType):encodeURIComponent(this.deviceType))+"+"+this.metrics.startupTime+"+"+this.metrics.completion+"+"+Math.round(this.metrics.playbackDuration/1e3)+"+"+this.metrics.playbackType+"+"+this.metrics.stallsNumber+"+"+this.metrics.maxStallDuration+"+"+this.metrics.totalStallsDuration+"+"+this.metrics.rebufferingsNumber+"+"+this.metrics.maxRebufferingDuration+"+"+this.metrics.totalRebufferingDuration+"+"+Math.round(this.metrics.maxBitrate)+"+"+Math.round(this.metrics.minBitrate)+"+"+Math.round(this.metrics.averageBitrate)+"+"+this.metrics.layerSwitchesNumber+"+"+Math.round(this.metrics.sessionDuration/1e3)+"+"+this.getTimeSpentPerLayerQuery()+"+",t+=encodeURIComponent(this.smartLibParameters.uuid)+"+"+this.nanoCDNStatus+"+"+(void 0!==s?encodeURIComponent(s):"")+"+"+encodeURIComponent(this.smartLibVersion)+"+",void 0!==i.A.adModule&&void 0!==this.adMetrics&&this.adMetrics.length>0){const e=i.A.adModule.AdMetrics.merge(this.adMetrics);t+=(e.adSkippable?1:0)+"+"+(e.adSkipped?1:0)+"+"+(e.adProgress>=0?e.adProgress/25:e.adProgress)+"+"+Math.round(e.adDuration/1e3)+"+"+e.stallsNumber+"+"+Math.round(e.stallsDuration/1e3)+"+"+e.layerSwitchesNumber+"+"+e.averageBitrate}else t+="+++++++";return t+="+"+this.getNetworkTypeListStr()+"+"+encodeURIComponent(this.playerErrorCode),t+="+"+(this.cdnStatusCode>=0?this.cdnStatusCode:"")+"+"+(this.nanoCDNStatusCode>=0?this.nanoCDNStatusCode:"")+"+"+this.bpkhttpserverTiming+"+"+this.gdpr,t}toEndSessionJSON(){let e={};if(e[u.IS_START]=!1,e[u.GDPR]=this.gdpr,this.gdpr===h.H.GDPR_DELETE)return e;if(e[u.SESSION_ID]=this.sessionId,e[u.STATUS_CODE]=this.statusCode,e[u.CONTENT_URL]=this.requestedURL?.toString(),this.redirectedURL instanceof n.A==!0&&this.redirectedURL.hasParam(l.A.AD_NONCE_QUERY_PARAMETER)&&this.redirectedURL.setParam(l.A.AD_NONCE_QUERY_PARAMETER,"ignored"),e[u.REDIRECT_URL]=this.redirectedURL?.toString(),void 0!==this.metrics?(e[u.REDIRECTION_TIME]=this.metrics.redirectionTime,e[u.STARTUP_TIME]=this.metrics.startupTime,e[u.COMPLETION]=this.metrics.completion,e[u.PLAYED_TIME]=Math.round(this.metrics.playbackDuration/1e3),e[u.DURATION]=Math.round(this.metrics.sessionDuration/1e3),e[u.PLAYBACK_TYPE]=this.metrics.playbackType,e[u.NUMBER_OF_STALLS]=this.metrics.stallsNumber,e[u.MAX_STALL_TIME]=this.metrics.maxStallDuration,e[u.TOTAL_STALL_TIME]=this.metrics.totalStallsDuration,e[u.NUMBER_OF_REBUFFERING]=this.metrics.rebufferingsNumber,e[u.MAX_REBUFFERING_TIME]=this.metrics.maxRebufferingDuration,e[u.TOTAL_REBUFFERING_TIME]=this.metrics.totalRebufferingDuration,e[u.MIN_BITRATE]=Math.round(this.metrics.minBitrate),e[u.MAX_BITRATE]=Math.round(this.metrics.maxBitrate),e[u.AVERAGE_BITRATE]=Math.round(this.metrics.averageBitrate),e[u.NUMBER_OF_LAYER_SWITCH]=this.metrics.layerSwitchesNumber,e[u.TIME_SPENT_PER_LAYER]=this.metrics.timeSpentPerLayer):(e[u.REDIRECTION_TIME]=-1,e[u.STARTUP_TIME]=-1,e[u.COMPLETION]=-1,e[u.PLAYED_TIME]=-1,e[u.DURATION]=-1,e[u.PLAYBACK_TYPE]="",e[u.NUMBER_OF_STALLS]=-1,e[u.MAX_STALL_TIME]=-1,e[u.TOTAL_STALL_TIME]=-1,e[u.NUMBER_OF_REBUFFERING]=-1,e[u.MAX_REBUFFERING_TIME]=-1,e[u.TOTAL_REBUFFERING_TIME]=-1,e[u.MIN_BITRATE]=-1,e[u.MAX_BITRATE]=-1,e[u.AVERAGE_BITRATE]=-1,e[u.NUMBER_OF_LAYER_SWITCH]=-1,e[u.TIME_SPENT_PER_LAYER]={}),e[u.PLAYER_NAME]=this.playerName,e[u.PLAYER_VERSION]=this.playerVersion,e[u.DEVICE_OS]=this.osName,e[u.DEVICE_VERSION]=this.osVersion,""!==this.smartLibParameters.deviceType?e[u.DEVICE_TYPE]=this.smartLibParameters.deviceType:e[u.DEVICE_TYPE]=this.deviceType,e[u.UUID]=this.smartLibParameters.uuid,e[u.NANOCDN_STATUS]=this.nanoCDNStatus,e[u.CUSTOM_PARAMETERS]=this.customParameters,void 0!==this.timeline?e[u.TIMELINE]=this.timeline.data().base64():e[u.TIMELINE]="",e[u.SMARTLIB_VERSION]=this.smartLibVersion,e[u.DIVERSITY]=this.diversity,e[u.PLAYER_ERROR_CODE]=this.playerErrorCode,e[u.AD_METRICS]=[],void 0!==this.adMetrics&&this.adMetrics.length>0)for(let t=0;t<this.adMetrics.length;t++){const s=this.adMetrics[t],i=this.cleanJson({ad_skippable:s.adSkippable?1:0,ad_skipped:s.adSkipped?1:0,ad_progress:s.adProgress>=0?s.adProgress/25:s.adProgress,ad_duration:Math.round(s.adDuration/1e3),stalls_number:s.stallsNumber,stalls_duration:Math.round(s.stallsDuration/1e3),layer_switches_number:s.layerSwitchesNumber,average_bitrate:s.averageBitrate,creative_id:s.creativeId,ad_id:s.adId.slice(0,s.adId.lastIndexOf("-")),ad_index:s.adIndex,ad_count:s.adCount,ad_format:s.adFormat,impression_date:s.impressionDate});e[u.AD_METRICS].push(i)}return e[u.NETWORK_TYPE]=this.getNetworkTypeListStr(),e[u.CDN_STATUS_CODE]=this.cdnStatusCode>=0?this.cdnStatusCode:"",e[u.NANOCDN_STATUS_CODE]=this.nanoCDNStatusCode>=0?this.nanoCDNStatusCode:"",e[u.BPKHTTPSERVER_TIMING]=this.bpkhttpserverTiming,e[u.PRECACHED]=this.precached,e[u.PRECACHE_ENDED]=this.precacheEnded,e[u.PRECACHE_DURATION]=this.precacheDuration,e}cleanJson(e){const t=["ad_progress","ad_index","ad_count"];for(const s in e){const i=e[s];-1===t.indexOf(s)&&(i<=0||""===i)&&delete e[s]}return e}getTimeSpentPerLayerQuery(){let e="";for(let t in this.metrics.timeSpentPerLayer)""!==e&&(e+=","),e+=t+":"+this.metrics.timeSpentPerLayer[t];return e}addNetworkType(e){this.networkTypeList.includes(e)||this.networkTypeList.push(e)}getNetworkTypeListStr(){return this.networkTypeList.length>0?this.networkTypeList.sort((e,t)=>String(e).localeCompare(String(t))).join("-"):""}toString(){return JSON.stringify(this,(e,t)=>"timeline"===e&&void 0!==i.A.analyticsModule&&t instanceof i.A.analyticsModule.SessionTrackerTimeline?t.toString():"requestedURL"===e||"redirectedURL"===e?t?t.toString():"":void 0===t?"undefined":t,"  ")}}var g=s(7418),E=s(1262),p=s(1134);const S="BpkSessionHandler";class _{static NANOCDN_STATUS_UNAVAILABLE=1;static NANOCDN_STATUS_DETECTED_NOT_USED=2;static NANOCDN_STATUS_USED=3;static REGEX_TICKET="^[0-5a-z]{30,50}$";static REGEX_TICKET_TRANSCODED="^.*@[0-5a-z]{30,50}$";smartLib;streamingSession;analyticsAddress;options;diversitySession;adSession;omSessionHandler;id;listeners;playerAdapterInitialized;playerAdapter;simidControllerAdapter;metricsManager;keepAliveManager;adMetricsManager;adTrackingManager;sessionResult;sessionReport;firstImageCalled;stopped;jobs;deviceInitDate;manifestInitDate;videoMulticastStatus;audioMulticastStatus;dataMulticastStatus;constructor(e,t=void 0){this.smartLib=e,this.streamingSession=t,this.diversitySession=void 0,this.adSession=void 0,this.listeners=[],this.playerAdapterInitialized=!1,this.sessionResult=void 0,this.sessionReport=new u,this.firstImageCalled=!1,this.stopped=!1,this.jobs=[],this.sessionReport.smartLibParameters=e.getParameters(),this.sessionReport.customParameters=this.getCustomParameters(),this.videoMulticastStatus=h.H.MULTICAST_INACTIVE,this.audioMulticastStatus=h.H.MULTICAST_INACTIVE,this.dataMulticastStatus=h.H.MULTICAST_INACTIVE,this.analyticsAddress=this.sessionReport.smartLibParameters.analyticsAddress,this.multicastStatusListener=void 0}initPlayerAdapter(){!1===this.playerAdapterInitialized&&(this.playerAdapterInitialized=!0,void 0===this.playerAdapter?a.g.i(S,"Player:no player attached",this.id):(a.g.i(S,"Player:name="+this.playerAdapter.getName()+", version="+this.playerAdapter.getVersion(),this.id),a.g.i(S,"Player:capabilities="+JSON.stringify(this.playerAdapter.getCapabilities()),this.id),this.playerAdapter.attachSession(this),this.playerAdapter.initSessionPlayerObjects()))}initManagers(){void 0!==i.A.analyticsModule&&(this.metricsManager=new i.A.analyticsModule.MetricsManager(this,this.playerAdapter),this.addListener(this.sessionReport.timeline),E.CE.getInstance().addListener(this.sessionReport.timeline)),void 0!==i.A.adModule&&(this.adMetricsManager=new i.A.adModule.AdMetricsManager(this),this.adTrackingManager=new i.A.adModule.AdTrackingManager(this,this.playerAdapter),this.addListener(this.adMetricsManager),this.adTrackingManager.addListener(this.adMetricsManager),void 0!==this.simidControllerAdapter&&this.addListener(this.simidControllerAdapter)),void 0!==this.playerAdapter&&(this.addListener(this.metricsManager),this.addListener(this.playerAdapter)),void 0!==this.adSession&&this.adSession.isAdActivated()&&i.A.adModule?.OMSDKManager.getInstance().isEnabled()&&(this.omSessionHandler=new i.A.adModule.OMSessionHandler(this,this.playerAdapter),this.addListener(this.omSessionHandler),this.adTrackingManager?.addListener(this.omSessionHandler)),this.addListener(this),E.CE.getInstance().addListener(this),this.smartLib.monitoringManager?.startSession(this)}start(e,t=()=>{}){a.g.i(S,"Starting session...",this.id);const s=n.A.parse(e);this.sessionReport.startSessionDate=Date.now(),this.sessionReport.requestedURL=s,this.sessionReport.precached=this.isPrecached(),this.initPlayerAdapter(),this.initManagers(),this.notifyStart();const i=this.smartLib.getParameters(),o={analyticsAddress:this.analyticsAddress,nanoCDNDescr:this.smartLib.nanoCDNHostManager?.getCurrentNanoCDNDescr(),nanoCDNDescrConfigured:this.smartLib.nanoCDNHostManager?.getCurrentNanoCDNDescr(),broadpeakDomainNames:i.broadpeakDomainNames,forceTeardown:i.forceTeardown,userAgent:i.userAgent};if(void 0!==o.nanoCDNDescr&&(this.sessionReport.nanoCDNStatus=_.NANOCDN_STATUS_DETECTED_NOT_USED),this.sessionReport.gdpr=this.options.get(h.H.GDPR_PREFERENCE),!s){const i=E.Sy.success(s);this.sessionResult=i,this.handleRedirectedURL(o),i.url=e;const a=new n.A;return a.href=e,this.sessionReport.requestedURL=a,this.sessionReport.redirectedURL=a,t(e),Promise.resolve(i)}return r.A.getInstance().getURL(s,o,this).then(e=>(this.sessionResult=e,e.isError()&&(this.sessionReport.statusCode=e.getErrorCode()),this.sessionReport.redirectedURL=this.patchBkmResult(e.getURL()),this.handleRedirectedURL(o),e.url=this.sessionReport.redirectedURL?this.sessionReport.redirectedURL.toString():"",this.stopped?(a.g.d(S,"The session has been stopped while creating it.",this.id),this.stop(),e=E.Sy.error(E.Sy.RESULT_SESSION_HAS_BEEN_STOPPED_DURING_REQUEST),a.g.i(S,"Session error code: "+e.getErrorMessage()+" (code "+e.getErrorCode()+", detail "+e.getDetailedErrorMessage()+")",this.id),a.g.i(S,"Session redirected URL: ",this.id),t(""),e):(a.g.i(S,"Session status: "+e.getErrorMessage()+" (code "+e.getErrorCode()+", detail "+e.getDetailedErrorMessage()+")",this.id),e.url.length>0?(a.g.i(S,"Session redirected URL: "+e.url,this.id),void 0!==this.playerAdapter&&this.playerAdapter.checkPlaybackState&&this.playerAdapter.checkPlaybackState()):(this.sessionReport.redirectedURL=new n.A,this.sessionReport.redirectedURL.href=""),t(e.url),e)))}handleRedirectedURL(e){this.isNanoCDNUsed()&&(this.sessionReport.nanoCDNStatus=_.NANOCDN_STATUS_USED,this.notifyUnicastUsed());const t=this.sessionResult.nanoCDNDescr||this.smartLib.nanoCDNHostManager?.getCurrentNanoCDNDescr(),s=t?.bka100;if(void 0!==s&&(a.g.i(S,"nanoCDN is overwriting the analytics address to "+s,this.id),this.analyticsAddress=s),this.sessionReport.redirectedURL){if(!0===this.diversitySession?.activated&&this.diversitySession?.manifest){const e=this.playerAdapter.initDiversitySession(this.diversitySession.options);this.addListener(e),this.playerAdapter.setDiversityManifest(this.diversitySession.manifest)}this.sessionReport.sessionRunning=!0}this.sessionReport.sessionCreated=!0,this.sessionReport.sessionRunning&&(this.sessionReport.teardownActivated=this.isTeardownActivated(e)),this.removeBroadpeakParameters(this.sessionReport.redirectedURL),this.sessionReport.sessionId=this.getTicket(),this.sessionReport.teardownActivated||this.sessionReport.timeline?.encoder.extend(),this.notifyRedirectionEnd(),this.isPrecached()&&this.startKeepalive(),void 0===this.playerAdapter&&this.sessionReport.sessionRunning&&this.notifyFirstImage(0,0)}stop(e){if(this.updatePrecacheDuration(),E.CE.getInstance().removeListener(this.sessionReport.timeline),E.CE.getInstance().removeListener(this),void 0===e||Number.isNaN(e)||(this.sessionReport.statusCode=e),this.sessionReport.endSessionDate=Date.now(),this.notifyStop(this.sessionReport.statusCode),void 0!==this.keepAliveManager&&this.keepAliveManager.stop(),this.smartLib.monitoringManager?.stopSession(this),this.sessionReport.sessionCreated){a.g.d(S,"Session ends with status code: "+this.sessionReport.statusCode,this.id);const e=this.smartLib.getParameters();this.sessionReport.sessionRunning=!1,this.sessionReport.sessionCreated=!1,this.sessionReport.smartLibParameters=JSON.parse(JSON.stringify(this.sessionReport.smartLibParameters)),this.sessionReport.customParameters=JSON.parse(JSON.stringify(this.getCustomParameters())),this.notifyEndSessionReportUpdateRequested(this.sessionReport),a.g.d(S,"SessionReport: "+this.sessionReport.toString(),this.id),this.resetCustomParameters();const t={analyticsAddress:this.analyticsAddress,userAgent:e.userAgent},s=this.options.get(h.H.SESSION_TEARDOWN),n=this.options.get(h.H.SESSION_REPORTING_MODE);let o=!1,d=!1;if(s===h.H.SESSION_ENABLED?(o=!0,n===h.H.SESSION_REPORTING_MODE_METRICS_RECEIVER&&(d=!0)):s===h.H.SESSION_ENABLED_IF_BROADPEAK_DOMAIN?this.sessionReport.teardownActivated?(o=!0,n===h.H.SESSION_REPORTING_MODE_METRICS_RECEIVER&&(d=!0)):n!==h.H.SESSION_REPORTING_MODE_DEFAULT&&n!==h.H.SESSION_REPORTING_MODE_METRICS_RECEIVER||(d=!0):s===h.H.SESSION_DISABLED&&(n!==h.H.SESSION_REPORTING_MODE_DEFAULT&&n!==h.H.SESSION_REPORTING_MODE_METRICS_RECEIVER||(d=!0)),o){const e=void 0===this.keepAliveManager||"POST"===this.keepAliveManager?.method?"POST":"GET";a.g.d(S,"Keepalive manager method set to "+e,this.id),this.sessionReport.teardownRequestDate=Date.now(),r.A.getInstance().teardown(this,t,e)}d&&(this.sessionReport.endSessionRequestDate=Date.now(),i.A.analyticsModule?.AnalyticsRequestManager.getInstance().endSession(this,t))}void 0!==this.playerAdapter&&(!0===this.diversitySession?.activated&&this.playerAdapter.releaseDiversitySession(),this.playerAdapter.releaseSessionPlayerObjects(),this.playerAdapter.detachSession());let t=0;for(const e of this.jobs)!0===e.active&&t++,p.A.getInstance().interrupt(e);a.g.d(S,t+" active job(s)",this.id),this.jobs=[],this.listeners=[],this.stopped=!0}onFirstImage(e,t){void 0===this.keepAliveManager&&this.startKeepalive()}startKeepalive(){this.notifyStartSessionReportUpdateRequested(this.sessionReport);const e=this.options.get(h.H.SESSION_KEEPALIVE),t=void 0!==i.A.analyticsModule&&this.options.get(h.H.SESSION_REPORTING_MODE)===h.H.SESSION_REPORTING_MODE_METRICS_RECEIVER,s=0===this.smartLib.getParameters().analyticsAddress.length;e===h.H.SESSION_ENABLED?(a.g.i(S,"Keepalive is enabled (SESSION_KEEPALIVE=SESSION_ENABLED)",this.id),this.keepAliveManager=t&&!s?new i.A.analyticsModule.BroadpeakCDNCacheKeepaliveManager(this):new g.q(this)):e===h.H.SESSION_ENABLED_IF_BROADPEAK_DOMAIN?this.sessionReport.teardownActivated?this.keepAliveManager=t&&!s?new i.A.analyticsModule.BroadpeakCDNCacheKeepaliveManager(this):new g.q(this):void 0===i.A.analyticsModule||s||(this.keepAliveManager=new i.A.analyticsModule.CacheKeepaliveManager(this)):e===h.H.SESSION_DISABLED&&(this.sessionReport.teardownActivated&&a.g.i(S,"Keepalive is disabled (SESSION_KEEPALIVE=SESSION_DISABLED)",this.id),void 0===i.A.analyticsModule||s||(this.keepAliveManager=new i.A.analyticsModule.CacheKeepaliveManager(this))),this.keepAliveManager?.start(),void 0!==i.A.monitoringModule&&!0===this.isNanoCDNUsed()&&this.keepAliveManager?.process(!1)}getMulticastStatus(e,t){if(void 0!==e&&"number"==typeof e.status){const s=e.status,i=e.daiperiod||0;if(1===s)return a.g.d(S,"Multicast status: active",this.id),h.H.MULTICAST_ACTIVE;if(0!==i||1!==s)return t!==h.H.MULTICAST_INACTIVE?(a.g.d(S,"Multicast status: inactive was active"+(i>=1?" (playing DAI period)":""),this.id),h.H.MULTICAST_INACTIVE_WAS_ACTIVE):(a.g.d(S,"Multicast status: inactive",this.id),h.H.MULTICAST_INACTIVE)}return a.g.d(S,"Multicast status: unknown (segment:"+JSON.stringify(e)+")",this.id),h.H.MULTICAST_UNKNOWN}onKeepaliveRequestEnded(e,t){if(this.isNanoCDNUsed()){if("object"!=typeof t)return a.g.d(S,"Data is not an object: (data:"+JSON.stringify(t)+")",this.id),this.videoMulticastStatus=h.H.MULTICAST_UNKNOWN,this.audioMulticastStatus=h.H.MULTICAST_UNKNOWN,void(this.dataMulticastStatus=h.H.MULTICAST_UNKNOWN);a.g.d(S,"nanoCDN data: "+JSON.stringify(t)+")",this.id);let e=this.videoMulticastStatus,s=this.audioMulticastStatus,i=this.dataMulticastStatus;a.g.d(S,"Getting multicast status for video",this.id),this.videoMulticastStatus=this.getMulticastStatus(t.last_video_segment,e),a.g.d(S,"Getting multicast status for audio",this.id),this.audioMulticastStatus=this.getMulticastStatus(t.last_audio_segment,s),a.g.d(S,"Getting multicast status for data",this.id),this.dataMulticastStatus=this.getMulticastStatus(t.last_data_segment,i),e!==this.videoMulticastStatus&&(this.streamingSession.multicastStatusListener?.onVideoMulticastStatusChange(this.videoMulticastStatus),this.videoMulticastStatus===h.H.MULTICAST_ACTIVE?this.notifyMulticastUsed():this.notifyUnicastUsed()),s!==this.audioMulticastStatus&&this.streamingSession.multicastStatusListener?.onAudioMulticastStatusChange(this.audioMulticastStatus),i!==this.dataMulticastStatus&&this.streamingSession.multicastStatusListener?.onDataMulticastStatusChange(this.dataMulticastStatus)}}isNanoCDNUsed(){let e=!1;if(void 0===i.A.nanoCDNModule)return!1;if(!this.sessionReport.redirectedURL)return!1;const t=this.sessionReport.redirectedURL.getHostname(),s=this.smartLib.nanoCDNHostManager?.getNanoCDNDescrList();return s?.forEach(s=>{t===s.hostIP&&(e=!0)}),e}patchBkmResult(e){return e?(e.getPath().includes("//bpk-token")&&e.setPath(e.getPath().replace("//bpk-token","/bpk-token")),e):e}getTicket(){let e=null;void 0!==this.adTrackingManager&&!0===this.adTrackingManager.bkYouSession&&void 0!==this.adTrackingManager.sessionToken&&this.adTrackingManager.sessionToken.length>0&&(e=this.adTrackingManager.sessionToken),!e&&this.sessionReport.redirectedURL&&(e=this.sessionReport.redirectedURL.getParam(r.A.QUERY_PARAMETER_SESSION_ID)),!e&&this.sessionReport.redirectedURL&&(e=this.sessionReport.redirectedURL.getParam("bpkio_sessionid"));const t=this.sessionReport.redirectedURL?this.sessionReport.redirectedURL.getPathParts():null;if(!e&&t&&t.length&&(t[0].match(String.raw`\[(.*)\]`)?(e=t[0].substring(1,t[0].length-1),a.g.v(S,"Ticket detected: "+e,this.id)):t[0].match(String.raw`\%5B(.*)\%5D`)&&(e=t[0].substring(3,t[0].length-3),a.g.v(S,"Ticket detected: "+e,this.id))),!e&&t){const s="bpk-token"===t[0]?t[1]:t[0];s&&(s.match(_.REGEX_TICKET)||s.match(_.REGEX_TICKET_TRANSCODED))&&(e=s,a.g.v(S,"Ticket detected: "+e,this.id))}return e||(e=this.generateTicket()),e||(a.g.w(S,"Failed getting ticket",this.id),a.g.w(S,"SmartLib won't be able to post metrics",this.id)),e}generateTicket(){const e=Date.now(),t=o.A.randomIntFromInterval(1e6,9999999),s=o.A.randomIntFromInterval(1e6,9999999),i=o.A.stringToBase64(t+""+e+s);return a.g.w(S,i?"Ticket generated: "+i:"Cannot encode base 64 ticket",this.id),i}getTeardown(){const e=this.sessionReport.redirectedURL.getParam("bk-teardown");return!!e&&(e.startsWith("T")||e.startsWith("t")||e.startsWith("1"))}isTeardownActivated(e){return e.forceTeardown===i.A.FORCE_TEARDOWN_ENABLED?(a.g.i(S,"Session will start with keepalives/teardown (forceTeardown)",this.id),!0):e.forceTeardown===i.A.FORCE_TEARDOWN_DISABLED?(a.g.i(S,"Session will start without keepalives/teardown (forceTeardown)",this.id),!1):null!==this.sessionReport.redirectedURL&&"0"===this.sessionReport.redirectedURL.getParam("bk-teardown")?(a.g.i(S,"Session will start without keepalives/teardown (bk-teardown=0)",this.id),!1):null!==this.sessionReport.redirectedURL&&this.getTeardown()?(a.g.i(S,"Session will start with keepalives/teardown (bk-teardown=1)",this.id),!0):this.sessionReport.nanoCDNStatus===_.NANOCDN_STATUS_USED?(a.g.i(S,"Session will start with keepalives/teardown (nanoCDN used)",this.id),!0):!1===this.options.get(h.H.REQUEST_BROADPEAK_CDN)?(a.g.i(S,"Session will start without keepalives/teardown (REQUEST_BROADPEAK_CDN=false)",this.id),!1):null!==this.sessionReport.requestedURL&&r.A.isBroadpeakDomainName(this.sessionReport.requestedURL,e.broadpeakDomainNames)?(a.g.i(S,"Session will start with keepalives/teardown (in broadpeak domains list)",this.id),!0):(a.g.i(S,"Session will start without keepalives/teardown",this.id),!1)}removeBroadpeakParameters(e){if(!e)return;const t=e.getParams();if(t){for(let e=t.length-1;e>=0;e--){const s=t[e].key;s.startsWith("bk-")&&(a.g.d(S,"Remove query parameter '"+s+"' from url",this.id),t.splice(e,1))}e.setParams(t)}}isSessionCreated(e){if(null===e)return!1;const t=e.getParam(r.A.QUERY_PARAMETER_SESSION_ID);if(t&&t.length)return!0;const s=e.getParam(r.A.QUERY_PARAMETER_SESSION_CREATED);return!!s&&(s.startsWith("T")||s.startsWith("t")||s.startsWith("1"))}isPrecached(){return!0===this.options.get(h.H.SESSION_PRECACHE)}updatePrecacheDuration(){this.isPrecached()&&0===this.sessionReport.precacheDuration&&(this.sessionReport.precacheDuration=Date.now()-this.sessionReport.startSessionDate)}getCustomParameters(){return void 0!==this.streamingSession?this.streamingSession.customParameters:this.smartLib.getParameters().customParameters}resetCustomParameters(){void 0===this.streamingSession&&this.smartLib.resetCustomParameters()}addListener(e){void 0===e||this.listeners.includes(e)||this.listeners.push(e)}removeListener(e){let t=this.listeners.indexOf(e);-1!==t&&this.listeners.splice(t,1)}notifyEvent(e,t,s,i){"function"==typeof e[t]&&e[t](s,i)}notifyLoading(){this.listeners.forEach(e=>{this.notifyEvent(e,"onLoading")})}notifyStart(){let e,t;e=E.CE.getInstance().networkType,this.sessionReport.addNetworkType(e),t=E.CE.getInstance().mute,this.listeners.forEach(s=>{this.notifyEvent(s,"onStart",e,t)})}notifyRedirectionEnd(){this.listeners.forEach(e=>{this.notifyEvent(e,"onRedirectionEnd")})}notifyPrecacheEnded(){this.isPrecached()&&!0!==this.sessionReport.precacheEnded&&(a.g.d(S,"Precache ended",this.id),this.sessionReport.precacheEnded=!0,this.updatePrecacheDuration(),this.listeners.forEach(e=>{this.notifyEvent(e,"onPrecacheEnded")}))}notifyFirstImage(e,t){this.firstImageCalled?a.g.e(S,"Implementation error: PlayerEventListener.onSessionStart() already called. If you don't attach any player, please remove this call, SmartLib is now handling it automatically.",this.id):(this.firstImageCalled=!0,void 0!==this.adSession&&this.adSession.isAdActivated()?void 0===this.playerAdapter?a.g.d(S,"Ad tracking disabled (no player attached)",this.id):!0===this.playerAdapter.getCapabilities().adTracking?this.addListener(this.adTrackingManager):a.g.d(S,"Ad tracking disabled (player not compatible)",this.id):a.g.d(S,"Ad tracking disabled (advertising not activated)",this.id),this.listeners.forEach(s=>{this.notifyEvent(s,"onFirstImage",e,t)}))}notifyLayerSwitch(e){this.listeners.forEach(t=>{this.notifyEvent(t,"onLayerSwitch",e)})}notifyPause(){this.listeners.forEach(e=>{this.notifyEvent(e,"onPause")})}notifyResume(){this.listeners.forEach(e=>{this.notifyEvent(e,"onResume")})}notifyBufferingStart(){this.listeners.forEach(e=>{this.notifyEvent(e,"onBufferingStart")})}notifyBufferingEnd(e){this.listeners.forEach(t=>{this.notifyEvent(t,"onBufferingEnd",e)})}notifyStallEnd(){this.listeners.forEach(e=>{this.notifyEvent(e,"onStallEnd")})}notifyRebufferingEnd(){this.listeners.forEach(e=>{this.notifyEvent(e,"onRebufferingEnd")})}notifySeek(e,t){this.listeners.forEach(s=>{this.notifyEvent(s,"onSeek",e,t)})}notifyStop(e){this.adSession?.adPalSession?.setAdView(void 0),this.listeners.forEach(t=>{this.notifyEvent(t,"onStop",e)})}notifyClose(e=void 0){this.listeners.forEach(t=>{this.notifyEvent(t,"onClose",e)})}notifyStartSessionReportUpdateRequested(e){this.listeners.forEach(t=>{this.notifyEvent(t,"onStartSessionReportUpdateRequested",e)})}notifyKeepaliveSessionReportRequested(e){this.listeners.forEach(t=>{this.notifyEvent(t,"onKeepaliveSessionReportUpdateRequested",e)})}notifyKeepaliveRequestEnded(e,t){this.listeners.forEach(s=>{this.notifyEvent(s,"onKeepaliveRequestEnded",e,t)})}notifyEndSessionReportUpdateRequested(e){this.listeners.forEach(t=>{this.notifyEvent(t,"onEndSessionReportUpdateRequested",e)})}notifyVolumeChanged(e){this.listeners.forEach(t=>{this.notifyEvent(t,"onVolumeChanged",e)})}notifyPlayerError(e,t){this.listeners.forEach(s=>{this.notifyEvent(s,"onPlayerError",e,t)})}notifyMulticastUsed(){this.listeners.forEach(e=>{this.notifyEvent(e,"onMulticastUsed")})}notifyUnicastUsed(){this.listeners.forEach(e=>{this.notifyEvent(e,"onUnicastUsed")})}notifySimidClickthrough(e){a.g.d(S,"NOTIFY SIMID CLICKTHROUGH IN SESSION HANDLER"),this.listeners.forEach(t=>{this.notifyEvent(t,"onSimidClickthrough",e)})}notifySimidImpression(){a.g.d(S,"NOTIFY SIMID IMPRESSION IN SESSION HANDLER"),this.listeners.forEach(e=>{this.notifyEvent(e,"onSimidImpression")})}onNetworkAvailable(e){a.g.v(S,"Received event onNetworkAvailable type:"+e,this.id),this.sessionReport.addNetworkType(e)}}},828(e,t,s){s.d(t,{f:function(){return g}});var i=s(5690),a=s(8379),r=s(7832),n=s(3121),o=s(2765),d=s(5941),l=s(4943),h=s(1105),c=s(1142);const u="BpkStreamingSession";class g{smartLib;options;customParameters;diversitySession;adSession;id;date;handler;playerAdapter;simidControllerAdapter;stopped;multicastStatusListener;constructor(e,t){this.smartLib=e,this.options=t,this.customParameters={},this.id=l.A.randomIntFromInterval(1e4,99999),this.date=Date.now(),this.stopped=!1}attachPlayer(e,t){void 0===e?void 0===c.A.analyticsModule?a.g.w(u,"Try to attach a player, but analytics module not loaded",this.id):a.g.w(u,"Try to attach a player, but it is not recognized",this.id):void 0===this.handler?(this.playerAdapter=e,a.g.i(u,"Player "+this.playerAdapter.getName()+" attached",this.id)):a.g.e(u,"Exception: attachPlayer error, you cannot attach a player when a session is running.",this.id)}attachSimidController(e){void 0===e?void 0===c.A.simidModule||void 0===c.A.adModule?a.g.w(u,"Try to attach a SIMID controller, but need simid and ad modules",this.id):a.g.w(u,"Try to attach a SIMID controller, but it is not recognized",this.id):void 0===this.handler?(this.simidControllerAdapter=e,a.g.i(u,"SIMID Controller "+this.simidControllerAdapter.getName()+" attached",this.id)):a.g.e(u,"Exception: attachSimidController error, you cannot attach a SIMID controller when a session is running.",this.id)}setOption(e,t){void 0===this.handler?(a.g.d(u,"Setting session option "+r.H.optionToString(e)+" to "+r.H.valueToString(e,t),this.id),this.options.set(e,t)):a.g.e(u,"Exception: setOption error, you cannot set an option when a session is running.",this.id)}setAdEventsListener(e){void 0===this.adSession&&(this.adSession=new h.A),this.adSession.setAdEventsListener(e)}setAdDataListener(e){void 0===this.adSession&&(this.adSession=new h.A),this.adSession.setAdDataListener(e)}activateDiversity(e){void 0!==c.A.diversityModule.DiversitySession?void 0===this.diversitySession&&(this.diversitySession=new c.A.diversityModule.DiversitySession,this.diversitySession.activate(e)):a.g.e(u,"Diversity module not loaded, please import it",this.id)}activateAdvertising(){void 0===this.adSession&&(this.adSession=new h.A),this.adSession.activateAdvertising()}setAdParameter(e,t){void 0===this.adSession&&(this.adSession=new h.A),this.adSession.setAdParameter(e,t)}setAdView(e){void 0===this.adSession&&(this.adSession=new h.A),this.adSession.adView=e,this.handler?.omSessionHandler?.omAdSession?.setAdView(e)}setAdViewState(e){void 0===this.adSession&&(this.adSession=new h.A),!0===i.up.isAdViewState(e)?(this.adSession.adViewState=e,this.handler?.omSessionHandler?.omAdSession?.setAdViewState(e)):a.g.e(u,"Please use a defined state within the AdViewState enum.",this.id)}registerAdFriendlyObstructionView(e,t,s){void 0===this.adSession&&(this.adSession=new h.A),i.D6.isAdFriendlyObstructionPurpose(t)&&"string"==typeof s?(this.adSession.adFriendlyObstructionViews.push({view:e,purpose:t,reason:s}),this.handler?.omSessionHandler?.omAdSession?.registerAdFriendlyObstructionView(e,t,s)):a.g.e(u,"Ad friendly objection view not registered, please check arguments types: purpose -> state within the AdFriendlyObstructionPurpose enum, reason -> string",this.id)}unregisterFriendlyObstruction(e){void 0!==this.adSession&&(this.adSession.adFriendlyObstructionViews=this.adSession.adFriendlyObstructionViews.filter(t=>t.view!==e),this.handler?.omSessionHandler?.omAdSession?.unregisterFriendlyObstruction(e))}unregisterAllFriendlyObstructions(){void 0!==this.adSession&&(this.adSession.adFriendlyObstructionViews=[],this.handler?.omSessionHandler?.omAdSession?.unregisterAllFriendlyObstructions())}setAdCustomReference(e){void 0===this.adSession&&(this.adSession=new h.A),"string"==typeof e?(this.adSession.adCustomReference=e,void 0!==this.handler?.omSessionHandler?.omAdSession&&a.g.w(u,'An ad is already playing, the ad custom reference "'+e+'" will be set for the next ad',this.id)):a.g.e(u,"Ad custom reference not set, reference argument has to be a string",this.id)}registerAdVerificationData(e,t=void 0,s=void 0){void 0===this.adSession&&(this.adSession=new h.A);const i={verificationVendor:t,verificationURL:e,verificationParameters:s};this.adSession.adVerificationData.push(i),void 0!==this.handler?.omSessionHandler?.omAdSession&&a.g.w(u,'An ad is already playing, the ad verification data "'+JSON.stringify(i)+'" will be set for the next ad',this.id)}adUserInteraction(e){void 0===this.adSession&&(this.adSession=new h.A),"string"==typeof e?(a.g.d(u,"Ad interaction: "+e,this.id),this.handler?.adTrackingManager?.adUserInteraction(e),this.adSession.adPalSession?.sendAdClick(),void 0!==this.handler?.omSessionHandler?.omAdSession&&this.handler.omSessionHandler.omAdSession.adUserInteraction(e)):a.g.e(u,"Ad interaction type not triggered, interactionType argument has to be a string",this.id)}adTouch(e){void 0===this.adSession&&(this.adSession=new h.A),a.g.d(u,"Ad touch",this.id),this.adSession.adPalSession?.sendTouch(e)}setCustomParameter(e,t){"string"==typeof e?this.customParameters[e]=d.A.toBkAString(String(t)):a.g.e(u,"Error: Only string values are accepted for custom parameters",this.id)}setEventCallbackEnabled(e){void 0===this.adSession&&(this.adSession=new h.A),this.adSession.setEventCallbackEnabled(e)}getURL(e){return a.g.i(u,"getURL with "+e,this.id),void 0===this.handler?d.A.typeParameter(e,"string","Error: requestedURL should be a string")&&d.A.stringNonEmpty(e,"Error: requestedURL is empty")?(this.handler=this.smartLib.sessionManager.createSessionHandler(this),this.handler.diversitySession=this.diversitySession,void 0!==this.diversitySession&&(this.diversitySession.handler=this.handler),this.handler.adSession=this.adSession,void 0!==this.adSession&&(this.handler.simidControllerAdapter=this.simidControllerAdapter,this.adSession.handler=this.handler),this.handler.start(e)):Promise.resolve(n.S.error(n.S.RESULT_API_PARAMETER_FORMAT_ERROR)):(a.g.e(u,"Exception: getURL error, the session is already running.",this.id),Promise.resolve(n.S.error(n.S.RESULT_REQUEST_ALREADY_DONE)))}getQuery(){return a.g.i(u,"getQuery",this.id),void 0===this.handler?(this.handler=this.smartLib.sessionManager.createProxySessionHandler(this),this.handler.getQuery()):(a.g.e(u,"Exception: getQuery error, the session is already running.",this.id),"")}precacheEnded(){this.handler?.notifyPrecacheEnded()}startStreamingSession(e,t){return a.g.i(u,"startStreamingSession with "+e+" and "+t,this.id),!(!d.A.typeParameter(e,"string","Error: requestedURL should be a string")||!d.A.typeParameter(t,"string","Error: redirectedURL should be a string"))&&(void 0===this.handler?(a.g.e(u,"Exception: startSteamingSession error, getQuery() should be called prior to startStreamingSession(...)"),!1):this.handler instanceof o.A?(this.handler.start(e,t),!0):(a.g.e(u,"Exception: startSteamingSession error, startStreamingSession(...) cannot be called once getURL(...) has been called"),!1))}stopStreamingSession(e){return void 0===e?a.g.i(u,"Stopping streaming session...",this.id):a.g.i(u,"Stopping streaming session with statusCode "+e+"...",this.id),void 0!==this.handler&&this.handler.stop(e),void 0!==this.playerAdapter&&this.playerAdapter.detachPlayer(),void 0!==this.simidControllerAdapter&&this.simidControllerAdapter.detachSimidController(),this.stopped=!0,this.handler}isNanoCDNUsed(){return void 0!==this.handler&&this.handler.isNanoCDNUsed()}getVideoMulticastStatus(){return void 0!==this.handler?this.handler.videoMulticastStatus:r.H.MULTICAST_INACTIVE}getAudioMulticastStatus(){return void 0!==this.handler?this.handler.audioMulticastStatus:r.H.MULTICAST_INACTIVE}getDataMulticastStatus(){return void 0!==this.handler?this.handler.dataMulticastStatus:r.H.MULTICAST_INACTIVE}setMulticastStatusListener(e){a.g.d(u,"Multicast status listener "+(void 0===e?"unset":"set"),this.id),this.multicastStatusListener=e}getAdList(){return this.handler?.adTrackingManager?.adList||[]}getCurrentAd(){return this.handler?.adTrackingManager?.getCurrentAd()}getCurrentAdBreak(){return this.handler?.adTrackingManager?.getCurrentAdBreak()}getPositionForBookmark(e){const t=this.handler?.adTrackingManager?.getPositionForBookmark(e);return void 0===t?-1:t}getPositionForPlayback(e,t=!1){const s=this.handler?.adTrackingManager?.getPositionForPlayback(Number(e),t);return void 0===s?-1:s}getDurationWithoutAds(){const e=void 0===this.playerAdapter?0:this.playerAdapter.getDuration();if(e>0){const t=this.handler?.adTrackingManager?.getTotalAdsDuration();return void 0===t?e:e-t}return-1}requestOutOfBandAds(e,t=void 0,s=!0,i=void 0){a.g.d(u,"Calling requestOutOfBandAds"),void 0!==this.handler?void 0!==this.playerAdapter?!0===this.adSession?.adActivated?(null===t&&(t=void 0),d.A.stringNonEmpty(e,"Error: name should be a non-empty string")&&d.A.typeOrUndefinedParameter(t,"number","If set, duration should be a float")&&d.A.typeParameter(s,"boolean","Error: autoBegin should be a boolean")&&d.A.typeOrUndefinedParameter(i,"object","Error: additionalQueryParams should be an object")&&(t<=0&&(a.g.w(u,"Duration <= 0, setting to undefined"),t=void 0),this.handler?.adTrackingManager?.requestOutOfBandAds(e,t,s,i))):a.g.e(u,"Advertising not activated, please call activateAdvertising() before getURL()."):a.g.e(u,"No player attached. This is required to compute ads position."):a.g.e(u,"Session not started, please call getURL() to start session. This is required to get ad gateway URL.")}beginOutOfBandAdBreak(e){this.handler?.adTrackingManager?.beginOutOfBandAdBreak(e)}endOutOfBandAdBreak(e){this.handler?.adTrackingManager?.endOutOfBandAdBreak(e)}sendTracker(e,t,s=void 0){!0!==this.options.get(r.H.AD_TRACKERS_NON_LINEAR_AUTO_SEND)?d.A.typeParameter(e,"string","Error: trackingEventName should be a string")&&d.A.typeParameter(t,"string","Error: adId should be a string")&&d.A.typeOrUndefinedParameter(s,"string","Error: creativeId should be a string")&&this.handler?.adTrackingManager?.sendTracker(e,t,s):a.g.w(u,"The option AD_TRACKERS_NON_LINEAR_AUTO_SEND is enabled, you should not call sendTracker manually for non-linear ads as tracking events will be automatically sent.",this.id)}}},7832(e,t,s){s.d(t,{H:function(){return n}});var i=s(8379),a=s(6506);const r="BpkStreamingSessionOptions";class n{static MULTICAST_ONLY=0;static ULTRA_LOW_LATENCY_SUPPORT=1;static PIP_SESSION=2;static GDPR_PREFERENCE=3;static REQUEST_REDIRECT_THIRD_PARTY_CDN=100;static REQUEST_NANO_CDN=102;static REQUEST_BROADPEAK_CDN=103;static REQUEST_LOCAL_NANO_CDN_IF_CONNECTED_TO_WIFI=104;static REQUEST_NANO_CDN_DURING_GET_QUERY=106;static REQUEST_BKYOU_IF_BROADPEAK_CDN=107;static REQUEST_NANO_CDN_PRIORITY=108;static SESSION_KEEPALIVE=200;static SESSION_TEARDOWN=201;static SESSION_REPORTING_MODE=202;static SESSION_KEEPALIVE_FREQUENCY=203;static SESSION_PRECACHE=204;static USERAGENT_AD_EVENT=300;static AD_TRACKERS_STORE_DURATION=301;static AD_TRACKERS_NON_LINEAR_AUTO_SEND=310;static TIMEOUT_NANO_CDN_REQUEST_ROUTER=500;static TIMEOUT_NANO_CDN_STATIC_RESOLVING=501;static TIMEOUT_NANO_CDN_DISCOVER_RESOLVING=502;static PRIORITY_NANO_CDN_CONF=600;static PRIORITY_APP_CONF=601;static PRIORITY_LOAD_BALANCING=602;static EXPERIMENTAL_METRICS_LATENCY=900;static LEGACY_MULTICAST_ONLY=1e3;static SESSION_DISABLED=-1;static SESSION_ENABLED_IF_BROADPEAK_DOMAIN=0;static SESSION_ENABLED=1;static SESSION_REPORTING_MODE_DEFAULT=0;static SESSION_REPORTING_MODE_KEEPALIVE_TEARDOWN=1;static SESSION_REPORTING_MODE_METRICS_RECEIVER=2;static SESSION_REPORTING_MODE_DISABLED=-1;static MULTICAST_UNKNOWN=-1;static MULTICAST_INACTIVE=0;static MULTICAST_INACTIVE_WAS_ACTIVE=1;static MULTICAST_ACTIVE=2;static GDPR_DELETE=1;static GDPR_ANONYMIZED=2;static GDPR_ENCRYPTED=3;static GDPR_CLEAR=4;options;updates;constructor(){this.options={},this.options[n.MULTICAST_ONLY]=!1,this.options[n.ULTRA_LOW_LATENCY_SUPPORT]=!1,this.options[n.PIP_SESSION]=!1,this.options[n.GDPR_PREFERENCE]=n.GDPR_CLEAR,this.options[n.REQUEST_REDIRECT_THIRD_PARTY_CDN]=!1,this.options[n.REQUEST_NANO_CDN]=!0,this.options[n.REQUEST_BROADPEAK_CDN]=!0,this.options[n.REQUEST_LOCAL_NANO_CDN_IF_CONNECTED_TO_WIFI]=!0,this.options[n.REQUEST_NANO_CDN_DURING_GET_QUERY]=!0,this.options[n.REQUEST_BKYOU_IF_BROADPEAK_CDN]=!1,this.options[n.REQUEST_NANO_CDN_PRIORITY]=n.PRIORITY_NANO_CDN_CONF,this.options[n.SESSION_KEEPALIVE]=n.SESSION_ENABLED_IF_BROADPEAK_DOMAIN,this.options[n.SESSION_TEARDOWN]=n.SESSION_ENABLED_IF_BROADPEAK_DOMAIN,this.options[n.SESSION_REPORTING_MODE]=n.SESSION_REPORTING_MODE_DEFAULT,this.options[n.SESSION_KEEPALIVE_FREQUENCY]=a.A.KEEPALIVE_REQUEST_INTERVAL,this.options[n.SESSION_PRECACHE]=!1,this.options[n.USERAGENT_AD_EVENT]=void 0,this.options[n.AD_TRACKERS_STORE_DURATION]=void 0,this.options[n.AD_TRACKERS_NON_LINEAR_AUTO_SEND]=!0,this.options[n.TIMEOUT_NANO_CDN_REQUEST_ROUTER]=2e3,this.options[n.TIMEOUT_NANO_CDN_STATIC_RESOLVING]=3e3,this.options[n.TIMEOUT_NANO_CDN_DISCOVER_RESOLVING]=3e3,this.options[n.EXPERIMENTAL_METRICS_LATENCY]=!1,this.options[n.LEGACY_MULTICAST_ONLY]=!1,this.updates=[]}static create(e=void 0,t=void 0){const s=new n;return e instanceof n&&(s.options={...e.options}),void 0!==t&&t.updates.forEach(e=>{s.options[e]=t.options[e]}),s}option(e,t){return this.validate(e,t)&&(this.options[e]=t,e===n.PIP_SESSION&&!0===t&&this.option(n.REQUEST_NANO_CDN,!1),-1===this.updates.indexOf(e)&&this.updates.push(e)),this}get(e){const t=[n.USERAGENT_AD_EVENT,n.AD_TRACKERS_STORE_DURATION];return void 0===this.options[e]&&-1===t.indexOf(e)&&i.g.w(r,"Warning: get option "+e+" not found"),this.options[e]}set(e,t){this.option(e,t)}validate(e,t){if(e===n.SESSION_REPORTING_MODE)return t===n.SESSION_REPORTING_MODE_DEFAULT||t===n.SESSION_REPORTING_MODE_KEEPALIVE_TEARDOWN||t===n.SESSION_REPORTING_MODE_METRICS_RECEIVER||t===n.SESSION_REPORTING_MODE_DISABLED||(i.g.e(r,"Error: SESSION_REPORTING_MODE should be SESSION_REPORTING_MODE_DEFAULT, SESSION_REPORTING_MODE_KEEPALIVE_TEARDOWN, SESSION_REPORTING_MODE_METRICS_RECEIVER or SESSION_REPORTING_MODE_DISABLED"),!1);if(e===n.SESSION_KEEPALIVE||e===n.SESSION_TEARDOWN)return t===n.SESSION_DISABLED||t===n.SESSION_ENABLED_IF_BROADPEAK_DOMAIN||t===n.SESSION_ENABLED||(i.g.e(r,"Error: "+n.optionToString(e)+" value should be SESSION_ENABLED_IF_BROADPEAK_DOMAIN, SESSION_DISABLED or SESSION_ENABLED"),!1);if(e===n.SESSION_KEEPALIVE_FREQUENCY)return"number"==typeof t&&t>=5e3&&t<=6e4||(i.g.e(r,"Error: "+n.optionToString(e)+" value should be a number within 5000ms and 60000ms"),!1);if(e===n.USERAGENT_AD_EVENT)return"string"==typeof t||void 0===t||(i.g.e(r,"Error: "+n.optionToString(e)+" value should be a string or undefined"),!1);if(e===n.AD_TRACKERS_STORE_DURATION)return"number"==typeof t&&(-1===t||t>0)||void 0===t||(i.g.e(r,"Error: "+n.optionToString(e)+" value should be a number greater then 0 or equal to -1"),!1);if(e===n.GDPR_PREFERENCE)return"number"==typeof t&&t>=1&&t<=4||(i.g.e(r,"Error: "+n.optionToString(e)+" value should be a number within 1 and 4"),!1);if(e>=n.TIMEOUT_NANO_CDN_REQUEST_ROUTER&&e<=n.TIMEOUT_NANO_CDN_DISCOVER_RESOLVING)return"number"==typeof t||(i.g.e(r,"Error: "+n.optionToString(e)+" value should be a number"),!1);if(e===n.REQUEST_NANO_CDN_PRIORITY)return t>=n.PRIORITY_NANO_CDN_CONF&&t<=n.PRIORITY_LOAD_BALANCING||(i.g.e(r,"Error: "+n.optionToString(e)+" value should be PRIORITY_NANO_CDN_CONF, PRIORITY_APP_CONF or PRIORITY_LOAD_BALANCING"),!1);if(void 0===e)return i.g.e(r,"Error: option should not be undefined"),!1;const s="boolean"==typeof t;return s||i.g.e(r,"Error: "+n.optionToString(e)+" value should be a boolean"),s}print(e=r,t="",s){i.g.i(e,t+"Options",s),i.g.i(e,t+"   MULTICAST_ONLY="+this.get(n.MULTICAST_ONLY),s),i.g.i(e,t+"   LEGACY_MULTICAST_ONLY="+this.get(n.LEGACY_MULTICAST_ONLY),s),i.g.i(e,t+"   REQUEST_REDIRECT_THIRD_PARTY_CDN="+this.get(n.REQUEST_REDIRECT_THIRD_PARTY_CDN),s),i.g.i(e,t+"   REQUEST_NANO_CDN="+this.get(n.REQUEST_NANO_CDN),s),i.g.i(e,t+"   REQUEST_NANO_CDN_DURING_GET_QUERY="+this.get(n.REQUEST_NANO_CDN_DURING_GET_QUERY),s),i.g.i(e,t+"   REQUEST_BROADPEAK_CDN="+this.get(n.REQUEST_BROADPEAK_CDN),s),i.g.i(e,t+"   REQUEST_LOCAL_NANO_CDN_IF_CONNECTED_TO_WIFI="+this.get(n.REQUEST_LOCAL_NANO_CDN_IF_CONNECTED_TO_WIFI),s),i.g.i(e,t+"   REQUEST_BKYOU_IF_BROADPEAK_CDN="+this.get(n.REQUEST_BKYOU_IF_BROADPEAK_CDN),s),i.g.i(e,t+"   REQUEST_NANO_CDN_PRIORITY="+n.nanoCDNPriorityToString(this.get(n.REQUEST_NANO_CDN_PRIORITY)),s),i.g.i(e,t+"   SESSION_KEEPALIVE="+n.stateToString(this.get(n.SESSION_KEEPALIVE)),s),i.g.i(e,t+"   SESSION_KEEPALIVE_FREQUENCY="+this.get(n.SESSION_KEEPALIVE_FREQUENCY)+"ms",s),i.g.i(e,t+"   SESSION_TEARDOWN="+n.stateToString(this.get(n.SESSION_TEARDOWN)),s),i.g.i(e,t+"   SESSION_REPORTING_MODE="+n.reportingModeToString(this.get(n.SESSION_REPORTING_MODE)),s),i.g.i(e,t+"   SESSION_PRECACHE="+this.get(n.SESSION_PRECACHE),s),i.g.i(e,t+"   TIMEOUT_NANO_CDN_REQUEST_ROUTER="+this.get(n.TIMEOUT_NANO_CDN_REQUEST_ROUTER)+"ms",s),void 0!==this.get(n.USERAGENT_AD_EVENT)&&i.g.i(e,t+"   USERAGENT_AD_EVENT="+this.get(n.USERAGENT_AD_EVENT),s),void 0!==this.get(n.AD_TRACKERS_STORE_DURATION)&&i.g.i(e,t+"   AD_TRACKERS_STORE_DURATION="+this.get(n.AD_TRACKERS_STORE_DURATION),s),this.get(n.AD_TRACKERS_NON_LINEAR_AUTO_SEND)||i.g.i(e,t+"   AD_TRACKERS_NON_LINEAR_AUTO_SEND="+this.get(n.AD_TRACKERS_NON_LINEAR_AUTO_SEND),s),i.g.i(e,t+"   PIP_SESSION="+this.get(n.PIP_SESSION),s),i.g.i(e,t+"   ULTRA_LOW_LATENCY_SUPPORT="+this.get(n.ULTRA_LOW_LATENCY_SUPPORT),s),i.g.i(e,t+"   GDPR_PREFERENCE="+this.get(n.GDPR_PREFERENCE),s)}printUpdates(e=r,t="",s){this.updates.forEach(a=>{i.g.i(e,t+"   "+n.optionToString(a)+"="+n.valueToString(a,this.get(a)),s)})}static optionToString(e){switch(e){case this.MULTICAST_ONLY:return"MULTICAST_ONLY";case this.PIP_SESSION:return"PIP_SESSION";case this.ULTRA_LOW_LATENCY_SUPPORT:return"ULTRA_LOW_LATENCY_SUPPORT";case this.GDPR_PREFERENCE:return"GDPR_PREFERENCE";case this.REQUEST_REDIRECT_THIRD_PARTY_CDN:return"REQUEST_REDIRECT_THIRD_PARTY_CDN";case this.REQUEST_NANO_CDN:return"REQUEST_NANO_CDN";case this.REQUEST_BROADPEAK_CDN:return"REQUEST_BROADPEAK_CDN";case this.REQUEST_LOCAL_NANO_CDN_IF_CONNECTED_TO_WIFI:return"REQUEST_LOCAL_NANO_CDN_IF_CONNECTED_TO_WIFI";case this.REQUEST_NANO_CDN_DURING_GET_QUERY:return"REQUEST_NANO_CDN_DURING_GET_QUERY";case this.REQUEST_BKYOU_IF_BROADPEAK_CDN:return"REQUEST_BKYOU_IF_BROADPEAK_CDN";case this.REQUEST_NANO_CDN_PRIORITY:return"REQUEST_NANO_CDN_PRIORITY";case this.SESSION_KEEPALIVE:return"SESSION_KEEPALIVE";case this.SESSION_TEARDOWN:return"SESSION_TEARDOWN";case this.SESSION_REPORTING_MODE:return"SESSION_REPORTING_MODE";case this.SESSION_KEEPALIVE_FREQUENCY:return"SESSION_KEEPALIVE_FREQUENCY";case this.SESSION_PRECACHE:return"SESSION_PRECACHE";case this.USERAGENT_AD_EVENT:return"USERAGENT_AD_EVENT";case this.AD_TRACKERS_STORE_DURATION:return"AD_TRACKERS_STORE_DURATION";case this.AD_TRACKERS_NON_LINEAR_AUTO_SEND:return"AD_TRACKERS_NON_LINEAR_AUTO_SEND";case this.TIMEOUT_NANO_CDN_REQUEST_ROUTER:return"TIMEOUT_NANO_CDN_REQUEST_ROUTER";case this.TIMEOUT_NANO_CDN_STATIC_RESOLVING:return"TIMEOUT_NANO_CDN_STATIC_RESOLVING";case this.TIMEOUT_NANO_CDN_DISCOVER_RESOLVING:return"TIMEOUT_NANO_CDN_DISCOVER_RESOLVING";case this.PRIORITY_NANO_CDN_CONF:return"PRIORITY_NANO_CDN_CONF";case this.PRIORITY_APP_CONF:return"PRIORITY_APP_CONF";case this.PRIORITY_LOAD_BALANCING:return"PRIORITY_LOAD_BALANCING";case this.LEGACY_MULTICAST_ONLY:return"LEGACY_MULTICAST_ONLY"}return"unknown"}static valueToString(e,t){switch(e){case this.SESSION_KEEPALIVE:case this.SESSION_TEARDOWN:return this.stateToString(t);case this.SESSION_REPORTING_MODE:return this.reportingModeToString(t);case this.REQUEST_NANO_CDN_PRIORITY:return this.nanoCDNPriorityToString(t)}return String(t)}static stateToString(e){switch(e){case n.SESSION_DISABLED:return"disabled";case n.SESSION_ENABLED_IF_BROADPEAK_DOMAIN:return"enabled if broadpeak domain name";case n.SESSION_ENABLED:return"enabled"}return"unknown"}static reportingModeToString(e){switch(e){case n.SESSION_REPORTING_MODE_DEFAULT:return"default";case n.SESSION_REPORTING_MODE_KEEPALIVE_TEARDOWN:return"keepalive/teardown";case n.SESSION_REPORTING_MODE_METRICS_RECEIVER:return"metricsReceiver";case n.SESSION_REPORTING_MODE_DISABLED:return"disabled"}return"unknown"}static nanoCDNPriorityToString(e){switch(e){case n.PRIORITY_NANO_CDN_CONF:return"nanoCDN conf";case n.PRIORITY_APP_CONF:return"init order";case n.PRIORITY_LOAD_BALANCING:return"load balancing"}return"unknown"}}},3121(e,t,s){s.d(t,{S:function(){return i}});class i{static RESULT_NO_ERROR=0;static RESULT_NO_STREAMING_URL_FOUND=3100;static RESULT_CDN_RESPONSE_UNREADABLE=3101;static RESULT_REQUESTED_URL_NOT_FOUND_ON_CDN=3102;static RESULT_REQUESTED_URL_NOT_FOUND_ON_NANOCDN=3103;static RESULT_REQUESTED_URL_CDN_ERROR=3104;static RESULT_NANOCDN_SESSION_LIMIT_REACHED=3201;static RESULT_NANOCDN_SESSION_LIMIT_REACHED_ON_REQUESTED_CHANNEL=3202;static RESULT_NANOCDN_SERVICE_UNAVAILABLE=3203;static RESULT_NANOCDN_CHANNEL_UNAVAILABLE=3204;static RESULT_NANOCDN_REQUEST_LOCAL_IF_CONNECTED_TO_WIFI_NOT_ALLOWED=3205;static RESULT_NANOCDN_RESPONSE_UNREADABLE=3206;static RESULT_API_PARAMETER_FORMAT_ERROR=3400;static RESULT_API_NOT_INITIALIZED=3401;static RESULT_SESSION_HAS_BEEN_STOPPED_DURING_REQUEST=3402;static RESULT_REQUEST_ALREADY_DONE=3403;static RESULT_NO_DETAILED_ERROR=0;static RESULT_DETAILED_ERROR_PARSING_ERROR=-1;url;errorCode;detailedErrorCode;detailedErrorMessage;nanoCDNUsed;nanoCDNDescr;constructor(e,t,s=""){this.url=e,this.errorCode=t,this.detailedErrorMessage=s.trim();const a=s.match("^([0-9]+).*");null!==a&&void 0!==a[1]?this.detailedErrorCode=parseInt(a[1],10):""===this.detailedErrorMessage?this.detailedErrorCode=i.RESULT_NO_DETAILED_ERROR:this.detailedErrorCode=i.RESULT_DETAILED_ERROR_PARSING_ERROR,this.nanoCDNUsed=!1,this.nanoCDNDescr=void 0}static success(e){return new i(e,i.RESULT_NO_ERROR)}static error(e,t=""){return new i("",e,t)}getURL(){return this.url}isError(){return this.errorCode!==i.RESULT_NO_ERROR}getErrorCode(){return this.errorCode}getErrorMessage(){return i.getErrorMessage(this.errorCode)}getDetailedErrorCode(){return this.detailedErrorCode}getDetailedErrorMessage(){return this.detailedErrorMessage}isNanoCDNUsed(){return this.nanoCDNUsed}static getErrorMessage(e){switch(e){case i.RESULT_NO_ERROR:return"Result success. The session has been created.";case i.RESULT_NO_STREAMING_URL_FOUND:return"Request error. No streaming URL has been found. Default error when requesting the CDN (BkM/uCDN).";case i.RESULT_CDN_RESPONSE_UNREADABLE:return"Request error. The CDN response is unreadable (timeout error, CORS error, connection error).";case i.RESULT_REQUESTED_URL_NOT_FOUND_ON_CDN:return"Request error. Content not found on the CDN (error 4XX).";case i.RESULT_REQUESTED_URL_NOT_FOUND_ON_NANOCDN:return"Request error. Content not found on the nanoCDN (error 404, timeout error, CORS error or connection error).";case i.RESULT_REQUESTED_URL_CDN_ERROR:return"Request error. The CDN returned an unknown error (error 5XX).";case i.RESULT_NANOCDN_SESSION_LIMIT_REACHED:return"nanoCDN error. All nanoCDN on the network responded with session limit reached error.";case i.RESULT_NANOCDN_SESSION_LIMIT_REACHED_ON_REQUESTED_CHANNEL:return"nanoCDN error. All nanoCDN on the network responded with session limit reached error for the requested channel.";case i.RESULT_NANOCDN_SERVICE_UNAVAILABLE:return"nanoCDN error. All nanoCDN on the network have their service unavailable.";case i.RESULT_NANOCDN_CHANNEL_UNAVAILABLE:return"nanoCDN error. The requested channel is unavailable on all nanoCDN of the network.";case i.RESULT_NANOCDN_REQUEST_LOCAL_IF_CONNECTED_TO_WIFI_NOT_ALLOWED:return"nanoCDN error. A nanoCDN on 127.0.0.1 has been found and is connected to Wi-Fi but it is not allowed.";case i.RESULT_API_PARAMETER_FORMAT_ERROR:return"Api error. A method parameter does not have the right format.";case i.RESULT_API_NOT_INITIALIZED:return"Api error. SmartLib init not called";case i.RESULT_SESSION_HAS_BEEN_STOPPED_DURING_REQUEST:return"Workflow error. The session has been stopped during request.";case i.RESULT_REQUEST_ALREADY_DONE:return"Workflow error. The request has already been done for that session."}return"No error message for the error code "+e}}},3445(e,t,s){s.d(t,{A:function(){return i}});class i{static formatDate(e=new Date){let t="";e<0&&(e*=-1,t="-");const s=e.getDate()<=9?"0"+e.getDate():e.getDate(),i=e.getMonth()+1<=9?"0"+(e.getMonth()+1):e.getMonth()+1,a=e.getHours()<=9?"0"+e.getHours():e.getHours(),r=e.getMinutes()<=9?"0"+e.getMinutes():e.getMinutes(),n=e.getSeconds()<=9?"0"+e.getSeconds():e.getSeconds();let o=String(e.getMilliseconds());return 1===o.length?o="00"+o:2===o.length&&(o="0"+o),t+i+"-"+s+" "+a+":"+r+":"+n+"."+o}static formatTime(e){let t="";e<0&&(e*=-1,t="-");const s=e%1e3,i=Math.floor(e/1e3%60),a=Math.floor(e/6e4%60),r=Math.floor(e/36e5%24),n=r<=9?"0"+r:r,o=a<=9?"0"+a:a,d=i<=9?"0"+i:i;let l=String(s);return 1===l.length?l="00"+l:2===l.length&&(l="0"+l),t+n+":"+o+":"+d+"."+l}}},8379(e,t,s){s.d(t,{$:function(){return r},g:function(){return o}});var i=s(3445);class a{static log(e,t,s){}}class r{static VERBOSE=0;static DEBUG=1;static INFO=2;static WARN=3;static ERROR=4}class n{static NONE=-1;static BASIC=0;static VERBOSE=1}class o{static instance;#i=a;#_;#A;#N;static getInstance(){return o.instance||(o.instance=new o),o.instance}constructor(){this.#_=[],this.#A=n.VERBOSE}init(e){this.#i=e}release(){this.#i=void 0}printLogs(e,t,s,a){if(this.#_.length>100&&(this.#_=[]),void 0!==a&&(s="["+a+"] "+s),this.#_.push(t+": "+s),void 0!==this.#N){let a=i.A.formatDate()+" ";switch(e){case r.VERBOSE:a+="V/";break;case r.DEBUG:a+="D/";break;case r.INFO:a+="I/";break;case r.WARN:a+="W/";break;case r.ERROR:a+="E/"}a+=t+": "+s,this.#N?.onLog(a)}else this.#i.log(e,t,s,a)}printVerboseLogs(e,t,s){this.#A<n.VERBOSE||this.printLogs(r.VERBOSE,e,t,s)}static v(e,t,s){o.getInstance().printVerboseLogs(e,t,s)}printDebugLogs(e,t,s){this.#A<n.VERBOSE||this.printLogs(r.DEBUG,e,t,s)}static d(e,t,s){o.getInstance().printDebugLogs(e,t,s)}printInfoLogs(e,t,s){this.#A<=n.NONE||this.printLogs(r.INFO,e,t,s)}static i(e,t,s){o.getInstance().printInfoLogs(e,t,s)}printWarnLogs(e,t,s){this.#A<=n.NONE||this.printLogs(r.WARN,e,t,s)}static w(e,t,s){o.getInstance().printWarnLogs(e,t,s)}printErrorLogs(e,t,s){this.#A<=n.NONE||this.printLogs(r.ERROR,e,t,s)}static e(e,t,s){o.getInstance().printErrorLogs(e,t,s)}getLogs(){return this.#_.join("\n")}resetLogs(){this.#_=[]}getLogLevel(e){return this.#A}setLogLevel(e){this.#A=e}setLogRedirectListener(e){this.#N=e}}},4943(e,t,s){s.d(t,{A:function(){return i}});class i{static randomIntFromInterval(e,t){return Math.floor(Math.random()*(t-e+1)+e)}static bufferToBase64Lookup(e){return e<26?String.fromCharCode(e+"A".charCodeAt(0)):e<52?String.fromCharCode(e-26+"a".charCodeAt(0)):e<62?String.fromCharCode(e-52+"0".charCodeAt(0)):62===e?"-":63===e?"_":""}static bufferToBase64(e){let t;const s=e.data(),a=e.length();let r="";for(t=0;t<a;t+=3){let e=[void 0,void 0,void 0,void 0];e[0]=s[t]>>2,e[1]=(3&s[t])<<4,a>t+1&&(e[1]|=s[t+1]>>4,e[2]=(15&s[t+1])<<2),a>t+2&&(e[2]|=s[t+2]>>6,e[3]=63&s[t+2]);for(let t=0;t<e.length;t++)void 0===e[t]||(r+=i.bufferToBase64Lookup(e[t]))}return r}static BASE64_CHARS="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";static stringToBase64(e){let t="",s="",a=e.length%3;if(a>0)for(;a<3;a++)s+="=",e+="\0";for(a=0;a<e.length;a+=3){let s=(e.charCodeAt(a)<<16)+(e.charCodeAt(a+1)<<8)+e.charCodeAt(a+2);s=[s>>>18&63,s>>>12&63,s>>>6&63,63&s],t+=i.BASE64_CHARS[s[0]]+i.BASE64_CHARS[s[1]]+i.BASE64_CHARS[s[2]]+i.BASE64_CHARS[s[3]]}return t.substring(0,t.length-s.length)+s}static base64ToString(e){const t="="===(e=e.replace(new RegExp("[^"+i.BASE64_CHARS.split("")+"=]","g"),"")).charAt(e.length-1)?"="===e.charAt(e.length-2)?"AA":"A":"";let s="";e=e.substr(0,e.length-t.length)+t;for(let t=0;t<e.length;t+=4){const a=(i.BASE64_CHARS.indexOf(e.charAt(t))<<18)+(i.BASE64_CHARS.indexOf(e.charAt(t+1))<<12)+(i.BASE64_CHARS.indexOf(e.charAt(t+2))<<6)+i.BASE64_CHARS.indexOf(e.charAt(t+3));s+=String.fromCharCode(a>>>16&255,a>>>8&255,255&a)}return s.substring(0,s.length-t.length)}static floor(e){return e>>>0}static bufferToString(e,t=e.length){let s="[0x";for(let i=0;i<t;i++){const a=e[i];s+=("00"+Number(a).toString(16)).slice(-2),i<t-1&&(s+=",0x")}return s+="] (capacity:"+e.length+")",s}}},3641(e,t,s){s.d(t,{A:function(){return i}});class i{static REGEX_URL="^(https?)\\:\\/\\/(([^:\\/?#]*)(?:\\:([0-9]+))?)([\\/]{0,1}[^?#]*)(\\?[^#]*|)(#.*|)$";href;protocol;host;hostname;port;path;query;params;hash;dirty;static parse(e){if(!e||!e.length)return null;const t=e.match(i.REGEX_URL);if(!t)return null;const s=new i;s.href=e,s.protocol=t[1],s.host=t[2],s.hostname=t[3],s.port=t[4],s.path=t[5],s.query=t[6],s.hash=t[7],s.params=[];return(s.query&&s.query.length?s.query.substring(1).split("&"):[]).forEach(e=>{const t=e.indexOf("="),i=t>0?e.substring(0,t):e,a=t>0?e.substring(t+1):null;s.params.push({key:i,value:a})}),s.dirty=!1,s}static clone(e){if(!(e instanceof i))return null;const t=new i;return t.href=e.href,t.protocol=e.protocol,t.host=e.host,t.hostname=e.hostname,t.port=e.port,t.path=e.path,t.query=e.query,t.params=e.params?.map(e=>Object.assign({},e)),t.hash=e.hash,t.dirty=e.dirty,t}constructor(){}getProtocol(){return this.protocol}getHost(){return this.host}getHostname(){return this.hostname}getPort(){return this.port}getPath(){return this.path}getPathParts(){return this.path?this.path.split("/").filter(e=>""!==e):[]}getQuery(){return this.query}hasParam(e){return this.params&&this.params.some(t=>t.key===e)}getParam(e){const t=this.params?.find(t=>t.key===e);return t?t.value:null}getParams(){return this.params}setProtocol(e){return this.protocol=e,this.dirty=!0,this}setHost(e){return this.host=e,this.dirty=!0,this}setPath(e){return this.path=e,this.dirty=!0,this}addParam(e,t){return this.params.push({key:e,value:t}),this.dirty=!0,this}setParam(e,t){const s=this.params.find(t=>t.key===e);return s?s.value=t:this.addParam(e,t),this.dirty=!0,this}setParams(e){return this.params=e,this.dirty=!0,this}clearParams(){return this.params=[],this.dirty=!0,this}applyRelativeUrl(e){if(!e||!e.length)return this;const t=this.getPathParts(),s=(e.startsWith("/")?"":"/")+e,a=i.parse("http://domain"+s),r=a.getPathParts();if(e.startsWith("/"))this.path=a.getPath();else{this.path.endsWith("/")||t.pop();for(const e of r)"."!==e&&(".."===e?t.pop():t.push(e));this.path="/"+t.join("/")}return this.params=a.getParams(),this.dirty=!0,this}toString(){return this.dirty&&(this.query=this.params.length?"?"+this.params.map(e=>null!==e.value?`${e.key}=${e.value}`:e.key).join("&"):"",this.href=this.protocol+"://"+this.host+this.path+this.query,this.dirty=!1),this.href}}},5941(e,t,s){s.d(t,{A:function(){return r}});var i=s(8379);const a="BpkValidator";class r{static typeParameter(e,t,s){return typeof e===t||(i.g.e(a,s),!1)}static typeOrUndefinedParameter(e,t,s){return typeof e===t||void 0===e||(i.g.e(a,s),!1)}static typeOrNullParameter(e,t,s){return typeof e===t||null===e||(i.g.e(a,s),!1)}static stringNonEmpty(e,t){return"string"==typeof e&&e.length>0||(i.g.e(a,t),!1)}static toBkAString(e){return void 0!==e&&"string"==typeof e?e.replace(/\n/g,"").replace(/\t/g,"").replace(/\r/g,""):e}}}},__webpack_module_cache__={},deferred;function __nested_webpack_require_129805__(e){var t=__webpack_module_cache__[e];if(void 0!==t)return t.exports;var s=__webpack_module_cache__[e]={exports:{}};return __webpack_modules__[e](s,s.exports,__nested_webpack_require_129805__),s.exports}__nested_webpack_require_129805__.m=__webpack_modules__,deferred=[],__nested_webpack_require_129805__.O=function(e,t,s,i){if(!t){var a=1/0;for(d=0;d<deferred.length;d++){t=deferred[d][0],s=deferred[d][1],i=deferred[d][2];for(var r=!0,n=0;n<t.length;n++)(!1&i||a>=i)&&Object.keys(__nested_webpack_require_129805__.O).every(function(e){return __nested_webpack_require_129805__.O[e](t[n])})?t.splice(n--,1):(r=!1,i<a&&(a=i));if(r){deferred.splice(d--,1);var o=s();void 0!==o&&(e=o)}}return e}i=i||0;for(var d=deferred.length;d>0&&deferred[d-1][2]>i;d--)deferred[d]=deferred[d-1];deferred[d]=[t,s,i]},__nested_webpack_require_129805__.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return __nested_webpack_require_129805__.d(t,{a:t}),t},__nested_webpack_require_129805__.d=function(e,t){for(var s in t)__nested_webpack_require_129805__.o(t,s)&&!__nested_webpack_require_129805__.o(e,s)&&Object.defineProperty(e,s,{enumerable:!0,get:t[s]})},__nested_webpack_require_129805__.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(e){if("object"==typeof window)return window}}(),__nested_webpack_require_129805__.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},__nested_webpack_require_129805__.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},function(){var e={152:0};__nested_webpack_require_129805__.O.j=function(t){return 0===e[t]};var t=function(t,s){var i,a,r=s[0],n=s[1],o=s[2],d=0;if(r.some(function(t){return 0!==e[t]})){for(i in n)__nested_webpack_require_129805__.o(n,i)&&(__nested_webpack_require_129805__.m[i]=n[i]);if(o)var l=o(__nested_webpack_require_129805__)}for(t&&t(s);d<r.length;d++)a=r[d],__nested_webpack_require_129805__.o(e,a)&&e[a]&&e[a][0](),e[a]=0;return __nested_webpack_require_129805__.O(l)},s=("undefined"!=typeof self?self:__webpack_require__.g).webpackChunkSmartLibModule=("undefined"!=typeof self?self:__webpack_require__.g).webpackChunkSmartLibModule||[];s.forEach(t.bind(null,0)),s.push=t.bind(null,s.push.bind(s))}();var __nested_webpack_exports__={};__nested_webpack_require_129805__.r(__nested_webpack_exports__),__nested_webpack_require_129805__.d(__nested_webpack_exports__,{AdInteractionType:function(){return core__WEBPACK_IMPORTED_MODULE_0__.AdInteractionType},AdManager:function(){return core__WEBPACK_IMPORTED_MODULE_0__.X2},LoggerManager:function(){return core__WEBPACK_IMPORTED_MODULE_0__.gD},RequestManager:function(){return core__WEBPACK_IMPORTED_MODULE_0__.Je},SmartLib:function(){return core__WEBPACK_IMPORTED_MODULE_0__.x6},StreamingSession:function(){return core__WEBPACK_IMPORTED_MODULE_0__.fF},StreamingSessionOptions:function(){return core__WEBPACK_IMPORTED_MODULE_0__.H1},StreamingSessionResult:function(){return core__WEBPACK_IMPORTED_MODULE_0__.Sy}});var core__WEBPACK_IMPORTED_MODULE_0__=__nested_webpack_require_129805__(1262),_engine_CoreEngine__WEBPACK_IMPORTED_MODULE_1__=__nested_webpack_require_129805__(8100);return _engine_CoreEngine__WEBPACK_IMPORTED_MODULE_1__.A.getInstance().init(),__nested_webpack_exports__=__nested_webpack_require_129805__.O(__nested_webpack_exports__),__nested_webpack_exports__}()});
+
+/***/ }),
+
+/***/ "./src/App.ts":
+/*!********************!*\
+  !*** ./src/App.ts ***!
+  \********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ App)
+/* harmony export */ });
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ "./src/Player.ts");
+
+const DEFAULT_STREAM_URL = 'https://dcv5s0ei7csoc.cloudfront.net/898aef0932f6aaec18741c9c2acbaa20/asset-vod-01/a3player1/usp_test/vod_storage/test1/manifest.mpd?ooba-tag=atres-pause';
+class App {
+    constructor() {
+        this.resizeTimer = -1;
+        this.playerContainer = document.getElementById('player-container');
+        this.playerElement = document.getElementById('player');
+        this.streamEditUrl = document.getElementById('stream-edit-url');
+        this.streamButtonLoad = document.getElementById('stream-button-load');
+        this.streamButtonStop = document.getElementById('stream-button-stop');
+        this.metadataButton = document.getElementById('metadata-button');
+        this.metadataOverlay = document.getElementById('metadata-overlay');
+        this.player = new _Player__WEBPACK_IMPORTED_MODULE_0__["default"](this.playerContainer, this.playerElement);
+        this.setResizeObserver();
+        this.setupMetadata();
+    }
+    async init() {
+        this.streamButtonLoad.onclick = (e) => this.loadStream();
+        this.streamButtonStop.onclick = (e) => this.stopStream();
+        const urlParam = (new URL(window.location.href)).searchParams.get('url');
+        const url = urlParam || DEFAULT_STREAM_URL;
+        this.streamEditUrl.value = url;
+        setTimeout(() => this.loadStream(), 2000);
+    }
+    async reset() {
+        await this.stopStream();
+    }
+    async loadStream() {
+        const url = this.streamEditUrl.value;
+        await this.player.load(url);
+    }
+    async stopStream() {
+        await this.player.stop();
+    }
+    setupMetadata() {
+        const adTypeSelect = document.getElementById('ad-type-select');
+        adTypeSelect.onchange = () => this.player.setAdTypeCat(adTypeSelect.value);
+        this.metadataButton.onclick = () => this.openMetadataOverlay();
+        document.getElementById('metadata-close').onclick = () => this.closeMetadataOverlay();
+        document.getElementById('metadata-cancel').onclick = () => this.closeMetadataOverlay();
+        document.getElementById('metadata-save').onclick = () => {
+            this.player.setContentMetadata(this.readMetadataFields());
+            this.closeMetadataOverlay();
+        };
+        this.metadataOverlay.addEventListener('click', (e) => {
+            if (e.target === this.metadataOverlay)
+                this.closeMetadataOverlay();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape')
+                this.closeMetadataOverlay();
+        });
+    }
+    openMetadataOverlay() {
+        this.renderMetadataFields(this.player.getContentMetadata());
+        this.metadataOverlay.style.display = 'flex';
+    }
+    closeMetadataOverlay() {
+        this.metadataOverlay.style.display = 'none';
+    }
+    renderMetadataFields(metadata) {
+        const container = document.getElementById('metadata-fields');
+        container.innerHTML = '';
+        for (const [key, value] of Object.entries(metadata)) {
+            const row = document.createElement('div');
+            row.className = 'metadata-row';
+            const label = document.createElement('label');
+            label.className = 'metadata-key';
+            label.textContent = key;
+            const input = document.createElement('input');
+            input.className = 'metadata-value';
+            input.type = 'text';
+            input.dataset.key = key;
+            input.value = value;
+            row.appendChild(label);
+            row.appendChild(input);
+            container.appendChild(row);
+        }
+    }
+    readMetadataFields() {
+        const metadata = {};
+        document.querySelectorAll('#metadata-fields .metadata-value').forEach(input => {
+            metadata[input.dataset.key] = input.value;
+        });
+        return metadata;
+    }
+    setResizeObserver() {
+        window.addEventListener('resize', () => {
+            clearTimeout(this.resizeTimer);
+            this.resizeTimer = window.setTimeout(() => {
+                console.log('Window resized:', window.innerWidth, window.innerHeight);
+                this.player?.handleResize();
+            }, 200);
+        });
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/Player.ts":
+/*!***********************!*\
+  !*** ./src/Player.ts ***!
+  \***********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Player)
+/* harmony export */ });
+/* harmony import */ var _broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @broadpeak/smartlib */ "./node_modules/@broadpeak/smartlib/base.smartlib.js");
+/* harmony import */ var _broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _broadpeak_smartlib_ad__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @broadpeak/smartlib-ad */ "./node_modules/@broadpeak/smartlib-ad/ad.smartlib.js");
+/* harmony import */ var _broadpeak_smartlib_ad__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_broadpeak_smartlib_ad__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _broadpeak_smartlib_analytics__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @broadpeak/smartlib-analytics */ "./node_modules/@broadpeak/smartlib-analytics/analytics.smartlib.js");
+/* harmony import */ var _broadpeak_smartlib_analytics__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_broadpeak_smartlib_analytics__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _broadpeak_smartlib_bitmovin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @broadpeak/smartlib-bitmovin */ "./node_modules/@broadpeak/smartlib-bitmovin/bitmovin.smartlib.js");
+/* harmony import */ var _broadpeak_smartlib_bitmovin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_broadpeak_smartlib_bitmovin__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _broadpeak_smartlib_simid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @broadpeak/smartlib-simid */ "./node_modules/@broadpeak/smartlib-simid/simid.smartlib.js");
+/* harmony import */ var _broadpeak_smartlib_simid__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_broadpeak_smartlib_simid__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _SimidController__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SimidController */ "./src/SimidController.ts");
+
+
+
+
+
+
+class Player {
+    constructor(playerContainer, playerElement) {
+        this.adDatas = new Map();
+        this.simidControllers = new Map();
+        this.simidIframes = new Map();
+        this.adTypeCat = 'aspect-full';
+        this.contentMetadata = {
+            contentPosterUrl: 'https://cdng.europosters.eu/pod_public/1300/106240.jpg',
+            contentTitle: 'temporada 3 episodio 2',
+            lang: 'spa'
+        };
+        this.playerContainer = playerContainer;
+        this.playerElement = playerElement;
+        _broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_0__.SmartLib.getInstance().init('', '', '*');
+        this.loadPlayer();
+    }
+    async load(url) {
+        await this.stop();
+        // Create SmartLib session
+        this.smartlibSession = _broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_0__.SmartLib.getInstance().createStreamingSession();
+        this.smartlibSession.setOption(_broadpeak_smartlib__WEBPACK_IMPORTED_MODULE_0__.StreamingSessionOptions.AD_TRACKERS_NON_LINEAR_AUTO_SEND, false);
+        this.setAdDataListeners(this.smartlibSession);
+        this.setAdEventsListeners(this.smartlibSession);
+        this.bpkSimidController = new _broadpeak_smartlib_simid__WEBPACK_IMPORTED_MODULE_4__.GenericSimidControllerApi();
+        // Attach player to smartlib session
+        this.smartlibSession.attachPlayer(this.player);
+        // Attach bpkSimidController to the session
+        this.smartlibSession.attachSimidController(this.bpkSimidController);
+        const result = await this.smartlibSession.getURL(url);
+        const playUrl = result.url || url;
+        const source = playUrl.includes('.m3u8') ? { hls: playUrl } : { dash: playUrl };
+        await this.player.load(source);
+        this.player.play();
+    }
+    async stop() {
+        this.simidControllers.forEach(controller => controller.reset());
+        this.smartlibSession?.stopStreamingSession();
+        await this.player.unload();
+    }
+    injectContentMetadata(adParameters) {
+        let params = {};
+        try {
+            params = JSON.parse(adParameters);
+        }
+        catch {
+            // adParameters was not valid JSON — start from empty object
+        }
+        Object.assign(params, this.contentMetadata);
+        params.durationRemaining = this.getRemainingDuration();
+        return JSON.stringify(params);
+    }
+    getRemainingDuration() {
+        const duration = this.player.getDuration();
+        if (!duration || !isFinite(duration) || isNaN(duration))
+            return '...';
+        const remaining = Math.max(0, duration - this.player.getCurrentTime());
+        if (remaining < 60)
+            return '< 1 min';
+        return `${Math.floor(remaining / 60)} min`;
+    }
+    loadSimid(adId, creativeUri, adParameters, duration, autoStart = false) {
+        // Consider player container dimensions as initial creative dimensions
+        const playerRect = this.getElementDimensions(this.playerContainer);
+        console.log(`[Player] Load SIMID - uri:${creativeUri} duration:${duration}`);
+        const simidController = new _SimidController__WEBPACK_IMPORTED_MODULE_5__["default"](playerRect, playerRect, creativeUri, adParameters, duration, false);
+        simidController.onGetMediaState = () => this.getMediaState();
+        simidController.onAddSimid = (iframe) => this.addSimidIframe(adId, iframe);
+        simidController.onShowSimid = (show) => this.showSimidIframe(adId, show);
+        simidController.onResizeSimid = (dimensions) => this.resizeSimid(adId, dimensions);
+        simidController.onResizePlayer = (dimensions) => this.resizePlayer(dimensions);
+        simidController.onPauseMedia = () => this.pauseMedia();
+        simidController.onPlayMedia = () => this.playMedia();
+        simidController.onOpenClickthrough = (uri) => this.openClickthrough(uri);
+        simidController.onComplete = (skipped) => this.completeAd(adId, skipped);
+        simidController.simidControllerApi = this.bpkSimidController;
+        console.log(`[Player] Load SIMID controller v${simidController.getVersion()}`);
+        simidController.load(autoStart);
+        this.simidControllers.set(adId, simidController);
+    }
+    setAdTypeCat(cat) {
+        this.adTypeCat = cat;
+    }
+    getContentMetadata() {
+        return { ...this.contentMetadata };
+    }
+    setContentMetadata(metadata) {
+        this.contentMetadata = metadata;
+    }
+    handleResize() {
+        const playerRect = this.getElementDimensions(this.playerContainer);
+        console.log('[Player] Notify resize SIMID:', playerRect);
+        this.simidControllers.forEach(controller => controller.notifyResize(playerRect, playerRect, false));
+    }
+    loadPlayer() {
+        const playerConfig = {
+            key: '8ccd9a07-2076-4d36-b8e6-40c412fc90ba',
+            style: {
+                uiManagerFactory: (playerAPI, config) => bitmovin.playerui.UIFactory.buildUI(playerAPI, config)
+            },
+            playback: {
+                muted: true,
+                autoplay: false
+            }
+        };
+        this.player = new bitmovin.player.Player(this.playerElement, playerConfig);
+        // React to pause events to show pause ads
+        this.player.on(bitmovin.player.PlayerEvent.Paused, () => this.onVideoPaused());
+        // React to play events to hide pause ads
+        this.player.on(bitmovin.player.PlayerEvent.Playing, () => this.onVideoPlay());
+    }
+    setAdDataListeners(session /*: SmartLib.Session*/) {
+        session.setAdDataListener({
+            onAdData: (adData) => {
+                console.log('[Player] onAdData:', adData);
+            },
+            onOutOfBandAdData: (adData) => {
+                console.log('[Player] onOutOfBandAdData:', adData);
+            }
+        });
+    }
+    setAdEventsListeners(session /*: SmartLib.Session*/) {
+        session.activateAdvertising();
+        session.setAdEventsListener({
+            onPrepareAdBreak: (adBreakData) => {
+                console.log('[Player] onPrepareAdBreak:', adBreakData);
+            },
+            onAdBreakBegin: (adBreakData) => {
+                console.log('[Player] onAdBreakBegin:', adBreakData);
+                // Keep track of the active pause ad break
+                if (adBreakData.ooba && adBreakData.ooba.name === 'pause') {
+                    console.log('[Player] Pause ad break detected');
+                    this.activePauseAdBreak = adBreakData;
+                    this.activePauseAdId = adBreakData.ads[0]?.adId;
+                }
+            },
+            onPrepareAd: (adData, adBreakData) => {
+                console.log('[Player] onPrepareAd:', adData);
+                this.adDatas.set(adData.adId, adData);
+                if (adData.nonLinearIframeResources && adData.nonLinearIframeResources.length) {
+                    const iframeResources = adData.nonLinearIframeResources[0];
+                    const duration = adData.duration ? (adData.duration / 1000) : 0;
+                    const enrichedParams = this.injectContentMetadata(iframeResources.parameters);
+                    this.loadSimid(adData.adId, iframeResources.url, enrichedParams, duration);
+                }
+            },
+            onAdBegin: (adData, adBreakData) => {
+                console.log('[Player] onAdBegin:', adData);
+                const simidController = this.simidControllers.get(adData.adId);
+                if (simidController) {
+                    simidController.start();
+                }
+            },
+            onAdSkippable: (adData, adBreakData, adSkippablePosition, adEndPosition, adBreakEndPosition) => {
+                console.log('[Player] onAdSkippable:', adData);
+            },
+            onAdEnd: (adData, adBreakData) => {
+                console.log('[Player] onAdEnd:', adData);
+                const simidController = this.simidControllers.get(adData.adId);
+                if (simidController) {
+                    simidController.reset();
+                    this.simidControllers.delete(adData.adId);
+                }
+                this.adDatas.delete(adData.adId);
+            },
+            onAdBreakEnd: (adBreakData) => {
+                console.log('[Player] onAdBreakEnd:', adBreakData);
+            }
+        });
+    }
+    getMediaState() {
+        return {
+            currentTime: this.player.getCurrentTime()
+        };
+    }
+    addSimidIframe(adId, iframe) {
+        this.playerContainer.appendChild(iframe);
+        this.simidIframes.set(adId, iframe);
+        return true;
+    }
+    showSimidIframe(adId, show) {
+        const simidIframe = this.simidIframes.get(adId);
+        if (!simidIframe) {
+            return;
+        }
+        // ensure the pause ad is on top of any other nonlinear ad
+        if (this.activePauseAdId) {
+            simidIframe.style.zIndex = '20';
+        }
+        simidIframe.style.display = show ? 'block' : 'none';
+        // trigger trackers
+        if (show) {
+            this.smartlibSession?.sendTracker('impression', adId);
+            this.smartlibSession?.sendTracker('creativeView', adId);
+        }
+    }
+    resizeSimid(adId, dimensions) {
+        const simidIframe = this.simidIframes.get(adId);
+        if (!simidIframe) {
+            return false;
+        }
+        console.log('[Player] Resize SIMID:', dimensions);
+        // Check if requested SIMID dimensions is not outside original player container dimensions
+        const playerRect = this.getElementDimensions(this.playerContainer);
+        const widthFits = dimensions.x + dimensions.width <= Math.ceil(playerRect.width);
+        const heightFits = dimensions.y + dimensions.height <= Math.ceil(playerRect.height);
+        if (!widthFits || !heightFits) {
+            return false;
+        }
+        this.setElementDimensions(simidIframe, dimensions);
+        return true;
+    }
+    resizePlayer(dimensions) {
+        console.log('[Player] Resize player:', dimensions);
+        this.setElementDimensions(this.playerElement, dimensions);
+    }
+    pauseMedia() {
+        console.log('[Player] Pause media');
+        this.player.pause();
+        return true;
+    }
+    playMedia() {
+        console.log('[Player] Play media');
+        this.endPauseAd();
+        this.player.play();
+        return true;
+    }
+    openClickthrough(uri) {
+        console.log('[Player] Open clicktrough:', uri);
+        window.open(uri, '_blank');
+    }
+    completeAd(adId, skipped) {
+        console.log('[Player] Complete ad, skipped:', skipped);
+        const adData = this.adDatas.get(adId);
+        if (skipped && adData) {
+            this.skipCurrentAd(adData);
+        }
+    }
+    getElementDimensions(element) {
+        const containerRect = this.playerContainer.getBoundingClientRect();
+        const elementRect = element.getBoundingClientRect();
+        elementRect.x -= containerRect.x;
+        elementRect.y -= containerRect.y;
+        return elementRect;
+    }
+    setElementDimensions(element, dimensions) {
+        console.log(`[Player] Resize ${element.id} x:${dimensions.x} y:${dimensions.y} w:${dimensions.width} h:${dimensions.height}`);
+        const containerRect = this.playerContainer.getBoundingClientRect();
+        element.style.height = (dimensions.height * 100 / containerRect.height).toFixed(2) + '%';
+        element.style.width = (dimensions.width * 100 / containerRect.width).toFixed(2) + '%';
+        element.style.left = (dimensions.x * 100 / containerRect.width).toFixed(2) + '%';
+        element.style.top = (dimensions.y * 100 / containerRect.height).toFixed(2) + '%';
+    }
+    skipCurrentAd(adData) {
+        if (!adData) {
+            return;
+        }
+        this.player.seek((adData.startPosition + adData.duration) / 1000);
+    }
+    onVideoPaused() {
+        console.log('[Player] Video paused');
+        this.pauseAdTimer = window.setTimeout(() => {
+            this.pauseAdTimer = undefined;
+            if (this.smartlibSession) {
+                console.log('[Player] Request pause ads');
+                this.smartlibSession.requestOutOfBandAds('pause', 0, true, { cat: this.adTypeCat });
+            }
+        }, 2000);
+    }
+    onVideoPlay() {
+        console.log('[Player] Video play event');
+        window.clearTimeout(this.pauseAdTimer);
+        this.pauseAdTimer = undefined;
+        this.endPauseAd();
+    }
+    endPauseAd() {
+        console.log('[Player] Hide pause ad');
+        if (this.activePauseAdBreak) {
+            console.log('[Player] Pause ad break found, removing it');
+            this.smartlibSession?.endOutOfBandAdBreak(this.activePauseAdBreak.id);
+            this.activePauseAdBreak = undefined;
+            this.activePauseAdId = undefined;
+        }
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/SimidController.ts":
+/*!********************************!*\
+  !*** ./src/SimidController.ts ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ SimidController)
+/* harmony export */ });
+/* harmony import */ var _broadpeak_tv_simid_controller__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @broadpeak-tv/simid-controller */ "../controller/dist/index.js");
+
+class SimidController extends _broadpeak_tv_simid_controller__WEBPACK_IMPORTED_MODULE_0__.SimidController {
+    set simidControllerApi(controllerApi) {
+        this._simidControllerApi = controllerApi;
+    }
+    receiveMessage(event) {
+        this._simidControllerApi?.onMessageReceived(event.data);
+        super.receiveMessage(event);
+    }
+    postMessage(message) {
+        this._simidControllerApi?.onMessageSent(JSON.stringify(message));
+        super.postMessage(message);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/index.ts":
+/*!**********************!*\
+  !*** ./src/index.ts ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   initApp: () => (/* binding */ initApp),
+/* harmony export */   stopApp: () => (/* binding */ stopApp)
+/* harmony export */ });
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App */ "./src/App.ts");
+
+let app;
+async function initApp() {
+    const videoElement = document.querySelector('video');
+    app = new _App__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    app.init();
+}
+async function stopApp() {
+    if (app) {
+        app.reset();
+    }
+}
+
+
+/***/ }),
+
+/***/ "../controller/dist/SimidComponent.js":
+/*!********************************************!*\
+  !*** ../controller/dist/SimidComponent.js ***!
+  \********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SimidComponent: () => (/* binding */ SimidComponent)
+/* harmony export */ });
+/* harmony import */ var _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SimidMessages.js */ "../controller/dist/SimidMessages.js");
+
+
+const SIMID_NS = 'SIMID:';
+const SIMID_VERSION = '1.1';
+const LOG_COLORS = {
+    'Creative': '#33CCCC',
+    'Player': '#4998DC',
+};
+/**
+ * Contains logic for sending mesages between the SIMID creative and the player.
+ * Note: Some browsers do not support promises and a more complete implementation
+ * should consider using a polyfill.
+ */
+class SimidComponent {
+    // #endregion MEMBERS
+    // #region CONSTRUCTOR
+    /**
+     * Constructor
+     * @param type The protocol actor type ('Player' or 'Creative')
+     */
+    constructor(type) {
+        this._protocolVersion = SIMID_VERSION;
+        this._type = type;
+        this._listeners = new Map();
+        this._sessionId = '';
+        this._nextMessageId = 0;
+        this._responseListeners = new Map();
+        // By default target window is top window, that will be used by the creative
+        // The SIMID controller should use the creative iframe window as target window (see SimidController)
+        this._target = window.top;
+        // Initialize postMessage event listener
+        this._messageHandler = (event) => {
+            setTimeout(() => this.receiveMessage(event), 0);
+        };
+        window.addEventListener('message', this._messageHandler, false);
+    }
+    // #endregion CONSTRUCTOR
+    // #region PROTECTED METHODS
+    setMessageTarget(target) {
+        this._target = target;
+    }
+    /**
+     * Add a listener for a given message.
+     * @param messageType the message type
+     * @param callback the listener callback
+     */
+    addMessageListener(messageType, callback) {
+        if (!this._listeners.has(messageType)) {
+            this._listeners.set(messageType, []);
+        }
+        this._listeners.get(messageType)?.push(callback);
+    }
+    /**
+     * Sends a message using post message.
+     * Returns a promise that will resolve or reject after the message receives a response.
+     * @param messageType The name of the message.
+     * @param messageArgs The arguments for the message, may be null.
+     * @return A promise that will be fulfilled when client resolves or rejects.
+     */
+    sendMessage(messageType, messageArgs) {
+        // console.log(`[SIMID][${this._type}][S]`, messageType, messageArgs || {})
+        const message = this._createMessage(messageType, messageArgs);
+        return this._sendMessage(message);
+    }
+    receiveMessage(event) {
+        // Filter messages coming from target (e.g. iframe) if set
+        if (this._target && event.source !== this._target)
+            return;
+        // Filter non SIMID like messages
+        if (!event || !event.data || !(typeof event.data === 'string'))
+            return;
+        let message;
+        try {
+            message = JSON.parse(event.data);
+            this.log(`[SIMID][${this._type}][R] ${JSON.stringify(message)}`);
+        }
+        catch (e) {
+            this.log(`[SIMID][${this._type}][R] Failed to parse incoming message: ${JSON.stringify(event.data)}`);
+            return;
+        }
+        if (!message) {
+            // If there is no data in the event this is not a SIMID message.
+            return;
+        }
+        // A sessionId is valid in one of two cases:
+        // 1. It is not set and the message type is createSession.
+        // 2. The session ids match exactly.
+        const isCreatingSession = this._sessionId === '' && message.type === _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.ProtocolMessage.CREATE_SESSION;
+        const isSessionIdMatch = this._sessionId === message.sessionId;
+        const validSessionId = isCreatingSession || isSessionIdMatch;
+        if (!validSessionId || message.type == null) {
+            // Ignore invalid messages.
+            return;
+        }
+        // There are 2 types of messages to handle:
+        // 1. Protocol messages (like resolve, reject and createSession)
+        // 2. Messages starting with SIMID:
+        // All other messages are ignored.
+        switch (message.type) {
+            case _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.ProtocolMessage.CREATE_SESSION:
+                this._sessionId = message.sessionId;
+                this.resolveMessage(message);
+                this._invokeMessageListeners(message);
+                break;
+            case _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.ProtocolMessage.RESOLVE:
+            case _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.ProtocolMessage.REJECT:
+                this._invokeResponseListener(message);
+                break;
+            default:
+                if (message.type.startsWith(SIMID_NS)) {
+                    this._invokeMessageListeners(message);
+                }
+                break;
+        }
+    }
+    postMessage(message) {
+        this.log(`[SIMID][${this._type}][S] ${JSON.stringify(message)}`);
+        this._target.postMessage(JSON.stringify(message), '*');
+    }
+    resolveMessage(incomingMessage, outgoingArgs) {
+        const args = {
+            messageId: incomingMessage.messageId,
+            value: outgoingArgs,
+        };
+        const message = this._createMessage(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.ProtocolMessage.RESOLVE, args);
+        this.postMessage(message);
+    }
+    /**
+     * Rejects an incoming message.
+     * @param {!Object} incomingMessage the message that is being resolved.
+     * @param {!Object} outgoingArgs Any arguments that are part of the resolution.
+     */
+    rejectMessage(incomingMessage, errorCode, errorMessage) {
+        const value = {
+            errorCode,
+            message: errorMessage,
+        };
+        const args = {
+            messageId: incomingMessage.messageId,
+            value,
+        };
+        const message = this._createMessage(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.ProtocolMessage.REJECT, args);
+        this.postMessage(message);
+    }
+    log(message) {
+        const color = 'color:' + LOG_COLORS[this._type] + ';';
+        console.log('%c' + message, color);
+    }
+    /**
+     * Reset/revert this protocol to its original state
+     */
+    resetSession() {
+        this._listeners.clear();
+        this._sessionId = '';
+        this._nextMessageId = 1;
+        // TODO: Perhaps we should reject all associated promises.
+        this._responseListeners.clear();
+        window.removeEventListener('message', this._messageHandler, false);
+        this._messageHandler = undefined;
+    }
+    // #endregion PROTECTED METHODS
+    // #region PRIVATE METHODS
+    _createMessage(type, args) {
+        // Incrementing between messages keeps each message id unique.
+        const messageId = this._nextMessageId++;
+        // The message object as defined by the SIMID spec.
+        const message = {
+            type: type,
+            sessionId: this._sessionId,
+            messageId: messageId,
+            timestamp: Date.now(),
+            args: args
+        };
+        return message;
+    }
+    _sendMessage(message) {
+        if (_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.MessagesWithResponse.includes(message.type)) {
+            // If the message requires a callback this code will set
+            // up a promise that will call resolve or reject with its parameters.
+            return new Promise((resolve, reject) => {
+                this._addResponseListener(message.messageId, resolve, reject);
+                this.postMessage(message);
+            });
+        }
+        // A default promise will just resolve immediately.
+        // It is assumed no one would listen to these promises, but if they do it will "just work".
+        return new Promise((resolve, reject) => {
+            this.postMessage(message);
+            resolve();
+        });
+    }
+    /**
+     * Sets up a listener for response resolve/reject messages.
+     * @private
+     */
+    _addResponseListener(messageId, resolve, reject) {
+        const listener = (response) => {
+            if (response.type === _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.ProtocolMessage.RESOLVE) {
+                resolve(response.args);
+            }
+            else if (response.type === _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.ProtocolMessage.REJECT) {
+                reject(response.args);
+            }
+        };
+        this._responseListeners.set(messageId, listener.bind(this));
+    }
+    _invokeResponseListener(message) {
+        const args = message.args;
+        const correlatingId = args.messageId;
+        this._responseListeners.get(correlatingId)?.(message);
+        this._responseListeners.delete(correlatingId);
+    }
+    _invokeMessageListeners(message) {
+        this._listeners.get(message.type)?.forEach((listener) => listener(message));
+    }
+}
+// #endregion PRIVATE METHODS
+
+
+
+
+/***/ }),
+
+/***/ "../controller/dist/SimidController.js":
+/*!*********************************************!*\
+  !*** ../controller/dist/SimidController.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SimidController: () => (/* binding */ SimidController)
+/* harmony export */ });
+/* harmony import */ var _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SimidMessages.js */ "../controller/dist/SimidMessages.js");
+/* harmony import */ var _SimidComponent_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SimidComponent.js */ "../controller/dist/SimidComponent.js");
+
+
+
+const MEDIA_TIMEUPDATE_INTERVAL_MS = 250;
+/**
+ * All the logic for a simple SIMID player/controller
+ */
+class SimidController extends _SimidComponent_js__WEBPACK_IMPORTED_MODULE_1__.SimidComponent {
+    // #endregion MEMBERS
+    /**
+     * Set up the SIMID controller starts listening for messages from the creative.
+     * @param playerDimensions the main player dimensions
+     * @param creativeDimensions the initial creative dimensions the application/player will set
+     * @param creativeUri The creative URI
+     * @param adParameters the creative ad parameters
+     * @param adDuration the display duration of the creative (0 by default, meaning no requested duration)
+     * @param adSkippable true if the linear ad is skippable (false by default)
+     * @param mediaTimeupdateInterval the interval in ms to send media timeupdate message to the creative (250ms by default, -1 to disable)
+     */
+    constructor(playerDimensions, creativeDimensions, creativeUri, adParameters = '', adDuration = 0, adSkippable = false, mediaTimeupdateInterval = MEDIA_TIMEUPDATE_INTERVAL_MS) {
+        super('Player');
+        this._mainPlayerDimensions = playerDimensions;
+        this._creativeDimensions = creativeDimensions;
+        this._creativeUri = creativeUri;
+        this._adParameters = adParameters;
+        this._adSkippable = adSkippable;
+        this._isStopping = false;
+        this._simidIframe = undefined;
+        this._autoStart = true;
+        this._initialized = false;
+        this._nonLinearStartTime = undefined;
+        this._adDuration = adDuration;
+        this._durationInterval = NaN;
+        this._mediaTimeupdateInterval = mediaTimeupdateInterval;
+        this.addCreativeMessageListeners();
+    }
+    static get version() {
+        return "0.7.0";
+    }
+    // #region PUBLIC METHODS 
+    /**
+     * Set the callback function called to retrieve current media state.
+     */
+    set onGetMediaState(cb) {
+        this._onGetMediaState = cb;
+    }
+    /**
+     * Set the callback function called when the main video has to be played or resumed.
+     */
+    set onPlayMedia(cb) {
+        this._onPlayMedia = cb;
+    }
+    /**
+     * Set the callback function called when the main video has to be paused.
+     */
+    set onPauseMedia(cb) {
+        this._onPauseMedia = cb;
+    }
+    /**
+     * Set the callback function called when a new SIMID iframe has to be added in application DOM.
+     */
+    set onAddSimid(cb) {
+        this._onAddSimid = cb;
+    }
+    /**
+     * Set the callback function called when a the SIMID iframe has to be showed of hidden.
+     */
+    set onShowSimid(cb) {
+        this._onShowSimid = cb;
+    }
+    /**
+     * Set the callback function called when the SIMID iframe has to be resized.
+     */
+    set onResizeSimid(cb) {
+        this._onResizeSimid = cb;
+    }
+    /**
+     * Set the callback function called when the media player element has to be resized.
+     */
+    set onResizePlayer(cb) {
+        this._onResizePlayer = cb;
+    }
+    /**
+     * Set the callback function called when the creative requests navigation to an external URI.
+     * Used in mobile app environments where the player manages external URL navigation.
+     * The player must open the URI and the callback is invoked after resolve is sent to the creative.
+     */
+    set onOpenClickthrough(cb) {
+        this._onOpenClickthrough = cb;
+    }
+    /**
+     * Set the callback function called when the current SIMID duration has completed.
+     */
+    set onComplete(cb) {
+        this._onComplete = cb;
+    }
+    getVersion() {
+        return "0.7.0";
+    }
+    /**
+     * Initialize and load ad. This should be called before an ad plays.
+     * Creates an iframe with the creative in it, then uses a promise to call init on the creative as soon as the creative initializes a session.
+     * @param autoStart true to start the creative once initialized
+     */
+    load(autoStart = false) {
+        this._autoStart = autoStart;
+        // [2] - Create iframe element
+        this._simidIframe = this._createSimidIframe();
+        // After the iframe is created the player will wait until the SIMID creative initializes the communication channel (see onCreateSession)
+    }
+    /**
+     * Start the loaded creative
+     */
+    start() {
+        if (!this._initialized) {
+            // start() my be called before creative has been fully initialized, then start it automatically when ready
+            this._autoStart = true;
+            return;
+        }
+        this._startCreative();
+    }
+    /**
+     * Stop and reset the SIMID controller
+     */
+    reset() {
+        this._stopAd();
+    }
+    /**
+     * Notify the SIMID controller any changes any of ad components’ size
+     * @param playerDimensions the new player dimensions
+     * @param creativeDimensions the new creative dimensions
+     * @param fullscreen true if in fullscreen mode
+     */
+    notifyResize(playerDimensions, creativeDimensions, fullscreen) {
+        if (!this._initialized) {
+            return;
+        }
+        this._mainPlayerDimensions = playerDimensions;
+        this._creativeDimensions = creativeDimensions;
+        const args = {
+            videoDimensions: playerDimensions,
+            creativeDimensions,
+            fullscreen
+        };
+        this.sendMessage(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.PlayerMessage.RESIZE, args);
+    }
+    // #endregion PUBLIC METHODS
+    addCreativeMessageListeners() {
+        this.addMessageListener(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.ProtocolMessage.CREATE_SESSION, (message) => this.onCreateSession(message));
+        this.addMessageListener(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.CreativeMessage.FATAL_ERROR, (message) => this.onCreativeFatalError(message));
+        this.addMessageListener(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.CreativeMessage.GET_MEDIA_STATE, (message) => this.onCreativeGetMediaState(message));
+        this.addMessageListener(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.CreativeMessage.REQUEST_PAUSE, (message) => this.onCreativeRequestPause(message));
+        this.addMessageListener(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.CreativeMessage.REQUEST_PLAY, (message) => this.onCreativeRequestPlay(message));
+        this.addMessageListener(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.CreativeMessage.REQUEST_RESIZE, (message) => this.onCreativeRequestResize(message));
+        this.addMessageListener(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.CreativeMessage.REQUEST_SKIP, (message) => this.onCreativeRequestSkip(message));
+        this.addMessageListener(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.CreativeMessage.REQUEST_STOP, (message) => this.onCreativeRequestStop(message));
+        this.addMessageListener(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.CreativeMessage.EXPAND_NONLINEAR, (message) => this.onCreativeExpandNonlinear(message));
+        this.addMessageListener(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.CreativeMessage.COLLAPSE_NONLINEAR, (message) => this.onCreativeCollapseNonlinear(message));
+        this.addMessageListener(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.CreativeMessage.REQUEST_NAVIGATION, (message) => this.onCreativeRequestNavigation(message));
+    }
+    // #region PROTECTED METHODS
+    // #region CREATIVE MESSAGE HANDLERS
+    onCreateSession(message) {
+        // [3] - createSession sent by the creative (message resolved in SimidComponent::receiveMessage())
+        // [4] - send Player:init message
+        this._sendInitMessage();
+    }
+    onCreativeFatalError(message) {
+        this.resolveMessage(message);
+        this._stopAd(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.StopCode.CREATIVE_INITIATED);
+    }
+    onCreativeGetMediaState(message) {
+        const mediaState = this._onGetMediaState?.();
+        const args = {
+            currentSrc: mediaState ? mediaState.currentSrc : '',
+            currentTime: mediaState ? mediaState.currentTime : 0,
+            duration: mediaState ? mediaState.duration : 0,
+            ended: mediaState ? mediaState.ended : true,
+            muted: mediaState ? mediaState.muted : false,
+            paused: mediaState ? mediaState.paused : true,
+            volume: mediaState ? mediaState.volume : 0,
+            fullscreen: mediaState ? mediaState.fullscreen : false,
+        };
+        this.resolveMessage(message, args);
+    }
+    onCreativeExpandNonlinear(message) {
+        if (!this._initialized) {
+            console.warn('[Player] Session not initialized, expandNonlinear ignored');
+            return;
+        }
+        // Under normal circumstances, the player pauses the media.
+        // In cases when the content is video, the player resizes the creative iframe to the dimensions of the video
+        // and places the expanded creative at video zero coordinates.
+        this._onPauseMedia?.();
+        this._onResizeSimid(this._mainPlayerDimensions) ?
+            this.resolveMessage(message) :
+            this.rejectMessage(message, _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.PlayerErrorCode.UNSPECIFIED, 'Unable to expand nonlinear ad');
+    }
+    onCreativeCollapseNonlinear(message) {
+        if (!this._initialized) {
+            console.warn('[Player] Session not initialized, collapseNonlinear ignored');
+            return;
+        }
+        // Under normal circumstances, the player pauses the media.
+        // In cases when the content is video, the player resizes the creative iframe to the dimensions of the video
+        // and places the expanded creative at video zero coordinates.
+        this._onPlayMedia?.();
+        this._onResizeSimid(this._creativeDimensions) ?
+            this.resolveMessage(message) :
+            this.rejectMessage(message, _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.PlayerErrorCode.UNSPECIFIED, 'Unable to collapse nonlinear ad');
+    }
+    onCreativeRequestPause(message) {
+        if (!this._initialized) {
+            console.warn('[Player] Session not initialized, requestPause ignored');
+            return;
+        }
+        this._onPauseMedia?.() ? this.resolveMessage(message) : this.rejectMessage(message, _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.PlayerErrorCode.UNSPECIFIED, '');
+    }
+    onCreativeRequestPlay(message) {
+        if (!this._initialized) {
+            console.warn('[Player] Session not initialized, requestPlay ignored');
+            return;
+        }
+        this._onPlayMedia?.() ? this.resolveMessage(message) : this.rejectMessage(message, _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.PlayerErrorCode.UNSPECIFIED, '');
+    }
+    onCreativeRequestResize(message) {
+        if (!this._onResizeSimid || !this._onResizePlayer) {
+            this.rejectMessage(message, _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.PlayerErrorCode.UNSPECIFIED, 'Resize not supported by the player');
+            return;
+        }
+        const args = message.args;
+        const creativeDimensions = args.creativeDimensions;
+        // Add compatibility with SIMID v1.0
+        const mediaDimensions = args.mediaDimensions || args.videoDimensions;
+        if (!creativeDimensions || !mediaDimensions) {
+            this.rejectMessage(message, _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.PlayerErrorCode.UNSPECIFIED, 'Missing input dimensions to resize');
+            return;
+        }
+        // Resize SIMID iframe
+        if (!this._onResizeSimid?.(creativeDimensions)) {
+            this.rejectMessage(message, _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.PlayerErrorCode.UNSPECIFIED, 'The player is unable to complete the Creative resizing');
+        }
+        else {
+            // Store creative dimensions (reused when collapsed)
+            this._creativeDimensions = creativeDimensions;
+            // If creative successfully resized then resize the main player
+            this._onResizePlayer?.(mediaDimensions);
+            this.resolveMessage(message);
+        }
+    }
+    onCreativeRequestSkip(message) {
+        this.resolveMessage(message);
+        this._skipAd();
+    }
+    onCreativeRequestStop(message) {
+        this.resolveMessage(message);
+        this._stopAd(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.StopCode.CREATIVE_INITIATED);
+    }
+    onCreativeRequestNavigation(message) {
+        if (!this._onOpenClickthrough) {
+            this.rejectMessage(message, _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.PlayerErrorCode.NAVIGATION_NOT_SUPPORTED, 'Navigation not supported by the player');
+            return;
+        }
+        const args = message.args;
+        // Spec §4.4.12.1: resolve before opening the window so the creative receives
+        // the message prior to the app being backgrounded.
+        this.resolveMessage(message);
+        this._onPauseMedia();
+        this._onOpenClickthrough(args.uri);
+    }
+    // #endregion CREATIVE MESSAGE HANDLERS
+    // #endregion PROTECTED METHODS
+    // #region PRIVATE METHODS
+    async _sendInitMessage() {
+        // [4] - send Player:init message
+        const mediaState = this._onGetMediaState?.();
+        const environmentData = {
+            videoDimensions: this._mainPlayerDimensions,
+            creativeDimensions: this._creativeDimensions,
+            fullscreen: false,
+            fullscreenAllowed: true,
+            variableDurationAllowed: true,
+            skippableState: this._adSkippable ? _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.SkippableState.AD_HANDLES : _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.SkippableState.NOT_SKIPPABLE,
+            version: this._protocolVersion,
+            siteUrl: document.location.host,
+            appId: '',
+            useragent: '',
+            deviceId: '',
+            muted: mediaState ? mediaState.muted : false,
+            volume: mediaState ? mediaState.volume : 1,
+            navigationSupport: this._onOpenClickthrough ? _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.NavigationSupport.PLAYER_HANDLES : _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.NavigationSupport.AD_HANDLES,
+            nonlinearDuration: this._adDuration,
+        };
+        const creativeData = {
+            adParameters: this._adParameters,
+            clickThruUrl: '',
+            // These values should be populated from the VAST response
+            // adId: '',
+            // creativeId : '',
+            // adServingId: '',
+        };
+        const args = {
+            environmentData: environmentData,
+            creativeData: creativeData,
+        };
+        try {
+            await this.sendMessage(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.PlayerMessage.INIT, args);
+            this._initialized = true;
+            if (this._autoStart) {
+                this._startCreative();
+            }
+        }
+        catch (e) {
+            console.error('[PLAYER] Init failed', e);
+            this._stopAd();
+        }
+    }
+    // #region IFRAME MANAGEMENT
+    _createSimidIframe() {
+        // Note: once the SIMID iframe is created, it will send a "createSession" message to this SIMID player (see _onCreateSession()) 
+        // [2] - create iframe element
+        const simidIframe = document.createElement('iframe');
+        simidIframe.id = 'iframe';
+        simidIframe.style.display = 'none';
+        simidIframe.style.zIndex = '10';
+        simidIframe.style.width = '100%';
+        simidIframe.style.height = '100%';
+        simidIframe.setAttribute('allowFullScreen', '');
+        simidIframe.setAttribute('allow', 'geolocation');
+        // Set the iframe creative, this should be an html creative.
+        // TODO: This sample does not show what to do when loading fails.
+        // [2.1] - set iframe.src
+        simidIframe.src = this._creativeUri;
+        // [2.2] - add do DOM
+        // this._appContainerElement.appendChild(simidIframe)
+        this._onAddSimid?.(simidIframe);
+        // The target of the player to send messages to is the newly created iframe.
+        this.setMessageTarget(simidIframe.contentWindow);
+        return simidIframe;
+    }
+    _destroySimidIframe() {
+        if (!this._simidIframe) {
+            return;
+        }
+        this._simidIframe.remove();
+        this._simidIframe = null;
+    }
+    // #endregion IFRAME
+    // #region CREATIVE AD MANAGEMENT
+    async _startCreative() {
+        const mediaState = this._onGetMediaState?.();
+        this._nonLinearStartTime = mediaState?.currentTime;
+        try {
+            await this.sendMessage(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.PlayerMessage.START_CREATIVE);
+            this._onShowSimid?.(true);
+            this._startMediaTimeupdateInterval();
+        }
+        catch (e) {
+            console.error('[PLAYER] Failed to start creative', e);
+        }
+    }
+    _stopAd(reason = _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.StopCode.PLAYER_INITATED) {
+        this._stopSession(false, reason);
+    }
+    _skipAd() {
+        this._stopSession(true);
+    }
+    async _stopSession(skipped = false, reason = _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.StopCode.PLAYER_INITATED) {
+        if (this._isStopping || !this._simidIframe) {
+            this.resetSession();
+            return;
+        }
+        this._isStopping = true;
+        this._stopMediaTimeupdateInterval();
+        // The iframe is only hidden on ad stoppage. The ad might still request tracking pixels before it is cleaned up
+        this._onShowSimid?.(false);
+        this._completeAd(skipped);
+        // Wait for the SIMID creative to acknowledge stop and then clean up the iframe.
+        if (this._initialized) {
+            skipped ?
+                await this.sendMessage(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.PlayerMessage.AD_SKIPPED) :
+                await this.sendMessage(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.PlayerMessage.AD_STOPPED, {
+                    code: reason
+                });
+        }
+        this._destroySimidIframe();
+        this.resetSession();
+    }
+    _completeAd(skipped = false) {
+        // Resize the main player to its original dimensions
+        this._onResizePlayer?.(this._mainPlayerDimensions);
+        // Notify player ad is complete, if skipped this enable player to seek after the current linear ad
+        this._onComplete?.(skipped);
+        // Resume main video playback
+        this._onPlayMedia?.();
+    }
+    // #endregion CREATIVE AD MANAGEMENT
+    // #region MAIN VIDEO STATE
+    _startMediaTimeupdateInterval() {
+        this._stopMediaTimeupdateInterval();
+        if (this._mediaTimeupdateInterval === -1) {
+            return;
+        }
+        if (this._adDuration <= 0) {
+            return;
+        }
+        this._timerMediaState = window.setInterval(() => {
+            const mediaState = this._onGetMediaState?.();
+            if (mediaState) {
+                this._mediaTimeUpdated(mediaState.currentTime);
+            }
+        }, this._mediaTimeupdateInterval);
+    }
+    _stopMediaTimeupdateInterval() {
+        if (this._timerMediaState === undefined) {
+            return;
+        }
+        window.clearInterval(this._timerMediaState);
+        this._timerMediaState = undefined;
+    }
+    _mediaTimeUpdated(currentTime) {
+        this.sendMessage(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.MediaMessage.TIME_UPDATE, { currentTime });
+        // For nonlinear ads, stop the ad once requested duration is over
+        if (this._adDuration > 0 &&
+            this._nonLinearStartTime &&
+            currentTime - this._nonLinearStartTime > this._adDuration) {
+            this._nonLinearStartTime = undefined;
+            this._stopAd(_SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.StopCode.NON_LINEAR_DURATION_COMPLETE);
+        }
+    }
+}
+
+
+
+
+/***/ }),
+
+/***/ "../controller/dist/SimidMessages.js":
+/*!*******************************************!*\
+  !*** ../controller/dist/SimidMessages.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CloseButtonSupport: () => (/* binding */ CloseButtonSupport),
+/* harmony export */   CreativeErrorCode: () => (/* binding */ CreativeErrorCode),
+/* harmony export */   CreativeMessage: () => (/* binding */ CreativeMessage),
+/* harmony export */   MediaMessage: () => (/* binding */ MediaMessage),
+/* harmony export */   MessagesWithResponse: () => (/* binding */ MessagesWithResponse),
+/* harmony export */   NavigationSupport: () => (/* binding */ NavigationSupport),
+/* harmony export */   PlayerErrorCode: () => (/* binding */ PlayerErrorCode),
+/* harmony export */   PlayerMessage: () => (/* binding */ PlayerMessage),
+/* harmony export */   ProtocolMessage: () => (/* binding */ ProtocolMessage),
+/* harmony export */   SkippableState: () => (/* binding */ SkippableState),
+/* harmony export */   StopCode: () => (/* binding */ StopCode),
+/* harmony export */   VideoEvent: () => (/* binding */ VideoEvent)
+/* harmony export */ });
+const ProtocolMessage = {
+    CREATE_SESSION: 'createSession',
+    RESOLVE: 'resolve',
+    REJECT: 'reject'
+};
+const MediaMessage = {
+    DURATION_CHANGE: 'SIMID:Media:durationchange',
+    ENDED: 'SIMID:Media:ended',
+    ERROR: 'SIMID:Media:error',
+    PAUSE: 'SIMID:Media:pause',
+    PLAY: 'SIMID:Media:play',
+    PLAYING: 'SIMID:Media:playing',
+    SEEKED: 'SIMID:Media:seeked',
+    SEEKING: 'SIMID:Media:seeking',
+    STALLED: 'SIMID:Media:stalled',
+    TIME_UPDATE: 'SIMID:Media:timeupdate',
+    VOLUME_CHANGE: 'SIMID:Media:volumechange',
+};
+const PlayerMessage = {
+    AD_SKIPPED: 'SIMID:Player:adSkipped',
+    AD_STOPPED: 'SIMID:Player:adStopped',
+    FATAL_ERROR: 'SIMID:Player:fatalError',
+    INIT: 'SIMID:Player:init',
+    LOG: 'SIMID:Player:log',
+    RESIZE: 'SIMID:Player:resize',
+    START_CREATIVE: 'SIMID:Player:startCreative',
+};
+const VideoEvent = {
+    DURATION_CHANGE: 'durationchange',
+    ENDED: 'ended',
+    ERROR: 'error',
+    PAUSE: 'pause',
+    PLAY: 'play',
+    PLAYING: 'playing',
+    SEEKED: 'seeked',
+    SEEKING: 'seeking',
+    STALLED: 'stalled',
+    TIME_UPDATE: 'timeupdate',
+    VOLUME_CHANGE: 'volumechange',
+};
+/** Messages from the creative */
+const CreativeMessage = {
+    CLICK_THRU: 'SIMID:Creative:clickThru',
+    EXPAND_NONLINEAR: 'SIMID:Creative:expandNonlinear',
+    COLLAPSE_NONLINEAR: 'SIMID:Creative:collapseNonlinear',
+    FATAL_ERROR: 'SIMID:Creative:fatalError',
+    GET_MEDIA_STATE: 'SIMID:Creative:getMediaState',
+    LOG: 'SIMID:Creative:log',
+    READY: 'SIMID:Creative:Ready',
+    REPORT_TRACKING: 'SIMID:Creative:reportTracking',
+    REQUEST_FULL_SCREEN: 'SIMID:Creative:requestFullScreen',
+    REQUEST_SKIP: 'SIMID:Creative:requestSkip',
+    REQUEST_STOP: 'SIMID:Creative:requestStop',
+    REQUEST_PAUSE: 'SIMID:Creative:requestPause',
+    REQUEST_PLAY: 'SIMID:Creative:requestPlay',
+    REQUEST_RESIZE: 'SIMID:Creative:requestResize',
+    REQUEST_VOLUME: 'SIMID:Creative:requestVolume',
+    REQUEST_TRACKING: 'SIMID:Creative:reportTracking',
+    REQUEST_CHANGE_AD_DURATION: 'SIMID:Creative:requestChangeAdDuration',
+    REQUEST_NAVIGATION: 'SIMID:Creative:requestNavigation',
+    REQUEST_VIDEO_LOCATION: 'SIMID:Creative:requestVideoLocation'
+};
+/**
+ * These messages require a response (either resolve or reject).
+ * All other messages do not require a response and are information only.
+ */
+const MessagesWithResponse = [
+    CreativeMessage.CLICK_THRU,
+    CreativeMessage.GET_MEDIA_STATE,
+    CreativeMessage.READY,
+    CreativeMessage.REPORT_TRACKING,
+    CreativeMessage.REQUEST_CHANGE_AD_DURATION,
+    CreativeMessage.REQUEST_FULL_SCREEN,
+    CreativeMessage.REQUEST_NAVIGATION,
+    CreativeMessage.REQUEST_PAUSE,
+    CreativeMessage.REQUEST_PLAY,
+    CreativeMessage.REQUEST_RESIZE,
+    CreativeMessage.REQUEST_SKIP,
+    CreativeMessage.REQUEST_STOP,
+    CreativeMessage.REQUEST_VIDEO_LOCATION,
+    CreativeMessage.REQUEST_VOLUME,
+    PlayerMessage.AD_SKIPPED,
+    PlayerMessage.AD_STOPPED,
+    PlayerMessage.FATAL_ERROR,
+    PlayerMessage.INIT,
+    PlayerMessage.START_CREATIVE,
+    ProtocolMessage.CREATE_SESSION,
+];
+// A list of errors the creative might send to the player.
+const CreativeErrorCode = {
+    UNSPECIFIED: 1100,
+    CANNOT_LOAD_RESOURCE: 1101,
+    PLAYBACK_AREA_UNUSABLE: 1102,
+    INCORRECT_VERSION: 1103,
+    TECHNICAL_ERROR: 1104,
+    EXPAND_NOT_POSSIBLE: 1105,
+    PAUSE_NOT_HONORED: 1106,
+    PLAYMODE_NOT_ADEQUATE: 1107,
+    CREATIVE_INTERNAL_ERROR: 1108,
+    DEVICE_NOT_SUPPORTED: 1109,
+    MESSAGES_NOT_FOLLOWING_SPEC: 1110,
+    PLAYER_RESPONSE_TIMEOUT: 1111,
+};
+// A list of errors the player might send to the creative.
+const PlayerErrorCode = {
+    UNSPECIFIED: 1200,
+    WRONG_VERSION: 1201,
+    UNSUPPORTED_TIME: 1202,
+    UNSUPPORTED_FUNCTIONALITY_REQUEST: 1203,
+    UNSUPPORTED_ACTIONS: 1204,
+    POSTMESSAGE_CHANNEL_OVERLOADED: 1205,
+    VIDEO_COULD_NOT_LOAD: 1206,
+    VIDEO_TIME_OUT: 1207,
+    RESPONSE_TIMEOUT: 1208,
+    MEDIA_NOT_SUPPORTED: 1209,
+    SPEC_NOT_FOLLOWED_ON_INIT: 1210,
+    SPEC_NOT_FOLLOWED_ON_MESSAGES: 1211,
+    CREATIVE_DID_NOT_REPLY_TO_INIT: 1212,
+    CREATIVE_DID_NOT_REPLY_TO_START_CREATIVE: 1213,
+    NAVIGATION_NOT_SUPPORTED: 1214,
+    NAVIGATION_NOT_POSSIBLE: 1215,
+    NAVIGATION_TOO_MANY_CALLS: 1216,
+    NAVIGATION_INVALID_URL: 1217,
+    NAVIGATION_INVALID_APP: 1218,
+};
+// A list of reasons a player could stop the ad.
+const StopCode = {
+    UNSPECIFIED: 0,
+    USER_INITIATED: 1,
+    MEDIA_PLAYBACK_COMPLETE: 2,
+    PLAYER_INITATED: 3,
+    CREATIVE_INITIATED: 4,
+    NON_LINEAR_DURATION_COMPLETE: 5,
+};
+var SkippableState;
+(function (SkippableState) {
+    SkippableState["PLAYER_HANDLES"] = "playerHandles";
+    SkippableState["AD_HANDLES"] = "adHandles";
+    SkippableState["NOT_SKIPPABLE"] = "notSkippable";
+})(SkippableState || (SkippableState = {}));
+var NavigationSupport;
+(function (NavigationSupport) {
+    NavigationSupport["AD_HANDLES"] = "adHandles";
+    NavigationSupport["PLAYER_HANDLES"] = "playerHandles";
+    NavigationSupport["NOT_SUPPORTED"] = "notSupported";
+})(NavigationSupport || (NavigationSupport = {}));
+var CloseButtonSupport;
+(function (CloseButtonSupport) {
+    CloseButtonSupport["AD_HANDLES"] = "adHandles";
+    CloseButtonSupport["PLAYER_HANDLES"] = "playerHandles";
+})(CloseButtonSupport || (CloseButtonSupport = {}));
+// #endregion CREATIVE MESSAGES ARGS
+
+
+
+
+/***/ }),
+
+/***/ "../controller/dist/index.js":
+/*!***********************************!*\
+  !*** ../controller/dist/index.js ***!
+  \***********************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CreativeErrorCode: () => (/* reexport safe */ _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.CreativeErrorCode),
+/* harmony export */   CreativeMessage: () => (/* reexport safe */ _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.CreativeMessage),
+/* harmony export */   MediaMessage: () => (/* reexport safe */ _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.MediaMessage),
+/* harmony export */   MessagesWithResponse: () => (/* reexport safe */ _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.MessagesWithResponse),
+/* harmony export */   NavigationSupport: () => (/* reexport safe */ _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.NavigationSupport),
+/* harmony export */   PlayerErrorCode: () => (/* reexport safe */ _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.PlayerErrorCode),
+/* harmony export */   PlayerMessage: () => (/* reexport safe */ _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.PlayerMessage),
+/* harmony export */   ProtocolMessage: () => (/* reexport safe */ _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.ProtocolMessage),
+/* harmony export */   SimidComponent: () => (/* reexport safe */ _SimidComponent_js__WEBPACK_IMPORTED_MODULE_1__.SimidComponent),
+/* harmony export */   SimidController: () => (/* reexport safe */ _SimidController_js__WEBPACK_IMPORTED_MODULE_2__.SimidController),
+/* harmony export */   SkippableState: () => (/* reexport safe */ _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.SkippableState),
+/* harmony export */   StopCode: () => (/* reexport safe */ _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.StopCode),
+/* harmony export */   VideoEvent: () => (/* reexport safe */ _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__.VideoEvent)
+/* harmony export */ });
+/* harmony import */ var _SimidMessages_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SimidMessages.js */ "../controller/dist/SimidMessages.js");
+/* harmony import */ var _SimidComponent_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SimidComponent.js */ "../controller/dist/SimidComponent.js");
+/* harmony import */ var _SimidController_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SimidController.js */ "../controller/dist/SimidController.js");
+
+
+
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			if (cachedModule.error !== undefined) throw cachedModule.error;
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		try {
+/******/ 			var execOptions = { id: moduleId, module: module, factory: __webpack_modules__[moduleId], require: __webpack_require__ };
+/******/ 			__webpack_require__.i.forEach(function(handler) { handler(execOptions); });
+/******/ 			module = execOptions.module;
+/******/ 			execOptions.factory.call(module.exports, module, module.exports, execOptions.require);
+/******/ 		} catch(e) {
+/******/ 			module.error = e;
+/******/ 			throw e;
+/******/ 		}
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = __webpack_module_cache__;
+/******/ 	
+/******/ 	// expose the module execution interceptor
+/******/ 	__webpack_require__.i = [];
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/get javascript update chunk filename */
+/******/ 	(() => {
+/******/ 		// This function allow to reference all chunks
+/******/ 		__webpack_require__.hu = (chunkId) => {
+/******/ 			// return url for filenames based on template
+/******/ 			return "" + chunkId + "." + __webpack_require__.h() + ".hot-update.js";
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/get update manifest filename */
+/******/ 	(() => {
+/******/ 		__webpack_require__.hmrF = () => ("main." + __webpack_require__.h() + ".hot-update.json");
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/getFullHash */
+/******/ 	(() => {
+/******/ 		__webpack_require__.h = () => ("370157e0a884820a5300")
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/load script */
+/******/ 	(() => {
+/******/ 		var inProgress = {};
+/******/ 		var dataWebpackPrefix = "@broadpeak-tv/simid-demo-app:";
+/******/ 		// loadScript function to load a script via script tag
+/******/ 		__webpack_require__.l = (url, done, key, chunkId) => {
+/******/ 			if(inProgress[url]) { inProgress[url].push(done); return; }
+/******/ 			var script, needAttach;
+/******/ 			if(key !== undefined) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				for(var i = 0; i < scripts.length; i++) {
+/******/ 					var s = scripts[i];
+/******/ 					if(s.getAttribute("src") == url || s.getAttribute("data-webpack") == dataWebpackPrefix + key) { script = s; break; }
+/******/ 				}
+/******/ 			}
+/******/ 			if(!script) {
+/******/ 				needAttach = true;
+/******/ 				script = document.createElement('script');
+/******/ 		
+/******/ 				script.charset = 'utf-8';
+/******/ 				script.timeout = 120;
+/******/ 				if (__webpack_require__.nc) {
+/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
+/******/ 				}
+/******/ 				script.setAttribute("data-webpack", dataWebpackPrefix + key);
+/******/ 		
+/******/ 				script.src = url;
+/******/ 			}
+/******/ 			inProgress[url] = [done];
+/******/ 			var onScriptComplete = (prev, event) => {
+/******/ 				// avoid mem leaks in IE.
+/******/ 				script.onerror = script.onload = null;
+/******/ 				clearTimeout(timeout);
+/******/ 				var doneFns = inProgress[url];
+/******/ 				delete inProgress[url];
+/******/ 				script.parentNode && script.parentNode.removeChild(script);
+/******/ 				doneFns && doneFns.forEach((fn) => (fn(event)));
+/******/ 				if(prev) return prev(event);
+/******/ 			}
+/******/ 			var timeout = setTimeout(onScriptComplete.bind(null, undefined, { type: 'timeout', target: script }), 120000);
+/******/ 			script.onerror = onScriptComplete.bind(null, script.onerror);
+/******/ 			script.onload = onScriptComplete.bind(null, script.onload);
+/******/ 			needAttach && document.head.appendChild(script);
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hot module replacement */
+/******/ 	(() => {
+/******/ 		var currentModuleData = {};
+/******/ 		var installedModules = __webpack_require__.c;
+/******/ 		
+/******/ 		// module and require creation
+/******/ 		var currentChildModule;
+/******/ 		var currentParents = [];
+/******/ 		
+/******/ 		// status
+/******/ 		var registeredStatusHandlers = [];
+/******/ 		var currentStatus = "idle";
+/******/ 		
+/******/ 		// while downloading
+/******/ 		var blockingPromises = 0;
+/******/ 		var blockingPromisesWaiting = [];
+/******/ 		
+/******/ 		// The update info
+/******/ 		var currentUpdateApplyHandlers;
+/******/ 		var queuedInvalidatedModules;
+/******/ 		
+/******/ 		__webpack_require__.hmrD = currentModuleData;
+/******/ 		
+/******/ 		__webpack_require__.i.push(function (options) {
+/******/ 			var module = options.module;
+/******/ 			var require = createRequire(options.require, options.id);
+/******/ 			module.hot = createModuleHotObject(options.id, module);
+/******/ 			module.parents = currentParents;
+/******/ 			module.children = [];
+/******/ 			currentParents = [];
+/******/ 			options.require = require;
+/******/ 		});
+/******/ 		
+/******/ 		__webpack_require__.hmrC = {};
+/******/ 		__webpack_require__.hmrI = {};
+/******/ 		
+/******/ 		function createRequire(require, moduleId) {
+/******/ 			var me = installedModules[moduleId];
+/******/ 			if (!me) return require;
+/******/ 			var fn = function (request) {
+/******/ 				if (me.hot.active) {
+/******/ 					if (installedModules[request]) {
+/******/ 						var parents = installedModules[request].parents;
+/******/ 						if (parents.indexOf(moduleId) === -1) {
+/******/ 							parents.push(moduleId);
+/******/ 						}
+/******/ 					} else {
+/******/ 						currentParents = [moduleId];
+/******/ 						currentChildModule = request;
+/******/ 					}
+/******/ 					if (me.children.indexOf(request) === -1) {
+/******/ 						me.children.push(request);
+/******/ 					}
+/******/ 				} else {
+/******/ 					console.warn(
+/******/ 						"[HMR] unexpected require(" +
+/******/ 							request +
+/******/ 							") from disposed module " +
+/******/ 							moduleId
+/******/ 					);
+/******/ 					currentParents = [];
+/******/ 				}
+/******/ 				return require(request);
+/******/ 			};
+/******/ 			var createPropertyDescriptor = function (name) {
+/******/ 				return {
+/******/ 					configurable: true,
+/******/ 					enumerable: true,
+/******/ 					get: function () {
+/******/ 						return require[name];
+/******/ 					},
+/******/ 					set: function (value) {
+/******/ 						require[name] = value;
+/******/ 					}
+/******/ 				};
+/******/ 			};
+/******/ 			for (var name in require) {
+/******/ 				if (Object.prototype.hasOwnProperty.call(require, name) && name !== "e") {
+/******/ 					Object.defineProperty(fn, name, createPropertyDescriptor(name));
+/******/ 				}
+/******/ 			}
+/******/ 			fn.e = function (chunkId, fetchPriority) {
+/******/ 				return trackBlockingPromise(require.e(chunkId, fetchPriority));
+/******/ 			};
+/******/ 			return fn;
+/******/ 		}
+/******/ 		
+/******/ 		function createModuleHotObject(moduleId, me) {
+/******/ 			var _main = currentChildModule !== moduleId;
+/******/ 			var hot = {
+/******/ 				// private stuff
+/******/ 				_acceptedDependencies: {},
+/******/ 				_acceptedErrorHandlers: {},
+/******/ 				_declinedDependencies: {},
+/******/ 				_selfAccepted: false,
+/******/ 				_selfDeclined: false,
+/******/ 				_selfInvalidated: false,
+/******/ 				_disposeHandlers: [],
+/******/ 				_main: _main,
+/******/ 				_requireSelf: function () {
+/******/ 					currentParents = me.parents.slice();
+/******/ 					currentChildModule = _main ? undefined : moduleId;
+/******/ 					__webpack_require__(moduleId);
+/******/ 				},
+/******/ 		
+/******/ 				// Module API
+/******/ 				active: true,
+/******/ 				accept: function (dep, callback, errorHandler) {
+/******/ 					if (dep === undefined) hot._selfAccepted = true;
+/******/ 					else if (typeof dep === "function") hot._selfAccepted = dep;
+/******/ 					else if (typeof dep === "object" && dep !== null) {
+/******/ 						for (var i = 0; i < dep.length; i++) {
+/******/ 							hot._acceptedDependencies[dep[i]] = callback || function () {};
+/******/ 							hot._acceptedErrorHandlers[dep[i]] = errorHandler;
+/******/ 						}
+/******/ 					} else {
+/******/ 						hot._acceptedDependencies[dep] = callback || function () {};
+/******/ 						hot._acceptedErrorHandlers[dep] = errorHandler;
+/******/ 					}
+/******/ 				},
+/******/ 				decline: function (dep) {
+/******/ 					if (dep === undefined) hot._selfDeclined = true;
+/******/ 					else if (typeof dep === "object" && dep !== null)
+/******/ 						for (var i = 0; i < dep.length; i++)
+/******/ 							hot._declinedDependencies[dep[i]] = true;
+/******/ 					else hot._declinedDependencies[dep] = true;
+/******/ 				},
+/******/ 				dispose: function (callback) {
+/******/ 					hot._disposeHandlers.push(callback);
+/******/ 				},
+/******/ 				addDisposeHandler: function (callback) {
+/******/ 					hot._disposeHandlers.push(callback);
+/******/ 				},
+/******/ 				removeDisposeHandler: function (callback) {
+/******/ 					var idx = hot._disposeHandlers.indexOf(callback);
+/******/ 					if (idx >= 0) hot._disposeHandlers.splice(idx, 1);
+/******/ 				},
+/******/ 				invalidate: function () {
+/******/ 					this._selfInvalidated = true;
+/******/ 					switch (currentStatus) {
+/******/ 						case "idle":
+/******/ 							currentUpdateApplyHandlers = [];
+/******/ 							Object.keys(__webpack_require__.hmrI).forEach(function (key) {
+/******/ 								__webpack_require__.hmrI[key](
+/******/ 									moduleId,
+/******/ 									currentUpdateApplyHandlers
+/******/ 								);
+/******/ 							});
+/******/ 							setStatus("ready");
+/******/ 							break;
+/******/ 						case "ready":
+/******/ 							Object.keys(__webpack_require__.hmrI).forEach(function (key) {
+/******/ 								__webpack_require__.hmrI[key](
+/******/ 									moduleId,
+/******/ 									currentUpdateApplyHandlers
+/******/ 								);
+/******/ 							});
+/******/ 							break;
+/******/ 						case "prepare":
+/******/ 						case "check":
+/******/ 						case "dispose":
+/******/ 						case "apply":
+/******/ 							(queuedInvalidatedModules = queuedInvalidatedModules || []).push(
+/******/ 								moduleId
+/******/ 							);
+/******/ 							break;
+/******/ 						default:
+/******/ 							// ignore requests in error states
+/******/ 							break;
+/******/ 					}
+/******/ 				},
+/******/ 		
+/******/ 				// Management API
+/******/ 				check: hotCheck,
+/******/ 				apply: hotApply,
+/******/ 				status: function (l) {
+/******/ 					if (!l) return currentStatus;
+/******/ 					registeredStatusHandlers.push(l);
+/******/ 				},
+/******/ 				addStatusHandler: function (l) {
+/******/ 					registeredStatusHandlers.push(l);
+/******/ 				},
+/******/ 				removeStatusHandler: function (l) {
+/******/ 					var idx = registeredStatusHandlers.indexOf(l);
+/******/ 					if (idx >= 0) registeredStatusHandlers.splice(idx, 1);
+/******/ 				},
+/******/ 		
+/******/ 				//inherit from previous dispose call
+/******/ 				data: currentModuleData[moduleId]
+/******/ 			};
+/******/ 			currentChildModule = undefined;
+/******/ 			return hot;
+/******/ 		}
+/******/ 		
+/******/ 		function setStatus(newStatus) {
+/******/ 			currentStatus = newStatus;
+/******/ 			var results = [];
+/******/ 		
+/******/ 			for (var i = 0; i < registeredStatusHandlers.length; i++)
+/******/ 				results[i] = registeredStatusHandlers[i].call(null, newStatus);
+/******/ 		
+/******/ 			return Promise.all(results).then(function () {});
+/******/ 		}
+/******/ 		
+/******/ 		function unblock() {
+/******/ 			if (--blockingPromises === 0) {
+/******/ 				setStatus("ready").then(function () {
+/******/ 					if (blockingPromises === 0) {
+/******/ 						var list = blockingPromisesWaiting;
+/******/ 						blockingPromisesWaiting = [];
+/******/ 						for (var i = 0; i < list.length; i++) {
+/******/ 							list[i]();
+/******/ 						}
+/******/ 					}
+/******/ 				});
+/******/ 			}
+/******/ 		}
+/******/ 		
+/******/ 		function trackBlockingPromise(promise) {
+/******/ 			switch (currentStatus) {
+/******/ 				case "ready":
+/******/ 					setStatus("prepare");
+/******/ 				/* fallthrough */
+/******/ 				case "prepare":
+/******/ 					blockingPromises++;
+/******/ 					promise.then(unblock, unblock);
+/******/ 					return promise;
+/******/ 				default:
+/******/ 					return promise;
+/******/ 			}
+/******/ 		}
+/******/ 		
+/******/ 		function waitForBlockingPromises(fn) {
+/******/ 			if (blockingPromises === 0) return fn();
+/******/ 			return new Promise(function (resolve) {
+/******/ 				blockingPromisesWaiting.push(function () {
+/******/ 					resolve(fn());
+/******/ 				});
+/******/ 			});
+/******/ 		}
+/******/ 		
+/******/ 		function hotCheck(applyOnUpdate) {
+/******/ 			if (currentStatus !== "idle") {
+/******/ 				throw new Error("check() is only allowed in idle status");
+/******/ 			}
+/******/ 			return setStatus("check")
+/******/ 				.then(__webpack_require__.hmrM)
+/******/ 				.then(function (update) {
+/******/ 					if (!update) {
+/******/ 						return setStatus(applyInvalidatedModules() ? "ready" : "idle").then(
+/******/ 							function () {
+/******/ 								return null;
+/******/ 							}
+/******/ 						);
+/******/ 					}
+/******/ 		
+/******/ 					return setStatus("prepare").then(function () {
+/******/ 						var updatedModules = [];
+/******/ 						currentUpdateApplyHandlers = [];
+/******/ 		
+/******/ 						return Promise.all(
+/******/ 							Object.keys(__webpack_require__.hmrC).reduce(function (
+/******/ 								promises,
+/******/ 								key
+/******/ 							) {
+/******/ 								__webpack_require__.hmrC[key](
+/******/ 									update.c,
+/******/ 									update.r,
+/******/ 									update.m,
+/******/ 									promises,
+/******/ 									currentUpdateApplyHandlers,
+/******/ 									updatedModules
+/******/ 								);
+/******/ 								return promises;
+/******/ 							}, [])
+/******/ 						).then(function () {
+/******/ 							return waitForBlockingPromises(function () {
+/******/ 								if (applyOnUpdate) {
+/******/ 									return internalApply(applyOnUpdate);
+/******/ 								} else {
+/******/ 									return setStatus("ready").then(function () {
+/******/ 										return updatedModules;
+/******/ 									});
+/******/ 								}
+/******/ 							});
+/******/ 						});
+/******/ 					});
+/******/ 				});
+/******/ 		}
+/******/ 		
+/******/ 		function hotApply(options) {
+/******/ 			if (currentStatus !== "ready") {
+/******/ 				return Promise.resolve().then(function () {
+/******/ 					throw new Error(
+/******/ 						"apply() is only allowed in ready status (state: " +
+/******/ 							currentStatus +
+/******/ 							")"
+/******/ 					);
+/******/ 				});
+/******/ 			}
+/******/ 			return internalApply(options);
+/******/ 		}
+/******/ 		
+/******/ 		function internalApply(options) {
+/******/ 			options = options || {};
+/******/ 		
+/******/ 			applyInvalidatedModules();
+/******/ 		
+/******/ 			var results = currentUpdateApplyHandlers.map(function (handler) {
+/******/ 				return handler(options);
+/******/ 			});
+/******/ 			currentUpdateApplyHandlers = undefined;
+/******/ 		
+/******/ 			var errors = results
+/******/ 				.map(function (r) {
+/******/ 					return r.error;
+/******/ 				})
+/******/ 				.filter(Boolean);
+/******/ 		
+/******/ 			if (errors.length > 0) {
+/******/ 				return setStatus("abort").then(function () {
+/******/ 					throw errors[0];
+/******/ 				});
+/******/ 			}
+/******/ 		
+/******/ 			// Now in "dispose" phase
+/******/ 			var disposePromise = setStatus("dispose");
+/******/ 		
+/******/ 			results.forEach(function (result) {
+/******/ 				if (result.dispose) result.dispose();
+/******/ 			});
+/******/ 		
+/******/ 			// Now in "apply" phase
+/******/ 			var applyPromise = setStatus("apply");
+/******/ 		
+/******/ 			var error;
+/******/ 			var reportError = function (err) {
+/******/ 				if (!error) error = err;
+/******/ 			};
+/******/ 		
+/******/ 			var outdatedModules = [];
+/******/ 			results.forEach(function (result) {
+/******/ 				if (result.apply) {
+/******/ 					var modules = result.apply(reportError);
+/******/ 					if (modules) {
+/******/ 						for (var i = 0; i < modules.length; i++) {
+/******/ 							outdatedModules.push(modules[i]);
+/******/ 						}
+/******/ 					}
+/******/ 				}
+/******/ 			});
+/******/ 		
+/******/ 			return Promise.all([disposePromise, applyPromise]).then(function () {
+/******/ 				// handle errors in accept handlers and self accepted module load
+/******/ 				if (error) {
+/******/ 					return setStatus("fail").then(function () {
+/******/ 						throw error;
+/******/ 					});
+/******/ 				}
+/******/ 		
+/******/ 				if (queuedInvalidatedModules) {
+/******/ 					return internalApply(options).then(function (list) {
+/******/ 						outdatedModules.forEach(function (moduleId) {
+/******/ 							if (list.indexOf(moduleId) < 0) list.push(moduleId);
+/******/ 						});
+/******/ 						return list;
+/******/ 					});
+/******/ 				}
+/******/ 		
+/******/ 				return setStatus("idle").then(function () {
+/******/ 					return outdatedModules;
+/******/ 				});
+/******/ 			});
+/******/ 		}
+/******/ 		
+/******/ 		function applyInvalidatedModules() {
+/******/ 			if (queuedInvalidatedModules) {
+/******/ 				if (!currentUpdateApplyHandlers) currentUpdateApplyHandlers = [];
+/******/ 				Object.keys(__webpack_require__.hmrI).forEach(function (key) {
+/******/ 					queuedInvalidatedModules.forEach(function (moduleId) {
+/******/ 						__webpack_require__.hmrI[key](
+/******/ 							moduleId,
+/******/ 							currentUpdateApplyHandlers
+/******/ 						);
+/******/ 					});
+/******/ 				});
+/******/ 				queuedInvalidatedModules = undefined;
+/******/ 				return true;
+/******/ 			}
+/******/ 		}
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		__webpack_require__.p = "/simid-controller/atres-pause/dist/";
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		// no baseURI
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = __webpack_require__.hmrS_jsonp = __webpack_require__.hmrS_jsonp || {
+/******/ 			"main": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		var currentUpdatedModulesList;
+/******/ 		var waitingUpdateResolves = {};
+/******/ 		function loadUpdateChunk(chunkId, updatedModulesList) {
+/******/ 			currentUpdatedModulesList = updatedModulesList;
+/******/ 			return new Promise((resolve, reject) => {
+/******/ 				waitingUpdateResolves[chunkId] = resolve;
+/******/ 				// start update chunk loading
+/******/ 				var url = __webpack_require__.p + __webpack_require__.hu(chunkId);
+/******/ 				// create error before stack unwound to get useful stacktrace later
+/******/ 				var error = new Error();
+/******/ 				var loadingEnded = (event) => {
+/******/ 					if(waitingUpdateResolves[chunkId]) {
+/******/ 						waitingUpdateResolves[chunkId] = undefined
+/******/ 						var errorType = event && (event.type === 'load' ? 'missing' : event.type);
+/******/ 						var realSrc = event && event.target && event.target.src;
+/******/ 						error.message = 'Loading hot update chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
+/******/ 						error.name = 'ChunkLoadError';
+/******/ 						error.type = errorType;
+/******/ 						error.request = realSrc;
+/******/ 						reject(error);
+/******/ 					}
+/******/ 				};
+/******/ 				__webpack_require__.l(url, loadingEnded);
+/******/ 			});
+/******/ 		}
+/******/ 		
+/******/ 		self["webpackHotUpdate_broadpeak_tv_simid_demo_app"] = (chunkId, moreModules, runtime) => {
+/******/ 			for(var moduleId in moreModules) {
+/******/ 				if(__webpack_require__.o(moreModules, moduleId)) {
+/******/ 					currentUpdate[moduleId] = moreModules[moduleId];
+/******/ 					if(currentUpdatedModulesList) currentUpdatedModulesList.push(moduleId);
+/******/ 				}
+/******/ 			}
+/******/ 			if(runtime) currentUpdateRuntime.push(runtime);
+/******/ 			if(waitingUpdateResolves[chunkId]) {
+/******/ 				waitingUpdateResolves[chunkId]();
+/******/ 				waitingUpdateResolves[chunkId] = undefined;
+/******/ 			}
+/******/ 		};
+/******/ 		
+/******/ 		var currentUpdateChunks;
+/******/ 		var currentUpdate;
+/******/ 		var currentUpdateRemovedChunks;
+/******/ 		var currentUpdateRuntime;
+/******/ 		function applyHandler(options) {
+/******/ 			if (__webpack_require__.f) delete __webpack_require__.f.jsonpHmr;
+/******/ 			currentUpdateChunks = undefined;
+/******/ 			function getAffectedModuleEffects(updateModuleId) {
+/******/ 				var outdatedModules = [updateModuleId];
+/******/ 				var outdatedDependencies = {};
+/******/ 		
+/******/ 				var queue = outdatedModules.map(function (id) {
+/******/ 					return {
+/******/ 						chain: [id],
+/******/ 						id: id
+/******/ 					};
+/******/ 				});
+/******/ 				while (queue.length > 0) {
+/******/ 					var queueItem = queue.pop();
+/******/ 					var moduleId = queueItem.id;
+/******/ 					var chain = queueItem.chain;
+/******/ 					var module = __webpack_require__.c[moduleId];
+/******/ 					if (
+/******/ 						!module ||
+/******/ 						(module.hot._selfAccepted && !module.hot._selfInvalidated)
+/******/ 					)
+/******/ 						continue;
+/******/ 					if (module.hot._selfDeclined) {
+/******/ 						return {
+/******/ 							type: "self-declined",
+/******/ 							chain: chain,
+/******/ 							moduleId: moduleId
+/******/ 						};
+/******/ 					}
+/******/ 					if (module.hot._main) {
+/******/ 						return {
+/******/ 							type: "unaccepted",
+/******/ 							chain: chain,
+/******/ 							moduleId: moduleId
+/******/ 						};
+/******/ 					}
+/******/ 					for (var i = 0; i < module.parents.length; i++) {
+/******/ 						var parentId = module.parents[i];
+/******/ 						var parent = __webpack_require__.c[parentId];
+/******/ 						if (!parent) continue;
+/******/ 						if (parent.hot._declinedDependencies[moduleId]) {
+/******/ 							return {
+/******/ 								type: "declined",
+/******/ 								chain: chain.concat([parentId]),
+/******/ 								moduleId: moduleId,
+/******/ 								parentId: parentId
+/******/ 							};
+/******/ 						}
+/******/ 						if (outdatedModules.indexOf(parentId) !== -1) continue;
+/******/ 						if (parent.hot._acceptedDependencies[moduleId]) {
+/******/ 							if (!outdatedDependencies[parentId])
+/******/ 								outdatedDependencies[parentId] = [];
+/******/ 							addAllToSet(outdatedDependencies[parentId], [moduleId]);
+/******/ 							continue;
+/******/ 						}
+/******/ 						delete outdatedDependencies[parentId];
+/******/ 						outdatedModules.push(parentId);
+/******/ 						queue.push({
+/******/ 							chain: chain.concat([parentId]),
+/******/ 							id: parentId
+/******/ 						});
+/******/ 					}
+/******/ 				}
+/******/ 		
+/******/ 				return {
+/******/ 					type: "accepted",
+/******/ 					moduleId: updateModuleId,
+/******/ 					outdatedModules: outdatedModules,
+/******/ 					outdatedDependencies: outdatedDependencies
+/******/ 				};
+/******/ 			}
+/******/ 		
+/******/ 			function addAllToSet(a, b) {
+/******/ 				for (var i = 0; i < b.length; i++) {
+/******/ 					var item = b[i];
+/******/ 					if (a.indexOf(item) === -1) a.push(item);
+/******/ 				}
+/******/ 			}
+/******/ 		
+/******/ 			// at begin all updates modules are outdated
+/******/ 			// the "outdated" status can propagate to parents if they don't accept the children
+/******/ 			var outdatedDependencies = {};
+/******/ 			var outdatedModules = [];
+/******/ 			var appliedUpdate = {};
+/******/ 		
+/******/ 			var warnUnexpectedRequire = function warnUnexpectedRequire(module) {
+/******/ 				console.warn(
+/******/ 					"[HMR] unexpected require(" + module.id + ") to disposed module"
+/******/ 				);
+/******/ 			};
+/******/ 		
+/******/ 			for (var moduleId in currentUpdate) {
+/******/ 				if (__webpack_require__.o(currentUpdate, moduleId)) {
+/******/ 					var newModuleFactory = currentUpdate[moduleId];
+/******/ 					/** @type {TODO} */
+/******/ 					var result;
+/******/ 					if (newModuleFactory) {
+/******/ 						result = getAffectedModuleEffects(moduleId);
+/******/ 					} else {
+/******/ 						result = {
+/******/ 							type: "disposed",
+/******/ 							moduleId: moduleId
+/******/ 						};
+/******/ 					}
+/******/ 					/** @type {Error|false} */
+/******/ 					var abortError = false;
+/******/ 					var doApply = false;
+/******/ 					var doDispose = false;
+/******/ 					var chainInfo = "";
+/******/ 					if (result.chain) {
+/******/ 						chainInfo = "\nUpdate propagation: " + result.chain.join(" -> ");
+/******/ 					}
+/******/ 					switch (result.type) {
+/******/ 						case "self-declined":
+/******/ 							if (options.onDeclined) options.onDeclined(result);
+/******/ 							if (!options.ignoreDeclined)
+/******/ 								abortError = new Error(
+/******/ 									"Aborted because of self decline: " +
+/******/ 										result.moduleId +
+/******/ 										chainInfo
+/******/ 								);
+/******/ 							break;
+/******/ 						case "declined":
+/******/ 							if (options.onDeclined) options.onDeclined(result);
+/******/ 							if (!options.ignoreDeclined)
+/******/ 								abortError = new Error(
+/******/ 									"Aborted because of declined dependency: " +
+/******/ 										result.moduleId +
+/******/ 										" in " +
+/******/ 										result.parentId +
+/******/ 										chainInfo
+/******/ 								);
+/******/ 							break;
+/******/ 						case "unaccepted":
+/******/ 							if (options.onUnaccepted) options.onUnaccepted(result);
+/******/ 							if (!options.ignoreUnaccepted)
+/******/ 								abortError = new Error(
+/******/ 									"Aborted because " + moduleId + " is not accepted" + chainInfo
+/******/ 								);
+/******/ 							break;
+/******/ 						case "accepted":
+/******/ 							if (options.onAccepted) options.onAccepted(result);
+/******/ 							doApply = true;
+/******/ 							break;
+/******/ 						case "disposed":
+/******/ 							if (options.onDisposed) options.onDisposed(result);
+/******/ 							doDispose = true;
+/******/ 							break;
+/******/ 						default:
+/******/ 							throw new Error("Unexception type " + result.type);
+/******/ 					}
+/******/ 					if (abortError) {
+/******/ 						return {
+/******/ 							error: abortError
+/******/ 						};
+/******/ 					}
+/******/ 					if (doApply) {
+/******/ 						appliedUpdate[moduleId] = newModuleFactory;
+/******/ 						addAllToSet(outdatedModules, result.outdatedModules);
+/******/ 						for (moduleId in result.outdatedDependencies) {
+/******/ 							if (__webpack_require__.o(result.outdatedDependencies, moduleId)) {
+/******/ 								if (!outdatedDependencies[moduleId])
+/******/ 									outdatedDependencies[moduleId] = [];
+/******/ 								addAllToSet(
+/******/ 									outdatedDependencies[moduleId],
+/******/ 									result.outdatedDependencies[moduleId]
+/******/ 								);
+/******/ 							}
+/******/ 						}
+/******/ 					}
+/******/ 					if (doDispose) {
+/******/ 						addAllToSet(outdatedModules, [result.moduleId]);
+/******/ 						appliedUpdate[moduleId] = warnUnexpectedRequire;
+/******/ 					}
+/******/ 				}
+/******/ 			}
+/******/ 			currentUpdate = undefined;
+/******/ 		
+/******/ 			// Store self accepted outdated modules to require them later by the module system
+/******/ 			var outdatedSelfAcceptedModules = [];
+/******/ 			for (var j = 0; j < outdatedModules.length; j++) {
+/******/ 				var outdatedModuleId = outdatedModules[j];
+/******/ 				var module = __webpack_require__.c[outdatedModuleId];
+/******/ 				if (
+/******/ 					module &&
+/******/ 					(module.hot._selfAccepted || module.hot._main) &&
+/******/ 					// removed self-accepted modules should not be required
+/******/ 					appliedUpdate[outdatedModuleId] !== warnUnexpectedRequire &&
+/******/ 					// when called invalidate self-accepting is not possible
+/******/ 					!module.hot._selfInvalidated
+/******/ 				) {
+/******/ 					outdatedSelfAcceptedModules.push({
+/******/ 						module: outdatedModuleId,
+/******/ 						require: module.hot._requireSelf,
+/******/ 						errorHandler: module.hot._selfAccepted
+/******/ 					});
+/******/ 				}
+/******/ 			}
+/******/ 		
+/******/ 			var moduleOutdatedDependencies;
+/******/ 		
+/******/ 			return {
+/******/ 				dispose: function () {
+/******/ 					currentUpdateRemovedChunks.forEach(function (chunkId) {
+/******/ 						delete installedChunks[chunkId];
+/******/ 					});
+/******/ 					currentUpdateRemovedChunks = undefined;
+/******/ 		
+/******/ 					var idx;
+/******/ 					var queue = outdatedModules.slice();
+/******/ 					while (queue.length > 0) {
+/******/ 						var moduleId = queue.pop();
+/******/ 						var module = __webpack_require__.c[moduleId];
+/******/ 						if (!module) continue;
+/******/ 		
+/******/ 						var data = {};
+/******/ 		
+/******/ 						// Call dispose handlers
+/******/ 						var disposeHandlers = module.hot._disposeHandlers;
+/******/ 						for (j = 0; j < disposeHandlers.length; j++) {
+/******/ 							disposeHandlers[j].call(null, data);
+/******/ 						}
+/******/ 						__webpack_require__.hmrD[moduleId] = data;
+/******/ 		
+/******/ 						// disable module (this disables requires from this module)
+/******/ 						module.hot.active = false;
+/******/ 		
+/******/ 						// remove module from cache
+/******/ 						delete __webpack_require__.c[moduleId];
+/******/ 		
+/******/ 						// when disposing there is no need to call dispose handler
+/******/ 						delete outdatedDependencies[moduleId];
+/******/ 		
+/******/ 						// remove "parents" references from all children
+/******/ 						for (j = 0; j < module.children.length; j++) {
+/******/ 							var child = __webpack_require__.c[module.children[j]];
+/******/ 							if (!child) continue;
+/******/ 							idx = child.parents.indexOf(moduleId);
+/******/ 							if (idx >= 0) {
+/******/ 								child.parents.splice(idx, 1);
+/******/ 							}
+/******/ 						}
+/******/ 					}
+/******/ 		
+/******/ 					// remove outdated dependency from module children
+/******/ 					var dependency;
+/******/ 					for (var outdatedModuleId in outdatedDependencies) {
+/******/ 						if (__webpack_require__.o(outdatedDependencies, outdatedModuleId)) {
+/******/ 							module = __webpack_require__.c[outdatedModuleId];
+/******/ 							if (module) {
+/******/ 								moduleOutdatedDependencies =
+/******/ 									outdatedDependencies[outdatedModuleId];
+/******/ 								for (j = 0; j < moduleOutdatedDependencies.length; j++) {
+/******/ 									dependency = moduleOutdatedDependencies[j];
+/******/ 									idx = module.children.indexOf(dependency);
+/******/ 									if (idx >= 0) module.children.splice(idx, 1);
+/******/ 								}
+/******/ 							}
+/******/ 						}
+/******/ 					}
+/******/ 				},
+/******/ 				apply: function (reportError) {
+/******/ 					// insert new code
+/******/ 					for (var updateModuleId in appliedUpdate) {
+/******/ 						if (__webpack_require__.o(appliedUpdate, updateModuleId)) {
+/******/ 							__webpack_require__.m[updateModuleId] = appliedUpdate[updateModuleId];
+/******/ 						}
+/******/ 					}
+/******/ 		
+/******/ 					// run new runtime modules
+/******/ 					for (var i = 0; i < currentUpdateRuntime.length; i++) {
+/******/ 						currentUpdateRuntime[i](__webpack_require__);
+/******/ 					}
+/******/ 		
+/******/ 					// call accept handlers
+/******/ 					for (var outdatedModuleId in outdatedDependencies) {
+/******/ 						if (__webpack_require__.o(outdatedDependencies, outdatedModuleId)) {
+/******/ 							var module = __webpack_require__.c[outdatedModuleId];
+/******/ 							if (module) {
+/******/ 								moduleOutdatedDependencies =
+/******/ 									outdatedDependencies[outdatedModuleId];
+/******/ 								var callbacks = [];
+/******/ 								var errorHandlers = [];
+/******/ 								var dependenciesForCallbacks = [];
+/******/ 								for (var j = 0; j < moduleOutdatedDependencies.length; j++) {
+/******/ 									var dependency = moduleOutdatedDependencies[j];
+/******/ 									var acceptCallback =
+/******/ 										module.hot._acceptedDependencies[dependency];
+/******/ 									var errorHandler =
+/******/ 										module.hot._acceptedErrorHandlers[dependency];
+/******/ 									if (acceptCallback) {
+/******/ 										if (callbacks.indexOf(acceptCallback) !== -1) continue;
+/******/ 										callbacks.push(acceptCallback);
+/******/ 										errorHandlers.push(errorHandler);
+/******/ 										dependenciesForCallbacks.push(dependency);
+/******/ 									}
+/******/ 								}
+/******/ 								for (var k = 0; k < callbacks.length; k++) {
+/******/ 									try {
+/******/ 										callbacks[k].call(null, moduleOutdatedDependencies);
+/******/ 									} catch (err) {
+/******/ 										if (typeof errorHandlers[k] === "function") {
+/******/ 											try {
+/******/ 												errorHandlers[k](err, {
+/******/ 													moduleId: outdatedModuleId,
+/******/ 													dependencyId: dependenciesForCallbacks[k]
+/******/ 												});
+/******/ 											} catch (err2) {
+/******/ 												if (options.onErrored) {
+/******/ 													options.onErrored({
+/******/ 														type: "accept-error-handler-errored",
+/******/ 														moduleId: outdatedModuleId,
+/******/ 														dependencyId: dependenciesForCallbacks[k],
+/******/ 														error: err2,
+/******/ 														originalError: err
+/******/ 													});
+/******/ 												}
+/******/ 												if (!options.ignoreErrored) {
+/******/ 													reportError(err2);
+/******/ 													reportError(err);
+/******/ 												}
+/******/ 											}
+/******/ 										} else {
+/******/ 											if (options.onErrored) {
+/******/ 												options.onErrored({
+/******/ 													type: "accept-errored",
+/******/ 													moduleId: outdatedModuleId,
+/******/ 													dependencyId: dependenciesForCallbacks[k],
+/******/ 													error: err
+/******/ 												});
+/******/ 											}
+/******/ 											if (!options.ignoreErrored) {
+/******/ 												reportError(err);
+/******/ 											}
+/******/ 										}
+/******/ 									}
+/******/ 								}
+/******/ 							}
+/******/ 						}
+/******/ 					}
+/******/ 		
+/******/ 					// Load self accepted modules
+/******/ 					for (var o = 0; o < outdatedSelfAcceptedModules.length; o++) {
+/******/ 						var item = outdatedSelfAcceptedModules[o];
+/******/ 						var moduleId = item.module;
+/******/ 						try {
+/******/ 							item.require(moduleId);
+/******/ 						} catch (err) {
+/******/ 							if (typeof item.errorHandler === "function") {
+/******/ 								try {
+/******/ 									item.errorHandler(err, {
+/******/ 										moduleId: moduleId,
+/******/ 										module: __webpack_require__.c[moduleId]
+/******/ 									});
+/******/ 								} catch (err2) {
+/******/ 									if (options.onErrored) {
+/******/ 										options.onErrored({
+/******/ 											type: "self-accept-error-handler-errored",
+/******/ 											moduleId: moduleId,
+/******/ 											error: err2,
+/******/ 											originalError: err
+/******/ 										});
+/******/ 									}
+/******/ 									if (!options.ignoreErrored) {
+/******/ 										reportError(err2);
+/******/ 										reportError(err);
+/******/ 									}
+/******/ 								}
+/******/ 							} else {
+/******/ 								if (options.onErrored) {
+/******/ 									options.onErrored({
+/******/ 										type: "self-accept-errored",
+/******/ 										moduleId: moduleId,
+/******/ 										error: err
+/******/ 									});
+/******/ 								}
+/******/ 								if (!options.ignoreErrored) {
+/******/ 									reportError(err);
+/******/ 								}
+/******/ 							}
+/******/ 						}
+/******/ 					}
+/******/ 		
+/******/ 					return outdatedModules;
+/******/ 				}
+/******/ 			};
+/******/ 		}
+/******/ 		__webpack_require__.hmrI.jsonp = function (moduleId, applyHandlers) {
+/******/ 			if (!currentUpdate) {
+/******/ 				currentUpdate = {};
+/******/ 				currentUpdateRuntime = [];
+/******/ 				currentUpdateRemovedChunks = [];
+/******/ 				applyHandlers.push(applyHandler);
+/******/ 			}
+/******/ 			if (!__webpack_require__.o(currentUpdate, moduleId)) {
+/******/ 				currentUpdate[moduleId] = __webpack_require__.m[moduleId];
+/******/ 			}
+/******/ 		};
+/******/ 		__webpack_require__.hmrC.jsonp = function (
+/******/ 			chunkIds,
+/******/ 			removedChunks,
+/******/ 			removedModules,
+/******/ 			promises,
+/******/ 			applyHandlers,
+/******/ 			updatedModulesList
+/******/ 		) {
+/******/ 			applyHandlers.push(applyHandler);
+/******/ 			currentUpdateChunks = {};
+/******/ 			currentUpdateRemovedChunks = removedChunks;
+/******/ 			currentUpdate = removedModules.reduce(function (obj, key) {
+/******/ 				obj[key] = false;
+/******/ 				return obj;
+/******/ 			}, {});
+/******/ 			currentUpdateRuntime = [];
+/******/ 			chunkIds.forEach(function (chunkId) {
+/******/ 				if (
+/******/ 					__webpack_require__.o(installedChunks, chunkId) &&
+/******/ 					installedChunks[chunkId] !== undefined
+/******/ 				) {
+/******/ 					promises.push(loadUpdateChunk(chunkId, updatedModulesList));
+/******/ 					currentUpdateChunks[chunkId] = true;
+/******/ 				} else {
+/******/ 					currentUpdateChunks[chunkId] = false;
+/******/ 				}
+/******/ 			});
+/******/ 			if (__webpack_require__.f) {
+/******/ 				__webpack_require__.f.jsonpHmr = function (chunkId, promises) {
+/******/ 					if (
+/******/ 						currentUpdateChunks &&
+/******/ 						__webpack_require__.o(currentUpdateChunks, chunkId) &&
+/******/ 						!currentUpdateChunks[chunkId]
+/******/ 					) {
+/******/ 						promises.push(loadUpdateChunk(chunkId));
+/******/ 						currentUpdateChunks[chunkId] = true;
+/******/ 					}
+/******/ 				};
+/******/ 			}
+/******/ 		};
+/******/ 		
+/******/ 		__webpack_require__.hmrM = () => {
+/******/ 			if (typeof fetch === "undefined") throw new Error("No browser support: need fetch API");
+/******/ 			return fetch(__webpack_require__.p + __webpack_require__.hmrF()).then((response) => {
+/******/ 				if(response.status === 404) return; // no update available
+/******/ 				if(!response.ok) throw new Error("Failed to fetch update manifest " + response.statusText);
+/******/ 				return response.json();
+/******/ 			});
+/******/ 		};
+/******/ 		
+/******/ 		// no on chunks loaded
+/******/ 		
+/******/ 		// no jsonp function
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// module cache are used so entry inlining is disabled
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/index.ts");
+/******/ 	
+/******/ 	return __webpack_exports__;
+/******/ })()
+;
+});
+//# sourceMappingURL=main.js.map

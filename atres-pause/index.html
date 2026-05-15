@@ -1,0 +1,399 @@
+
+<html>
+<head>
+  <title>Broadpeak Pause Ads Demo</title>
+
+  <!-- bitmovin player -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bitmovin-player-ui@4/dist/css/bitmovinplayer-ui.css">
+  <script src="https://cdn.bitmovin.com/player/web/8/bitmovinplayer.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bitmovin-player-ui@4/dist/js/bitmovinplayer-ui.js"></script>
+
+  <!-- app -->
+  <script src="./dist/main.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: black;
+      color: white;
+      text-align: center;
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 1vw;
+    }
+
+    main {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: #111;
+      overflow: hidden;
+    }
+
+    .inputs {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
+      background: #3d3838;
+      gap: 8px;
+      margin: 8px;
+      padding: 8px 16px;
+      z-index: 999;
+    }
+
+    .inputs label {
+      white-space: nowrap;
+      flex: 0 0 auto;
+      font-size: 0.85em;
+      color: #888;
+    }
+
+    .inputs .input {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .inputs input {
+      height: 26px;
+      box-sizing: border-box;
+      background: #181818;
+      color: #e8e8e8;
+      border: 1px solid #444;
+      border-radius: 5px;
+      padding: 0 10px;
+      font-size: 0.88em;
+      font-family: inherit;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .inputs input:focus {
+      outline: none;
+      border-color: #5b9bd5;
+      background: #1a2535;
+    }
+
+    .flex-edit {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    #stream-button-load {
+      height: 26px;
+      background: #3a7abf;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 0 14px;
+      font-size: 0.88em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    #stream-button-load:hover {
+      background: #2e6aad;
+    }
+
+    #stream-button-stop {
+      height: 26px;
+      background: transparent;
+      color: #aaa;
+      border: 1px solid #484848;
+      border-radius: 5px;
+      padding: 0 14px;
+      font-size: 0.88em;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    #stream-button-stop:hover {
+      background: #2e2e2e;
+      color: #ddd;
+    }
+
+    .app {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #player-container {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      width: min(100%, calc((100vh - 90px) * 16 / 9));
+      height: auto;
+      max-height: calc(100vh - 90px);
+    }
+
+    #player {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      transition: all .5s linear;
+    }
+
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      border: 0;
+    }
+
+    #metadata-button {
+      height: 26px;
+      background: transparent;
+      color: #a8c4de;
+      border: 1px solid #4a6f8a;
+      border-radius: 5px;
+      padding: 0 12px;
+      font-size: 0.88em;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    #metadata-button {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    #metadata-button:hover {
+      background: #1e3347;
+      color: #cde0f0;
+    }
+
+    #ad-type-select {
+      height: 26px;
+      background: #1e1e1e;
+      color: #a8c4de;
+      border: 1px solid #4a6f8a;
+      border-radius: 5px;
+      padding: 0 8px;
+      font-size: 0.88em;
+      font-family: inherit;
+      cursor: pointer;
+      /* reset .inputs input overrides */
+      width: unset;
+    }
+
+    #ad-type-select:focus {
+      outline: none;
+      border-color: #5b9bd5;
+    }
+
+    #metadata-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(3px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #metadata-dialog {
+      background: #222;
+      border: 1px solid #3a3a3a;
+      border-radius: 10px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+      width: 520px;
+      max-width: 92vw;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      font-size: 14px;
+    }
+
+    .dialog-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-bottom: 1px solid #333;
+    }
+
+    .dialog-header h3 {
+      font-size: 1em;
+      font-weight: 600;
+      color: #f0f0f0;
+      letter-spacing: 0.02em;
+    }
+
+    #metadata-close {
+      background: none;
+      border: none;
+      color: #777;
+      font-size: 1em;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 4px;
+      line-height: 1;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    #metadata-close:hover {
+      background: #383838;
+      color: #ddd;
+    }
+
+    #metadata-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 18px 20px;
+    }
+
+    .metadata-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .metadata-key {
+      flex: 0 0 148px;
+      font-size: 0.82em;
+      color: #888;
+      text-align: right;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      user-select: none;
+    }
+
+    .metadata-value {
+      flex: 1;
+      min-width: 0;
+      background: #181818;
+      color: #e8e8e8;
+      border: 1px solid #444;
+      border-radius: 5px;
+      padding: 7px 10px;
+      font-size: 0.88em;
+      font-family: inherit;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .metadata-value:focus {
+      outline: none;
+      border-color: #5b9bd5;
+      background: #1a2535;
+    }
+
+    .dialog-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      padding: 12px 18px;
+      border-top: 1px solid #333;
+    }
+
+    #metadata-cancel {
+      background: transparent;
+      color: #aaa;
+      border: 1px solid #484848;
+      border-radius: 5px;
+      padding: 6px 18px;
+      font-size: 0.88em;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    #metadata-cancel:hover {
+      background: #2e2e2e;
+      color: #ddd;
+    }
+
+    #metadata-save {
+      background: #3a7abf;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 6px 20px;
+      font-size: 0.88em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    #metadata-save:hover {
+      background: #2e6aad;
+    }
+
+</style>
+</head>
+<body>
+
+<main>
+
+  <div class="inputs">
+    <div id="stream" class="input">
+      <label for="stream-edit-url">Stream:</label>
+      <input type="text" id="stream-edit-url" class="flex-edit" value="">
+      <button id="stream-button-load">LOAD</button>
+      <button id="stream-button-stop">STOP</button>
+      <select id="ad-type-select">
+        <option value="aspect-full">full-frame</option>
+        <option value="aspect-two-thirds">2/3</option>
+        <option value="aspect-overlay">overlay</option>
+      </select>
+      <button id="metadata-button">Content Metadata</button>
+    </div>
+  </div>
+
+  <div id="metadata-overlay">
+    <div id="metadata-dialog">
+      <div class="dialog-header">
+        <h3>Content Metadata</h3>
+        <button id="metadata-close">✕</button>
+      </div>
+      <div id="metadata-fields"></div>
+      <div class="dialog-actions">
+        <button id="metadata-cancel">Cancel</button>
+        <button id="metadata-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="app">
+    <div id="player-container">
+      <div id="player">
+      </div>
+      <!-- iframe -->
+    </div>
+  </div>
+
+</main>
+
+</body>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(() => initApp(), 500);
+  });
+
+  window.addEventListener('beforeunload', function () {
+    stopApp();
+  });
+</script>
+</html>
