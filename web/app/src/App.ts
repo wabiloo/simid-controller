@@ -6,7 +6,6 @@ export default class App {
 
   private playerContainer: HTMLElement
   private playerElement: HTMLElement
-  private videoElement: HTMLMediaElement
 
   private streamEditUrl: HTMLTextAreaElement
   private streamButtonLoad: HTMLButtonElement
@@ -22,14 +21,13 @@ export default class App {
   constructor() {
     this.playerContainer = document.getElementById('player-container') as HTMLElement
     this.playerElement = document.getElementById('player') as HTMLElement
-    this.videoElement = document.getElementById('video') as HTMLMediaElement
     this.streamEditUrl = document.getElementById('stream-edit-url') as HTMLTextAreaElement
     this.streamButtonLoad = document.getElementById('stream-button-load') as HTMLButtonElement
     this.streamButtonStop = document.getElementById('stream-button-stop') as HTMLButtonElement
     this.metadataButton = document.getElementById('metadata-button') as HTMLButtonElement
     this.metadataOverlay = document.getElementById('metadata-overlay') as HTMLElement
 
-    this.player = new Player(this.playerContainer, this.playerElement, this.videoElement)
+    this.player = new Player(this.playerContainer, this.playerElement)
 
     this.setResizeObserver()
     this.setupMetadata()

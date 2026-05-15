@@ -2,19 +2,18 @@ import { MediaState } from '@broadpeak-tv/simid-controller'
 import { SmartLib, StreamingSessionOptions } from '@broadpeak/smartlib'
 import '@broadpeak/smartlib-ad'
 import '@broadpeak/smartlib-analytics'
-import '@broadpeak/smartlib-shaka'
+import '@broadpeak/smartlib-bitmovin'
 import { GenericSimidControllerApi } from '@broadpeak/smartlib-simid'
 import SimidController from './SimidController'
 
-declare const shaka: any
+declare const bitmovin: any
 
 export default class Player {
 
   private playerContainer: HTMLElement
   private playerElement: HTMLElement
-  private videoElement: HTMLMediaElement
 
-  private player: any // ShakaPlayer
+  private player: any // BitmovinPlayer
 
   private smartlibSession?: any /* StreamingSession */
   private adDatas: Map<string, any> = new Map<string, any>()
@@ -32,10 +31,9 @@ export default class Player {
     contentTitle: 'Les reines du volant, saison 2 épisode 2'
   }
 
-  constructor(playerContainer: HTMLElement, playerElement: HTMLElement, videoElement: HTMLMediaElement) {
+  constructor(playerContainer: HTMLElement, playerElement: HTMLElement) {
     this.playerContainer = playerContainer
     this.playerElement = playerElement
-    this.videoElement = videoElement
 
     SmartLib.getInstance().init('', '', '*')
 
@@ -49,7 +47,7 @@ export default class Player {
     // Create SmartLib session
     this.smartlibSession = SmartLib.getInstance().createStreamingSession()
     this.smartlibSession.setOption(StreamingSessionOptions.AD_TRACKERS_NON_LINEAR_AUTO_SEND, false)
-    this.setAdDataListeners(this.smartlibSession)    
+    this.setAdDataListeners(this.smartlibSession)
     this.setAdEventsListeners(this.smartlibSession)
 
     this.bpkSimidController = new GenericSimidControllerApi()
@@ -62,16 +60,13 @@ export default class Player {
 
     const result = await this.smartlibSession.getURL(url)
 
-    await this.player.load(result.url || url)
-    this.videoElement.play()
-    // .then(_ => console.log("OK"))
-    .catch(error => {
-      // console.error(error)
-      this.videoElement.muted = true
-      this.videoElement.play()
-    })
+    const playUrl = result.url || url
+    const source: any = playUrl.includes('.m3u8') ? { hls: playUrl } : { dash: playUrl }
+
+    await this.player.load(source)
+    this.player.play()
   }
-  
+
   public async stop() {
     this.simidControllers.forEach(controller => controller.reset())
     this.smartlibSession?.stopStreamingSession()
@@ -91,9 +86,9 @@ export default class Player {
   }
 
   private getRemainingDuration(): string {
-    const duration = this.videoElement.duration
+    const duration = this.player.getDuration()
     if (!duration || !isFinite(duration) || isNaN(duration)) return '...'
-    const remaining = Math.max(0, duration - this.videoElement.currentTime)
+    const remaining = Math.max(0, duration - this.player.getCurrentTime())
     if (remaining < 60) return '< 1 min'
     return `${Math.floor(remaining / 60)} min`
   }
@@ -142,15 +137,25 @@ export default class Player {
     this.simidControllers.forEach(controller => controller.notifyResize(playerRect, playerRect, false))
   }
 
-  private async loadPlayer() {
-    shaka.polyfill.installAll()
-    this.player = new shaka.Player()
-    await this.player.attach(this.videoElement)
-    
+  private loadPlayer() {
+    const playerConfig = {
+      key: '8ccd9a07-2076-4d36-b8e6-40c412fc90ba',
+      style: {
+        uiManagerFactory: (playerAPI: any, config: any) =>
+          bitmovin.playerui.UIFactory.buildUI(playerAPI, config)
+      },
+      playback: {
+        muted: true,
+        autoplay: false
+      }
+    }
+
+    this.player = new bitmovin.player.Player(this.playerElement, playerConfig)
+
     // React to pause events to show pause ads
-    this.videoElement.addEventListener('pause', () => this.onVideoPaused())
-    // React to resume events to hide pause ads (if not triggered from within the creative)
-    this.videoElement.addEventListener('play', () => this.onVideoPlay())
+    this.player.on(bitmovin.player.PlayerEvent.Paused, () => this.onVideoPaused())
+    // React to play events to hide pause ads
+    this.player.on(bitmovin.player.PlayerEvent.Playing, () => this.onVideoPlay())
   }
 
   private setAdDataListeners(session: any/*: SmartLib.Session*/) {
@@ -166,7 +171,6 @@ export default class Player {
   }
 
   private setAdEventsListeners(session: any/*: SmartLib.Session*/) {
-    // this.session.attachSimidController(new BpkSimidControllerApi(window))
     session.activateAdvertising()
     session.setAdEventsListener({
         onPrepareAdBreak: (adBreakData: any) => {
@@ -207,9 +211,9 @@ export default class Player {
           const simidController = this.simidControllers.get(adData.adId)
           if (simidController) {
             simidController.reset()
-            this.simidControllers.delete(adData.adId)            
+            this.simidControllers.delete(adData.adId)
           }
-          this.adDatas.delete(adData.adId)            
+          this.adDatas.delete(adData.adId)
         },
         onAdBreakEnd: (adBreakData: any) => {
           console.log('[Player] onAdBreakEnd:', adBreakData)
@@ -219,7 +223,7 @@ export default class Player {
 
   private getMediaState(): MediaState {
     return {
-      currentTime: this.videoElement.currentTime
+      currentTime: this.player.getCurrentTime()
     }
   }
 
@@ -274,7 +278,7 @@ export default class Player {
 
   private pauseMedia(): boolean {
     console.log('[Player] Pause media')
-    this.videoElement.pause()
+    this.player.pause()
     return true
   }
 
@@ -282,8 +286,8 @@ export default class Player {
     console.log('[Player] Play media')
 
     this.endPauseAd()
-    
-    this.videoElement.play()
+
+    this.player.play()
     return true
   }
 
@@ -321,15 +325,10 @@ export default class Player {
     if (!adData) {
       return
     }
-    this.videoElement.currentTime = (adData.startPosition + adData.duration) / 1000
+    this.player.seek((adData.startPosition + adData.duration) / 1000)
   }
 
   private onVideoPaused(): void {
-    // ignore pause event during seek (when user is seeking the video)
-    if (this.videoElement.seeking) {
-      return 
-    }
-
     console.log('[Player] Video paused')
     if (this.smartlibSession) {
       console.log('[Player] Request pause ads')
@@ -347,7 +346,7 @@ export default class Player {
     console.log('[Player] Hide pause ad')
     if (this.activePauseAdBreak) {
       console.log('[Player] Pause ad break found, removing it')
-      this.smartlibSession?.endOutOfBandAdBreak(this.activePauseAdBreak.id)     
+      this.smartlibSession?.endOutOfBandAdBreak(this.activePauseAdBreak.id)
       this.activePauseAdBreak = undefined
       this.activePauseAdId = undefined
     }
