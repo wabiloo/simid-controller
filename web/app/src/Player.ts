@@ -23,12 +23,14 @@ export default class Player {
 
   private activePauseAdBreak?: any /* AdBreakData */
   private activePauseAdId?: string
+  private pauseAdTimer?: number
 
-  private aspectTwoThirdsEnabled: boolean = false
+  private adTypeCat: string = 'aspect-full'
 
   private contentMetadata: Record<string, string> = {
-    contentPosterUrl: 'https://bpkcscreatives.s3-eu-west-1.amazonaws.com/non-linear/customers/rmc/reinesvolant.jpg',
-    contentTitle: 'Les reines du volant, saison 2 épisode 2'
+    contentPosterUrl: 'https://cdng.europosters.eu/pod_public/1300/106240.jpg',
+    contentTitle: 'temporada 3 episodio 2',
+    lang: 'spa'
   }
 
   constructor(playerContainer: HTMLElement, playerElement: HTMLElement) {
@@ -119,8 +121,8 @@ export default class Player {
     this.simidControllers.set(adId, simidController)
   }
 
-  public setAspectTwoThirds(enabled: boolean): void {
-    this.aspectTwoThirdsEnabled = enabled
+  public setAdTypeCat(cat: string): void {
+    this.adTypeCat = cat
   }
 
   public getContentMetadata(): Record<string, string> {
@@ -330,15 +332,19 @@ export default class Player {
 
   private onVideoPaused(): void {
     console.log('[Player] Video paused')
-    if (this.smartlibSession) {
-      console.log('[Player] Request pause ads')
-      const targeting = this.aspectTwoThirdsEnabled ? { cat: 'aspect-two-thirds' } : {}
-      this.smartlibSession.requestOutOfBandAds('pause', 0, true, targeting)
-    }
+    this.pauseAdTimer = window.setTimeout(() => {
+      this.pauseAdTimer = undefined
+      if (this.smartlibSession) {
+        console.log('[Player] Request pause ads')
+        this.smartlibSession.requestOutOfBandAds('pause', 0, true, { cat: this.adTypeCat })
+      }
+    }, 2000)
   }
 
   private onVideoPlay(): void {
     console.log('[Player] Video play event')
+    window.clearTimeout(this.pauseAdTimer)
+    this.pauseAdTimer = undefined
     this.endPauseAd()
   }
 

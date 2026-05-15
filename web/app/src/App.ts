@@ -1,6 +1,6 @@
 import Player from './Player'
 
-const DEFAULT_STREAM_URL = 'https://dcv5s0ei7csoc.cloudfront.net/2ab56412b1163ee1f2c20f39d03e6ede/AVOD/CAMIONSXXL-S2E2/unconditioned/stream.m3u8?ooba-tag=rmc-pause'
+const DEFAULT_STREAM_URL = 'https://dcv5s0ei7csoc.cloudfront.net/898aef0932f6aaec18741c9c2acbaa20/asset-vod-01/a3player1/usp_test/vod_storage/test1/manifest.mpd?ooba-tag=atres-pause'
 
 export default class App {
 
@@ -60,9 +60,8 @@ export default class App {
   }
 
   private setupMetadata() {
-    const aspectCheckbox = document.getElementById('aspect-two-thirds-checkbox') as HTMLInputElement
-    aspectCheckbox.onclick = (e) => e.stopPropagation()
-    aspectCheckbox.onchange = () => this.player.setAspectTwoThirds(aspectCheckbox.checked)
+    const adTypeSelect = document.getElementById('ad-type-select') as HTMLSelectElement
+    adTypeSelect.onchange = () => this.player.setAdTypeCat(adTypeSelect.value)
 
     this.metadataButton.onclick = () => this.openMetadataOverlay()
 
