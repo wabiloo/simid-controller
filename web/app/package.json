@@ -13,7 +13,7 @@
     "@broadpeak/smartlib": "6.0.3-861c04c",
     "@broadpeak/smartlib-ad": "6.0.3-861c04c",
     "@broadpeak/smartlib-analytics": "6.0.3-861c04c",
-    "@broadpeak/smartlib-shaka": "6.0.3-861c04c",
+    "@broadpeak/smartlib-bitmovin": "^6.0.3-861c04c",
     "@broadpeak/smartlib-simid": "6.0.3-861c04c"
   },
   "devDependencies": {

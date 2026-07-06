@@ -2,9 +2,11 @@
 <html>
 <head>
   <title>Broadpeak Pause Ads Demo</title>
-  
-  <!-- shaka-player -->
-  <script src="./lib/shaka-player/4.14.2/shaka-player.compiled.js"></script>
+
+  <!-- bitmovin player -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bitmovin-player-ui@4/dist/css/bitmovinplayer-ui.css">
+  <script src="https://cdn.bitmovin.com/player/web/8/bitmovinplayer.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bitmovin-player-ui@4/dist/js/bitmovinplayer-ui.js"></script>
 
   <!-- app -->
   <script src="./dist/main.js"></script>
@@ -143,11 +145,6 @@
       transition: all .5s linear;
     }
 
-    #video {
-      object-fit: contain;
-      width: 100%;
-      height: auto;
-    }
 
     iframe {
       position: absolute;
@@ -183,17 +180,23 @@
       color: #cde0f0;
     }
 
-    #aspect-two-thirds-checkbox {
-      width: 13px;
-      height: 13px;
-      flex-shrink: 0;
-      accent-color: #5b9bd5;
+    #ad-type-select {
+      height: 26px;
+      background: #1e1e1e;
+      color: #a8c4de;
+      border: 1px solid #4a6f8a;
+      border-radius: 5px;
+      padding: 0 8px;
+      font-size: 0.88em;
+      font-family: inherit;
       cursor: pointer;
       /* reset .inputs input overrides */
-      background: unset;
-      border: unset;
-      border-radius: unset;
-      padding: unset;
+      width: unset;
+    }
+
+    #ad-type-select:focus {
+      outline: none;
+      border-color: #5b9bd5;
     }
 
     #metadata-overlay {
@@ -341,7 +344,7 @@
 </style>
 </head>
 <body>
-  
+
 <main>
 
   <div class="inputs">
@@ -350,10 +353,11 @@
       <input type="text" id="stream-edit-url" class="flex-edit" value="">
       <button id="stream-button-load">LOAD</button>
       <button id="stream-button-stop">STOP</button>
-      <button id="metadata-button">
-        <input type="checkbox" id="aspect-two-thirds-checkbox">
-        Content Metadata
-      </button>
+      <select id="ad-type-select">
+        <option value="aspect-full">fullscreen</option>
+        <option value="aspect-miniature">miniature</option>
+      </select>
+      <button id="metadata-button">Content Metadata</button>
     </div>
   </div>
 
@@ -374,7 +378,6 @@
   <div class="app">
     <div id="player-container">
       <div id="player">
-        <video id="video" controls autoplay muted></video>
       </div>
       <!-- iframe -->
     </div>

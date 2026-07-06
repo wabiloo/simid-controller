@@ -37,7 +37,7 @@ const config: webpack.Configuration = {
   devtool: 'source-map',
   devServer: {
     static: path.resolve(__dirname, 'public'),
-    port: 8080,
+    port: 8081,
     open: 'index.html',
     compress: true,
   },
