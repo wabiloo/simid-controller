@@ -1,0 +1,37 @@
+{
+  "name": "@broadpeak-tv/simid-demo-webos",
+  "version": "0.1.0",
+  "description": "Broadpeak SIMID demo app for LG webOS",
+  "scripts": {
+    "start": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack serve",
+    "build": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack",
+    "clean": "rimraf ./public/dist ./dist-ipk",
+    "package": "npm run build && ares-package -n public -o dist-ipk",
+    "install-device": "ares-install --device $npm_config_device $(ls dist-ipk/*.ipk | tail -n 1)",
+    "launch-device": "ares-launch --device $npm_config_device tv.broadpeak.simid.webos",
+    "inspect-device": "ares-inspect --device $npm_config_device --app tv.broadpeak.simid.webos"
+  },
+  "keywords": [],
+  "author": "Broadpeak",
+  "dependencies": {
+    "@broadpeak/smartlib": "6.0.3-861c04c",
+    "@broadpeak/smartlib-ad": "6.0.3-861c04c",
+    "@broadpeak/smartlib-analytics": "6.0.3-861c04c",
+    "@broadpeak/smartlib-bitmovin": "^6.0.3-861c04c",
+    "@broadpeak/smartlib-simid": "6.0.3-861c04c"
+  },
+  "devDependencies": {
+    "@broadpeak-tv/simid-controller": "file:../controller",
+    "@types/node": "18.11.18",
+    "@types/webpack": "5.28.0",
+    "cross-env": "10.1.0",
+    "rimraf": "6.0.1",
+    "source-map-loader": "5.0.0",
+    "ts-loader": "9.4.2",
+    "ts-node": "10.9.1",
+    "typescript": "5.5.3",
+    "webpack": "5.92.1",
+    "webpack-cli": "5.1.4",
+    "webpack-dev-server": "5.0.4"
+  }
+}

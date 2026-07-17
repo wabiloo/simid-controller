@@ -1,0 +1,49 @@
+import * as path from 'path';
+import * as webpack from 'webpack';
+// in case you run into any typescript error when configuring `devServer`
+import 'webpack-dev-server';
+
+const config: webpack.Configuration = {
+  mode: 'development',
+  entry: {
+    main: './src/index.ts'
+  },
+  module: {
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'source-map-loader',
+        exclude: /node_modules\/(?!@broadpeak-tv\/simid-controller)/,
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: [
+          /node_modules/
+        ]
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
+  output: {
+    path: path.resolve(__dirname, 'public/dist'),
+    publicPath: './dist/',
+    filename: '[name].js',
+    libraryTarget: 'umd',
+  },
+  devtool: 'source-map',
+  devServer: {
+    static: path.resolve(__dirname, 'public'),
+    port: 8082,
+    open: 'index.html',
+    compress: true,
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+  ],
+};
+
+export default config;

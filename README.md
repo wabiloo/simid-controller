@@ -14,3 +14,8 @@ This SDK also provides sample applications to illustrate the integration and use
 - the Broadpeak Dynamic Ad Insertion (DAI) solution gets ads from the ad server, and originates ABR streams (HLS or DASH)
 - the Broadpeak SmartLib SDK communicates with the Broadpeak DAI solution to acquire information about the ad break timings and creatives to load
 - The SmartLib SDK notifies the application accordingly.
+
+Sample applications:
+- [Web (browser)](web/app/README.md)
+- [LG webOS](web/webos/README.md)
+- [Samsung Tizen](web/tizen/README.md)

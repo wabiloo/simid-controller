@@ -1,0 +1,39 @@
+{
+  "name": "@broadpeak-tv/simid-demo-tizen",
+  "version": "0.1.0",
+  "description": "Broadpeak SIMID demo app for Samsung Tizen TV",
+  "scripts": {
+    "start": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack serve",
+    "build": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack",
+    "clean": "rimraf ./public/dist ./public/Debug",
+    "package": "npm run build && \"$TIZEN_SDK/tools/tizen-core/tz\" pack -w public -t wgt",
+    "install-device": "\"$TIZEN_SDK/tools/tizen-core/tz\" install -p $(ls public/Debug/*.wgt | tail -n 1) -t $npm_config_target",
+    "launch-device": "\"$TIZEN_SDK/tools/tizen-core/tz\" run -p SMDBPKWOS1.SimidDemoTizen -t $npm_config_target",
+    "uninstall-device": "\"$TIZEN_SDK/tools/tizen-core/tz\" uninstall -p SMDBPKWOS1.SimidDemoTizen -t $npm_config_target",
+    "list-emulators": "\"$TIZEN_SDK/tools/tizen-core/tz\" emul list-vm -d",
+    "launch-emulator": "\"$TIZEN_SDK/tools/tizen-core/tz\" emul launch -n $npm_config_name"
+  },
+  "keywords": [],
+  "author": "Broadpeak",
+  "dependencies": {
+    "@broadpeak/smartlib": "6.0.3-861c04c",
+    "@broadpeak/smartlib-ad": "6.0.3-861c04c",
+    "@broadpeak/smartlib-analytics": "6.0.3-861c04c",
+    "@broadpeak/smartlib-bitmovin": "^6.0.3-861c04c",
+    "@broadpeak/smartlib-simid": "6.0.3-861c04c"
+  },
+  "devDependencies": {
+    "@broadpeak-tv/simid-controller": "file:../controller",
+    "@types/node": "18.11.18",
+    "@types/webpack": "5.28.0",
+    "cross-env": "10.1.0",
+    "rimraf": "6.0.1",
+    "source-map-loader": "5.0.0",
+    "ts-loader": "9.4.2",
+    "ts-node": "10.9.1",
+    "typescript": "5.5.3",
+    "webpack": "5.92.1",
+    "webpack-cli": "5.1.4",
+    "webpack-dev-server": "5.0.4"
+  }
+}
