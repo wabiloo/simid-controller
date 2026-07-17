@@ -29,6 +29,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="LOAD TEST STREAM (bpkio)" />
+
+        <Button
+            android:id="@+id/buttonLoadPauseAds"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="LOAD PAUSE ADS DEMO" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

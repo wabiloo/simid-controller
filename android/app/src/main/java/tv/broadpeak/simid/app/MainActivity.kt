@@ -14,6 +14,8 @@ const val DEFAULT_CREATIVE_DURATION = 10
 
 const val DEFAULT_STREAM_BPKIO_URL = "https://dcv5s0ei7csoc.cloudfront.net/2ab56412b1163ee103b9ed7065a20563/AVOD/Meridian_1920x1080_30fps_SDR/conditioned/stream.mpd?midfreq=40&coll=cooldrink&adid=crea&max_ads=1&nldur=20&vdur=600&vod=true"
 
+const val DEFAULT_STREAM_PAUSE_ADS_URL = "https://dcv5s0ei7csoc.cloudfront.net/2ab56412b1163ee1f2c20f39d03e6ede/AVOD/CAMIONSXXL-S2E2/unconditioned/stream.m3u8?ooba-tag=rmc-pause"
+
 class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalTvMaterial3Api::class)
@@ -41,6 +43,16 @@ class MainActivity : ComponentActivity() {
                     PlayerActivity::class.java
                 )
                     .putExtra("url", DEFAULT_STREAM_BPKIO_URL)
+            )
+        }
+
+        findViewById<View>(R.id.buttonLoadPauseAds).setOnClickListener {
+            startActivity(
+                Intent(
+                    this,
+                    PlayerActivity::class.java
+                )
+                    .putExtra("url", DEFAULT_STREAM_PAUSE_ADS_URL)
             )
         }
     }

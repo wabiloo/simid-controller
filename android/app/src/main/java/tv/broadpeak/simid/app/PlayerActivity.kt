@@ -35,6 +35,10 @@ import tv.broadpeak.smartlib.ad.AdData
 import tv.broadpeak.smartlib.ad.AdManager
 import tv.broadpeak.smartlib.ad.simid.GenericSimidControllerApi
 import tv.broadpeak.smartlib.session.streaming.StreamingSession
+import tv.broadpeak.smartlib.session.streaming.StreamingSessionOptions
+import android.os.Handler
+import android.os.Looper
+import org.json.JSONObject
 import java.net.URL
 
 // Create a class that extends GenericSimidControllerApi
@@ -57,15 +61,35 @@ class PlayerActivity : AppCompatActivity() {
     private var simidControllers: MutableMap<String, SimidController>  = mutableMapOf()
     private var simidWebViews: MutableMap<String, WebView>  = mutableMapOf()
 
+    // Ads for which onAdBegin fired before their SimidController finished loading
+    // (can happen for OOBA/pause ads, whose onPrepareAd -> onAdBegin sequence can be
+    // near-instantaneous, racing with the runOnUiThread-deferred loadSimid() call).
+    private var pendingAdStarts: MutableSet<String> = mutableSetOf()
+
     private var bpkSimidController: BpkSimidController? = null
 
     // Global flag to control animation usage
     private var useAnimations: Boolean = true
 
+    // Pause ad state
+    private var activePauseAdBreak: AdBreakData? = null
+    private var activePauseAdId: String? = null
+    private var pauseAdTimerHandler: Handler = Handler(Looper.getMainLooper())
+    private var pauseAdTimerRunnable: Runnable? = null
+
+    private var adTypeCat: String = "aspect-full"
+
+    private var contentMetadata: MutableMap<String, String> = mutableMapOf(
+        "contentPosterUrl" to "https://io-fsly.cdn.rmcplus.fr/imagescaler002/rmcbfm/production/assets/1020933732470_9C860Fb/posters/e6bc41a1067de0b06d41cdaa066cc0d8/e6bc41a1067de0b06d41cdaa066cc0d8.jpg",
+        "contentTitle" to "Les reines du volant, saison 2 épisode 2"
+    )
+
     companion object {
         private const val TAG = "Player"
 
         private const val ANIMATION_DURATION_MS = 300L
+        private const val PAUSE_AD_DEBOUNCE_MS = 2000L
+        private const val PAUSE_AD_ELEVATION = 20f
     }
 
     @OptIn(UnstableApi::class)
@@ -85,6 +109,17 @@ class PlayerActivity : AppCompatActivity() {
         player!!.addListener(object : Player.Listener {
             override fun onPlayerError(error: PlaybackException) {
                 error.printStackTrace()
+            }
+
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                // React to pause/play events to show/hide pause ads.
+                // Ignore transient pauses caused by buffering/seeking: only a pause while
+                // the player is READY is considered a genuine user/content pause.
+                if (isPlaying) {
+                    onVideoPlay()
+                } else if (player?.playbackState == Player.STATE_READY) {
+                    onVideoPaused()
+                }
             }
         })
 
@@ -106,6 +141,8 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        pauseAdTimerRunnable?.let { pauseAdTimerHandler.removeCallbacks(it) }
+        pauseAdTimerRunnable = null
         simidControllers.forEach { (key, controller) ->  controller.reset() }
         simidControllers.clear()
         player?.stop()
@@ -154,7 +191,21 @@ class PlayerActivity : AppCompatActivity() {
 
         session = SmartLib.getInstance().createStreamingSession()
         session?.let { sSession ->
+            // Disable automatic sending of nonlinear ad trackers: for pause ads we want to
+            // fire impression/creativeView trackers only once the SIMID overlay is actually shown.
+            sSession.setOption(StreamingSessionOptions.AD_TRACKERS_NON_LINEAR_AUTO_SEND, false)
+
             sSession.activateAdvertising()
+
+            sSession.setAdDataListener(object : AdManager.AdDataListener {
+                override fun onAdData(adData: ArrayList<AdBreakData>) {
+                    Log.d(TAG, "onAdData: $adData")
+                }
+
+                override fun onOutOfBandAdData(adData: ArrayList<AdBreakData>) {
+                    Log.d(TAG, "onOutOfBandAdData: $adData")
+                }
+            })
 
             sSession.setAdEventsListener(object : AdManager.AdEventsListener {
                 override fun onPrepareAdBreak(adBreak: AdBreakData) {
@@ -163,6 +214,13 @@ class PlayerActivity : AppCompatActivity() {
 
                 override fun onAdBreakBegin(adBreakData: AdBreakData) {
                     Log.d(TAG, "onAdBreakBegin: ${adBreakData.id} ${adBreakData.startPosition} ${adBreakData.duration} ${adBreakData.ads.size}")
+
+                    // Keep track of the active pause ad break
+                    if (adBreakData.ooba != null && adBreakData.ooba.name == "pause") {
+                        Log.d(TAG, "Pause ad break detected")
+                        activePauseAdBreak = adBreakData
+                        activePauseAdId = adBreakData.ads.firstOrNull()?.adId
+                    }
                 }
 
                 override fun onPrepareAd(adData: AdData, adBreakData: AdBreakData) {
@@ -172,7 +230,7 @@ class PlayerActivity : AppCompatActivity() {
                     if (adData.nonLinearIframeResources?.size!! > 0) {
                         runOnUiThread {
                             val iframeResource = adData.nonLinearIframeResources[0].url
-                            val adParameters = adData.nonLinearIframeResources[0].parameters
+                            val adParameters = injectContentMetadata(adData.nonLinearIframeResources[0].parameters)
                             val clickThruUrl = adData.clickURL
                             loadSimid(adData.adId, iframeResource, adParameters, clickThruUrl, (adData.duration.toFloat() / 1000.0F))
                         }
@@ -187,6 +245,11 @@ class PlayerActivity : AppCompatActivity() {
                         runOnUiThread {
                             simidController.start()
                         }
+                    } else if (adData.nonLinearIframeResources?.size ?: 0 > 0) {
+                        // loadSimid() hasn't run yet (it's deferred to the UI thread from
+                        // onPrepareAd) - remember to start the creative as soon as it is loaded.
+                        Log.d(TAG, "SIMID controller not ready yet for ${adData.adId}, deferring start")
+                        pendingAdStarts.add(adData.adId)
                     }
                 }
 
@@ -250,6 +313,13 @@ class PlayerActivity : AppCompatActivity() {
             controller.load(autoStart)
 
             simidControllers[adId] = controller
+
+            // If onAdBegin already fired for this ad before we got here (race between the
+            // ad-events thread and this UI-thread-deferred load), start the creative now.
+            if (pendingAdStarts.remove(adId)) {
+                Log.d(TAG, "Starting deferred SIMID creative for $adId")
+                controller.start()
+            }
         }
     }
 
@@ -285,7 +355,17 @@ class PlayerActivity : AppCompatActivity() {
         val webView = simidWebViews[adId]
         webView?.let {
             runOnUiThread {
+                // ensure the pause ad is on top of any other nonlinear ad
+                if (activePauseAdId != null) {
+                    webView.elevation = PAUSE_AD_ELEVATION
+                    webView.bringToFront()
+                }
                 webView.visibility = if (show) View.VISIBLE else View.GONE
+            }
+            // trigger trackers
+            if (show) {
+                session?.sendTracker("impression", adId)
+                session?.sendTracker("creativeView", adId)
             }
         }
     }
@@ -357,6 +437,9 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun playMedia(): Boolean {
         Log.d(TAG, "Play media")
+
+        endPauseAd()
+
         runOnUiThread {
             player?.play()
         }
@@ -381,6 +464,65 @@ class PlayerActivity : AppCompatActivity() {
     private fun skipCurrentAd(adData: AdData) {
         runOnUiThread {
             player!!.seekTo(adData.startPosition + adData.duration)
+        }
+    }
+
+    private fun injectContentMetadata(adParameters: String): String {
+        val params = try {
+            JSONObject(adParameters)
+        } catch (e: Exception) {
+            // adParameters was not valid JSON — start from empty object
+            JSONObject()
+        }
+        contentMetadata.forEach { (key, value) -> params.put(key, value) }
+        params.put("durationRemaining", getRemainingDuration())
+        return params.toString()
+    }
+
+    private fun getRemainingDuration(): String {
+        val duration = player?.duration ?: return "..."
+        if (duration <= 0) return "..."
+        val remaining = maxOf(0L, duration - (player?.currentPosition ?: 0L)) / 1000
+        return if (remaining < 60) "< 1 min" else "${remaining / 60} min"
+    }
+
+    fun setAdTypeCat(cat: String) {
+        adTypeCat = cat
+    }
+
+    fun getContentMetadata(): Map<String, String> {
+        return contentMetadata.toMap()
+    }
+
+    fun setContentMetadata(metadata: Map<String, String>) {
+        contentMetadata = metadata.toMutableMap()
+    }
+
+    private fun onVideoPaused() {
+        Log.d(TAG, "Video paused")
+        pauseAdTimerRunnable?.let { pauseAdTimerHandler.removeCallbacks(it) }
+        pauseAdTimerRunnable = Runnable {
+            pauseAdTimerRunnable = null
+            Log.d(TAG, "Request pause ads")
+            session?.requestOutOfBandAds("pause", 0f, true, mapOf("cat" to adTypeCat))
+        }
+        pauseAdTimerHandler.postDelayed(pauseAdTimerRunnable!!, PAUSE_AD_DEBOUNCE_MS)
+    }
+
+    private fun onVideoPlay() {
+        Log.d(TAG, "Video play event")
+        pauseAdTimerRunnable?.let { pauseAdTimerHandler.removeCallbacks(it) }
+        pauseAdTimerRunnable = null
+        endPauseAd()
+    }
+
+    private fun endPauseAd() {
+        Log.d(TAG, "Hide pause ad")
+        activePauseAdBreak?.let { adBreakData ->
+            Log.d(TAG, "Pause ad break found, removing it")
+            session?.endOutOfBandAdBreak(adBreakData.id)
+            activePauseAdBreak = null
+            activePauseAdId = null
         }
     }
 }
