@@ -51,8 +51,15 @@ export default class App {
     this.player.togglePlayPause()
   }
 
-  private exitApp() {
+  private async exitApp() {
     console.log('[App] Exit requested')
+
+    // Stop playback/SIMID session first: PalmSystem.platformBack() only minimizes/backgrounds
+    // the app (it does not necessarily terminate it), so without this the stream and any
+    // active SIMID session would otherwise keep running invisibly in the background, and the
+    // TV would stop delivering further remote-control input to this (now backgrounded) app.
+    await this.stopStream()
+
     const w = window as any
     if (w.webOS && w.webOS.platformBack) {
       w.webOS.platformBack()

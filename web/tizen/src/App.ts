@@ -71,8 +71,12 @@ export default class App {
     }
   }
 
-  private exitApp() {
+  private async exitApp() {
     console.log('[App] Exit requested')
+
+    // Stop playback/SIMID session first, in case app termination is delayed or fails.
+    await this.stopStream()
+
     if (typeof tizen !== 'undefined' && tizen.application) {
       tizen.application.getCurrentApplication().exit()
     } else {

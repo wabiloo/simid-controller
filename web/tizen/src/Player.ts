@@ -29,6 +29,16 @@ export default class Player {
   private activePauseAdId?: string
   private pauseAdTimer?: number
 
+  // The SIMID controller library (web/controller, not modified by this app) always calls
+  // onPlayMedia after any ad completion — skipped or not — assuming any ad ending should
+  // resume main content playback. That's correct for linear ads, but wrong for pause ads:
+  // skipping a pause ad should just dismiss it and leave the (already paused) video paused,
+  // distinct from the creative's separate explicit "Resume" button (which calls onPlayMedia
+  // directly, bypassing onComplete entirely — see SimidController.ts's onCreativeRequestPlay).
+  // This flag lets completeAd() tell the very next playMedia() call to suppress that
+  // auto-resume specifically for this skip-a-pause-ad case.
+  private suppressNextAutoResume = false
+
   private readonly adTypeCat: string = 'aspect-full'
 
   private readonly contentMetadata: Record<string, string> = {
@@ -74,6 +84,7 @@ export default class Player {
 
   public async stop() {
     this.simidControllers.forEach(controller => controller.reset())
+    Array.from(this.simidIframes.keys()).forEach(adId => this.forceDestroySimidIframe(adId))
     this.smartlibSession?.stopStreamingSession()
     await this.player.unload()
   }
@@ -265,6 +276,10 @@ export default class Player {
             this.simidControllers.delete(adData.adId)
           }
           this.adDatas.delete(adData.adId)
+          // controller.reset() should already have torn down the iframe by now (the SIMID
+          // handshake is complete) — this is a safety net in case it didn't (see
+          // forceDestroySimidIframe() for why), and also reclaims focus either way.
+          this.forceDestroySimidIframe(adData.adId)
         },
         onAdBreakEnd: (adBreakData: any) => {
           console.log('[Player] onAdBreakEnd:', adBreakData)
@@ -299,7 +314,41 @@ export default class Player {
     if (show) {
       this.smartlibSession?.sendTracker('impression', adId)
       this.smartlibSession?.sendTracker('creativeView', adId)
+    } else {
+      // The SIMID creative iframe (cross-origin) typically holds keyboard focus while
+      // visible, so the user's remote presses reach its own buttons (skip/resume/etc).
+      // Once it's hidden, browsers do NOT automatically return focus to the parent
+      // document — document.activeElement is left pointing at a now-invisible iframe,
+      // which stops receiving key events entirely. Without reclaiming focus here, no
+      // further remote-control keydown events (Back, play/pause, ...) would reach this
+      // app's own listener at all, even though playback keeps running normally.
+      this.reclaimFocus()
+
+      // Safety net: some (particularly older/embedded) Chromium builds don't reliably
+      // tear down an iframe's running script context as soon as it's removed from the
+      // DOM (which web/controller does on its own shortly after this callback runs) —
+      // it can keep running detached, still holding focus and posting SIMID messages
+      // into the void. Give the outbound AD_SKIPPED/AD_STOPPED handshake a brief moment
+      // to complete, then force-kill it ourselves if it's still around.
+      window.setTimeout(() => this.forceDestroySimidIframe(adId), 500)
     }
+  }
+
+  private forceDestroySimidIframe(adId: string) {
+    const simidIframe = this.simidIframes.get(adId)
+    if (!simidIframe) {
+      return
+    }
+    console.log('[Player] Force-destroying SIMID iframe:', adId)
+    simidIframe.blur()
+    simidIframe.src = 'about:blank'
+    simidIframe.remove()
+    this.simidIframes.delete(adId)
+    this.reclaimFocus()
+  }
+
+  private reclaimFocus() {
+    document.body.focus()
   }
 
   private resizeSimid(adId: string, dimensions: DOMRect): boolean {
@@ -338,6 +387,12 @@ export default class Player {
 
     this.endPauseAd()
 
+    if (this.suppressNextAutoResume) {
+      this.suppressNextAutoResume = false
+      console.log('[Player] Suppressing auto-resume (pause-ad was skipped, staying paused)')
+      return true
+    }
+
     this.player.play()
     return true
   }
@@ -352,6 +407,11 @@ export default class Player {
     const adData = this.adDatas.get(adId)
     if (skipped && adData) {
       this.skipCurrentAd(adData)
+    }
+    // A skipped pause ad should just be dismissed, not resume main content playback —
+    // see the comment on suppressNextAutoResume above.
+    if (skipped && adId === this.activePauseAdId) {
+      this.suppressNextAutoResume = true
     }
   }
 
