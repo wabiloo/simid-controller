@@ -4,8 +4,6 @@
 /.idea/caches
 /.idea/libraries
 /.idea/deviceManager.xml
-/.idea/gradle.xml
-/.idea/markdown.xml
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
@@ -18,3 +16,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+derivedData
+xcshareddata
+xcuserdata
