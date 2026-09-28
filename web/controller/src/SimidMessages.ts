@@ -63,8 +63,17 @@ export const CreativeMessage = {
   REQUEST_TRACKING: 'SIMID:Creative:reportTracking',
   REQUEST_CHANGE_AD_DURATION: 'SIMID:Creative:requestChangeAdDuration',
   REQUEST_NAVIGATION: 'SIMID:Creative:requestNavigation',
-  REQUEST_VIDEO_LOCATION: 'SIMID:Creative:requestVideoLocation'
+  REQUEST_VIDEO_LOCATION: 'SIMID:Creative:requestVideoLocation',
+  SEND_KEYS: 'SIMID:Creative:sendKeys'
 }
+
+export type CreativeSendKeysMessageArgs = {
+  key: string
+  action: 'keydown'
+}
+
+/** Callback for the branch-local SIMID:Creative:sendKeys keyboard extension. */
+export type SendKeysCallback = (key: string) => void
 
 /**
  * These messages require a response (either resolve or reject).

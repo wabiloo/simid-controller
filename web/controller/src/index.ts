@@ -2,6 +2,8 @@ export {
   CloseButtonSupport,
   CreativeClickThruMessageArgs,
   CreativeData,
+  CreativeSendKeysMessageArgs,
+  SendKeysCallback,
   CreativeErrorCode,
   CreativeExpandNonLinearResolveMessageArgs,
   CreativeFatalErrorMessageArgs,

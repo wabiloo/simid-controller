@@ -1,93 +1,186 @@
 import Player from './Player'
 
-const DEFAULT_STREAM_URL = 'https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd'
-const DEFAULT_CREATIVE_URL = 'https://interactiveadvertisingbureau.github.io/SIMID/examples/creatives/banner_nonlinear.html'
-const DEFAULT_CREATIVE_AD_PARAMS = '{"bannerText":"Click here to draw!","webUrl":"https://quickdraw.withgoogle.com/"}'
-const DEFAULT_CREATIVE_DURATION = 10
+type Channel = {
+  id: string
+  number: string
+  name: string
+  category: string
+  thumbnail: string
+  stream: string
+}
+
+const CHANNELS_URL = './channels.json'
+const CHANNEL_SWITCH_TOAST_MS = 3000
+const SUPPORTED_KEYS = new Set(['ArrowUp', 'ArrowDown', 'f', 'F', 'Escape'])
 
 export default class App {
-
   private playerContainer: HTMLElement
-  private playerElement: HTMLElement
-  private videoElement: HTMLMediaElement
-
-  private streamEditUrl: HTMLTextAreaElement
-  private streamButtonLoad: HTMLButtonElement
-  private streamButtonStop: HTMLButtonElement
-
-  private creativeEditUrl: HTMLTextAreaElement
-  private creativeEditAdParams: HTMLTextAreaElement
-  private creativeEditDuration: HTMLTextAreaElement
-  private creativeButtonStart: HTMLButtonElement
-
-  private resizeTimer: number = -1
-
+  private channelsElement: HTMLElement
   private player: Player
+  private channels: Channel[] = []
+  private activeChannelIndex = -1
+  private toastHideTimer = -1
+  private theaterMode = false
+  private tuneRequest = 0
 
   constructor() {
     this.playerContainer = document.getElementById('player-container') as HTMLElement
-    this.playerElement = document.getElementById('player') as HTMLElement
-    this.videoElement = document.getElementById('video') as HTMLMediaElement
-    this.streamEditUrl = document.getElementById('stream-edit-url') as HTMLTextAreaElement
-    this.streamButtonLoad = document.getElementById('stream-button-load') as HTMLButtonElement
-    this.streamButtonStop = document.getElementById('stream-button-stop') as HTMLButtonElement
+    this.channelsElement = document.getElementById('channels') as HTMLElement
 
-    this.creativeEditUrl = document.getElementById('creative-edit-url') as HTMLTextAreaElement
-    this.creativeEditAdParams = document.getElementById('creative-edit-adparams') as HTMLTextAreaElement
-    this.creativeEditDuration = document.getElementById('creative-edit-duration') as HTMLTextAreaElement
-    this.creativeButtonStart = document.getElementById('creative-button-start') as HTMLButtonElement
+    const playerElement = document.getElementById('player') as HTMLElement
+    this.player = new Player(this.playerContainer, playerElement, (key) => this.handleAppKey(key))
 
-    this.player = new Player(this.playerContainer, this.playerElement, this.videoElement)
-
-    this.setResizeObserver()
+    document.getElementById('theater-toggle')!.addEventListener('click', () => this.setTheaterMode(!this.theaterMode))
+    document.getElementById('channel-up')!.addEventListener('click', () => this.zap(-1))
+    document.getElementById('channel-down')!.addEventListener('click', () => this.zap(1))
+    document.addEventListener('keydown', event => this.onKeyDown(event))
+    window.addEventListener('resize', () => this.player.handleResize())
   }
 
-  public async init() {
-
-    this.streamButtonLoad.onclick = (e) => this.loadStream()
-    this.streamButtonStop.onclick = (e) => this.stopStream()
-
-    this.creativeButtonStart.onclick = (e) => this.startCreative()
-
-    const urlParam = (new URL(window.location.href)).searchParams.get('url')
-    const url = urlParam || DEFAULT_STREAM_URL
-
-    this.streamEditUrl.value = url
-    this.creativeEditUrl.value = DEFAULT_CREATIVE_URL
-    this.creativeEditAdParams.value = DEFAULT_CREATIVE_AD_PARAMS
-    this.creativeEditDuration.value = DEFAULT_CREATIVE_DURATION.toString()
-
-    setTimeout(() => this.loadStream(), 2000)
+  public async init(): Promise<void> {
+    try {
+      const response = await fetch(CHANNELS_URL)
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      const channels = await response.json() as Channel[]
+      if (!Array.isArray(channels) || channels.length === 0) throw new Error('Channel config must contain at least one channel')
+      this.channels = channels.filter(channel => channel && channel.id && channel.number && channel.name && channel.thumbnail && channel.stream)
+      if (this.channels.length === 0) throw new Error('Channel config contains no valid channels')
+      if (this.channels.length !== channels.length) console.warn('[App] Skipped incomplete channel config entries')
+      this.renderChannels()
+      await this.tune(0)
+    } catch (error) {
+      console.error('[App] Failed to load channel configuration:', error)
+      this.showStatus('Unable to load channels. Check channels.json and reload.')
+    }
   }
 
-  public async reset() {
-    await this.stopStream()
-  }
-
-  private async loadStream() {
-    const url = this.streamEditUrl.value
-    await this.player.load(url)
-  }
-
-  private async stopStream() {
+  public async reset(): Promise<void> {
+    ++this.tuneRequest
+    window.clearTimeout(this.toastHideTimer)
     await this.player.stop()
   }
 
-  private async startCreative() {
-    const url = this.creativeEditUrl.value
-    const adParams = this.creativeEditAdParams.value
-    const clickThruUrl = ''
-    const duration = parseInt(this.creativeEditDuration.value)
-    this.player.loadSimid('input-creative', url, adParams, clickThruUrl, duration, true)
-  }
+  private renderChannels(): void {
+    this.channelsElement.replaceChildren()
+    document.getElementById('guide-count')!.textContent = `${this.channels.length} channels`
+    this.channels.forEach((channel, index) => {
+      const button = document.createElement('button')
+      button.className = 'channel-card'
+      button.type = 'button'
+      button.dataset.channelIndex = String(index)
+      button.setAttribute('aria-pressed', 'false')
+      button.setAttribute('aria-label', `Channel ${channel.number}: ${channel.name}`)
+      const image = document.createElement('img')
+      image.className = 'channel-thumbnail'
+      image.src = channel.thumbnail
+      image.alt = ''
+      image.loading = 'lazy'
+      image.addEventListener('error', () => {
+        image.removeAttribute('src')
+        image.classList.add('thumbnail-fallback')
+      }, { once: true })
 
-  private setResizeObserver() {
-    window.addEventListener('resize', () => {
-      clearTimeout(this.resizeTimer)
-      this.resizeTimer = window.setTimeout(() => {
-        console.log('Window resized:', window.innerWidth, window.innerHeight)
-        this.player?.handleResize()
-      }, 200)
+      const details = document.createElement('span')
+      details.className = 'channel-details'
+      const number = document.createElement('span')
+      number.className = 'channel-number'
+      number.textContent = channel.number
+      const name = document.createElement('span')
+      name.className = 'channel-name'
+      name.textContent = channel.name
+      const category = document.createElement('span')
+      category.className = 'channel-category'
+      category.textContent = channel.category
+      details.append(number, name, category)
+      button.append(image, details)
+      button.addEventListener('click', () => void this.tune(index))
+      this.channelsElement.appendChild(button)
     })
   }
+
+  private async tune(index: number): Promise<void> {
+    const channel = this.channels[index]
+    if (!channel || index === this.activeChannelIndex) return
+
+    const requestId = ++this.tuneRequest
+    this.activeChannelIndex = index
+    this.channelsElement.querySelectorAll<HTMLButtonElement>('.channel-card').forEach((button, buttonIndex) => {
+      const selected = buttonIndex === index
+      button.classList.toggle('is-active', selected)
+      button.setAttribute('aria-pressed', String(selected))
+    })
+    this.showChannelToast(channel)
+    this.hideStatus()
+    try {
+      await this.player.load(channel.stream)
+    } catch (error) {
+      if (this.tuneRequest !== requestId) return
+      console.error('[App] Failed to tune channel:', error)
+      this.showStatus(`Unable to play ${channel.name}. Check the stream URL in channels.json.`)
+    }
+  }
+
+  private zap(offset: number): void {
+    if (this.channels.length < 2 || this.activeChannelIndex < 0) return
+    const nextIndex = (this.activeChannelIndex + offset + this.channels.length) % this.channels.length
+    void this.tune(nextIndex)
+  }
+
+  private onKeyDown(event: KeyboardEvent): void {
+    if (event.repeat || !SUPPORTED_KEYS.has(event.key) || this.isTypingTarget(event.target)) return
+    this.handleAppKey(event.key)
+    event.preventDefault()
+  }
+
+  private handleAppKey(key: string): void {
+    switch (key) {
+      case 'ArrowUp':
+        this.zap(-1)
+        break
+      case 'ArrowDown':
+        this.zap(1)
+        break
+      case 'f':
+      case 'F':
+        this.setTheaterMode(!this.theaterMode)
+        break
+      case 'Escape':
+        if (this.theaterMode) this.setTheaterMode(false)
+        break
+    }
+  }
+
+  private setTheaterMode(enabled: boolean): void {
+    if (this.theaterMode === enabled) return
+    this.theaterMode = enabled
+    document.body.classList.toggle('theater-mode', enabled)
+    document.getElementById('zap-controls')!.setAttribute('aria-hidden', String(!enabled))
+    const button = document.getElementById('theater-toggle')!
+    button.textContent = enabled ? 'Exit theater' : 'Theater mode'
+    button.setAttribute('aria-pressed', String(enabled))
+    this.player.handleResize()
+  }
+
+  private showChannelToast(channel: Channel): void {
+    const toast = document.getElementById('channel-toast')!
+    toast.textContent = `${channel.number} · ${channel.name}`
+    window.clearTimeout(this.toastHideTimer)
+    toast.classList.add('is-visible')
+    this.toastHideTimer = window.setTimeout(() => toast.classList.remove('is-visible'), CHANNEL_SWITCH_TOAST_MS)
+  }
+
+  private showStatus(message: string): void {
+    const status = document.getElementById('status-message')!
+    status.textContent = message
+    status.hidden = false
+  }
+
+  private hideStatus(): void {
+    document.getElementById('status-message')!.hidden = true
+  }
+
+  private isTypingTarget(target: EventTarget | null): boolean {
+    return target instanceof HTMLElement && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName))
+  }
+
 }

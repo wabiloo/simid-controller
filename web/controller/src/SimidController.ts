@@ -24,6 +24,8 @@ import {
   PlayerResizeMessageArgs,
   CreativeClickThruMessageArgs,
   CreativeFatalErrorMessageArgs,
+  CreativeSendKeysMessageArgs,
+  SendKeysCallback,
 } from './SimidMessages'
 import { SimidComponent } from "./SimidComponent"
 
@@ -162,6 +164,7 @@ export class SimidController extends SimidComponent {
   private _onOpenPage: OpenPageCallback | undefined
   private _onComplete: CompleteCallback | undefined
   private _onError: ErrorCallback| undefined
+  private _onSendKeys: SendKeysCallback | undefined
 
   private _timerMediaState: number | undefined
   private _mediaTimeupdateInterval: number
@@ -320,6 +323,13 @@ export class SimidController extends SimidComponent {
     this._onError = cb
   }
 
+  /**
+   * Set the callback for the branch-local SIMID:Creative:sendKeys extension.
+   */
+  public set onSendKeys(cb: SendKeysCallback) {
+    this._onSendKeys = cb
+  }
+
   /*
   * Return the current SIMID controller version.
   * @return the current SIMID controller version
@@ -413,6 +423,7 @@ export class SimidController extends SimidComponent {
     this.addMessageListener(CreativeMessage.COLLAPSE_NONLINEAR, (message: Message) => this.onCreativeCollapseNonlinear(message))
     this.addMessageListener(CreativeMessage.CLICK_THRU, (message: Message) => this.onCreativeClickThru(message))
     this.addMessageListener(CreativeMessage.REQUEST_NAVIGATION, (message: Message) => this.onCreativeRequestNavigation(message))
+    this.addMessageListener(CreativeMessage.SEND_KEYS, (message: Message) => this.onCreativeSendKeys(message))
   }
 
   // #region PROTECTED METHODS
@@ -562,6 +573,18 @@ export class SimidController extends SimidComponent {
     }
     const args = message.args as CreativeRequestNavigationMessageArgs
     this._onOpenUri(message, args.uri)
+  }
+
+  protected onCreativeSendKeys(message: Message) {
+    if (!this._initialized) {
+      return
+    }
+    const args = message.args as CreativeSendKeysMessageArgs
+    const supportedKeys = ['ArrowUp', 'ArrowDown', 'f', 'F', 'Escape']
+    if (args?.action !== 'keydown' || !supportedKeys.includes(args.key)) {
+      return
+    }
+    this._onSendKeys?.(args.key)
   }
   // #endregion CREATIVE MESSAGE HANDLERS
   // #endregion PROTECTED METHODS
