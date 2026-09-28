@@ -14,9 +14,10 @@
     * { box-sizing: border-box; }
     body { margin: 0; min-width: 320px; min-height: 100vh; background: #080b10; }
     button { font: inherit; }
-    main { min-height: 100vh; max-width: 1600px; margin: auto; padding: 28px; }
-    .layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); align-items: start; gap: 22px; }
-    .left-rail { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+    .app-shell { display: grid; grid-template-columns: 280px minmax(0, 1fr); grid-template-rows: auto 1fr; column-gap: 22px; row-gap: 18px; min-height: 100vh; max-width: 1600px; margin: auto; padding: 28px; }
+    .brand-logo { grid-column: 1; grid-row: 1; display: block; width: 188px; height: auto; margin: 0; justify-self: start; align-self: start; }
+    .layout { display: contents; }
+    .left-rail { grid-column: 1; grid-row: 2; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
     .campaign-tile { padding: 2px 8px 0; }
     .campaign-title { margin: 0; color: #00a5d9; font-size: 15px; line-height: 1.25; font-weight: 750; letter-spacing: -.015em; }
     .campaign-subtitle { margin: 4px 0 0; color: #a3afbd; font-size: 11px; line-height: 1.4; }
@@ -37,10 +38,19 @@
     .key-hint > span:last-child { margin-left: auto; color: #748396; }
     .key-pair { display: inline-flex; gap: 3px; }
     kbd { display: inline-grid; place-items: center; min-width: 23px; height: 22px; padding: 0 5px; border: 1px solid #ffffff22; border-radius: 5px; background: #ffffff08; color: #e0e8f0; font: inherit; font-size: 11px; }
-    .screen-column { min-width: 0; }
-    #player-container { position: relative; isolation: isolate; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 12px; background: #000; box-shadow: 0 18px 55px #0008, 0 0 0 1px #ffffff16; }
+    .screen-column { grid-column: 2; grid-row: 1 / span 2; min-width: 0; align-self: start; }
+    #player-container { position: relative; isolation: auto; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 12px; background: #000; box-shadow: 0 18px 55px #0008, 0 0 0 1px #ffffff16; }
     #player { position: absolute; inset: 0; width: 100%; height: 100%; }
-    #player-container iframe.simid-creative { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 20; border: 0; }
+    /* Keep SIMID iframes in normal flow: Chrome paints absolutely positioned
+       cross-origin iframe surfaces opaquely over the video, even when their
+       document and iframe backgrounds are transparent. #player is positioned
+       already, so this places the creative at the player origin without the
+       opaque-overlay compositing path. */
+    #player-container iframe.simid-creative { width: 100%; height: 100%; z-index: 20; border: 0; background-color: transparent !important; }
+    .temporary-playback-controls { padding: 10px 8px 12px; border-top: 1px solid #ffffff12; }
+    #temporary-pause-button { width: 100%; min-height: 40px; padding: 8px 14px; border: 1px solid #ffffff20; border-radius: 7px; background: #182430; color: #c5d0dc; font-size: 13px; font-weight: 650; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+    #temporary-pause-button:hover { background: #203749; border-color: #00a5d966; color: #fff; }
+    #temporary-pause-button:focus-visible { outline: 2px solid #00a5d9; outline-offset: 2px; }
     .screen-toolbar { position: absolute; top: 12px; right: 12px; z-index: 30; opacity: .25; transition: opacity .2s; }
     #player-container:hover .screen-toolbar, .screen-toolbar:focus-within { opacity: 1; }
     .icon-button, .zap-button { border: 1px solid #ffffff30; color: #fff; background: #070b10bb; backdrop-filter: blur(12px); cursor: pointer; }
@@ -51,10 +61,12 @@
     .channel-toast.is-visible { opacity: 1; transform: translateY(0); }
     .status-message { margin-top: 12px; padding: 12px 14px; border-radius: 8px; background: #622634; color: #ffe3e7; font-size: 13px; }
     .theater-mode { overflow: hidden; }
-    .theater-mode main { max-width: none; height: 100vh; padding: 0; }
+    .theater-mode .app-shell { display: block; max-width: none; height: 100vh; padding: 0; }
+    .theater-mode .brand-logo { display: none; }
     .theater-mode .layout { display: block; height: 100%; }
     .theater-mode .left-rail, .theater-mode .status-message { display: none; }
     .theater-mode .screen-column { height: 100%; }
+    .theater-mode .temporary-playback-controls { display: none; }
     .theater-mode #player-container { position: fixed; z-index: 100; inset: 0; width: 100vw; height: 100vh; max-width: none; max-height: none; aspect-ratio: auto; border-radius: 0; box-shadow: none; }
     .theater-mode #player { inset: 0; }
     .theater-mode .screen-toolbar { top: max(14px, env(safe-area-inset-top)); right: max(14px, env(safe-area-inset-right)); opacity: 0; }
@@ -67,8 +79,10 @@
     .channel-card, .icon-button, .zap-button { -webkit-tap-highlight-color: transparent; }
     .theater-mode .channel-toast { top: max(24px, env(safe-area-inset-top)); left: max(24px, env(safe-area-inset-left)); font-size: 15px; }
     @media (max-width: 760px) {
-      main { padding: 12px; }
+      .app-shell { grid-template-columns: minmax(120px, 34%) minmax(0, 1fr); column-gap: 10px; row-gap: 12px; padding: 12px; }
+      .brand-logo { width: min(150px, 100%); }
       .layout { grid-template-columns: minmax(120px, 34%) minmax(0, 1fr); gap: 10px; }
+      .screen-column { grid-column: 2; grid-row: 1 / span 2; }
       #channels { max-height: calc(100vh - 130px); padding: 5px; }
       .channel-card { grid-template-columns: 1fr; gap: 5px; padding: 5px; }
       .channel-thumbnail { width: 100%; height: auto; aspect-ratio: 16 / 9; }
@@ -82,7 +96,8 @@
   </style>
 </head>
 <body>
-  <main>
+  <div class="app-shell">
+    <img class="brand-logo" src="./broadpeak-logo.png" alt="Broadpeak">
     <section class="layout" aria-label="Channel guide and video player">
       <div class="left-rail">
         <section class="campaign-tile" aria-label="New ad format">
@@ -97,6 +112,9 @@
             <div class="key-hint"><kbd>Esc</kbd><span>Exit theater view</span></div>
           </div>
         </aside>
+        <div class="temporary-playback-controls">
+          <button id="temporary-pause-button" type="button" aria-pressed="false">Pause playback</button>
+        </div>
       </div>
       <div class="screen-column">
         <div id="player-container" aria-label="Video player">
@@ -113,7 +131,7 @@
         <div id="status-message" class="status-message" role="alert" hidden></div>
       </div>
     </section>
-  </main>
+  </div>
   <script>
     document.addEventListener('DOMContentLoaded', () => setTimeout(() => initApp(), 300));
     window.addEventListener('beforeunload', () => stopApp());
