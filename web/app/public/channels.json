@@ -5,7 +5,7 @@
     "name": "Angel One",
     "category": "Sci-fi · Demo",
     "thumbnail": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=400&q=80",
-    "stream": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd"
+    "stream": "https://stream.broadpeak.io/hlsts/live/neox_usp/neox_usp.isml/master.m3u8?bpkio_serviceid=2ab56412b1163ee1e99a163a082689a8&category=all"
   },
   {
     "id": "sintel",
@@ -13,7 +13,7 @@
     "name": "Sintel",
     "category": "Adventure · Demo",
     "thumbnail": "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=400&q=80",
-    "stream": "https://storage.googleapis.com/shaka-demo-assets/sintel/dash.mpd"
+    "stream": "https://stream.broadpeak.io/hlsts/live/neox_usp/neox_usp.isml/master.m3u8?bpkio_serviceid=2ab56412b1163ee1e99a163a082689a8&category=all"
   },
   {
     "id": "angel-one-encore",
@@ -21,7 +21,7 @@
     "name": "Angel One Encore",
     "category": "Sci-fi · Demo",
     "thumbnail": "https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=400&q=80",
-    "stream": "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd"
+    "stream": "https://stream.broadpeak.io/hlsts/live/neox_usp/neox_usp.isml/master.m3u8?bpkio_serviceid=2ab56412b1163ee1e99a163a082689a8&category=all"
   },
   {
     "id": "big-buck-bunny",
@@ -29,6 +29,6 @@
     "name": "Big Buck Bunny",
     "category": "Animation · Demo",
     "thumbnail": "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=400&q=80",
-    "stream": "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd"
+    "stream": "https://stream.broadpeak.io/hlsts/live/neox_usp/neox_usp.isml/master.m3u8?bpkio_serviceid=2ab56412b1163ee1e99a163a082689a8&category=all"
   }
 ]

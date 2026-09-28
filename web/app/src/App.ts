@@ -62,7 +62,6 @@ export default class App {
 
   private renderChannels(): void {
     this.channelsElement.replaceChildren()
-    document.getElementById('guide-count')!.textContent = `${this.channels.length} channels`
     this.channels.forEach((channel, index) => {
       const button = document.createElement('button')
       button.className = 'channel-card'
@@ -88,10 +87,7 @@ export default class App {
       const name = document.createElement('span')
       name.className = 'channel-name'
       name.textContent = channel.name
-      const category = document.createElement('span')
-      category.className = 'channel-category'
-      category.textContent = channel.category
-      details.append(number, name, category)
+      details.append(number, name)
       button.append(image, details)
       button.addEventListener('click', () => void this.tune(index))
       this.channelsElement.appendChild(button)
