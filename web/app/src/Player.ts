@@ -13,6 +13,8 @@ class SimidControllerAdapter extends GenericSimidControllerApi {
   }
 }
 
+const PAUSE_AD_DELAY_MS = 2000
+
 export default class Player {
   private playerContainer: HTMLElement
   private playerElement: HTMLElement
@@ -21,21 +23,33 @@ export default class Player {
   private adDatas: Map<string, any> = new Map()
   private simidControllers: Map<string, SimidController> = new Map()
   private simidIframes: Map<string, HTMLIFrameElement> = new Map()
-  private trackedAdIds: Set<string> = new Set()
   private controllerAdapter?: SimidControllerAdapter
   private generation = 0
   private transition: Promise<void> = Promise.resolve()
+  private activePauseAdBreak?: any
+  private activePauseAdId?: string
+  private activeZapAdBreak?: any
+  private activeZapAdId?: string
+  private pauseAdTimer?: number
+  private playerIsPaused = false
   private onAppKey: (key: string) => void
+  private onPlaybackStateChange: (paused: boolean) => void
 
-  constructor(playerContainer: HTMLElement, playerElement: HTMLElement, onAppKey: (key: string) => void) {
+  constructor(
+    playerContainer: HTMLElement,
+    playerElement: HTMLElement,
+    onAppKey: (key: string) => void,
+    onPlaybackStateChange: (paused: boolean) => void
+  ) {
     this.playerContainer = playerContainer
     this.playerElement = playerElement
     this.onAppKey = onAppKey
-    SmartLib.getInstance().init('', '', '*')
+    this.onPlaybackStateChange = onPlaybackStateChange
+    SmartLib.getInstance().init('', '', '')
     this.loadPlayer()
   }
 
-  public async load(url: string): Promise<void> {
+  public async load(url: string, requestZapAd = false): Promise<void> {
     const generation = ++this.generation
     const transition = this.transition.catch(() => undefined).then(async () => {
       if (this.player) await this.player.unload()
@@ -50,7 +64,12 @@ export default class Player {
       session.attachSimidController(this.controllerAdapter)
       this.setAdEventsListeners(session, generation)
 
-      const result = await session.getURL(url)
+      const parsedUrl = new URL(url)
+      const queryParams = new URLSearchParams(parsedUrl.search)
+      const baseUrl = parsedUrl.origin + parsedUrl.pathname
+      queryParams.forEach((value, name) => session.setAdParameter(name, value))
+
+      const result = await session.getURL(baseUrl)
       if (generation !== this.generation) return
       const playUrl = result.url || url
       const source = playUrl.toLowerCase().includes('.m3u8') ? { hls: playUrl } : { dash: playUrl }
@@ -62,6 +81,7 @@ export default class Player {
         this.player.mute()
         await this.player.play()
       }
+      if (requestZapAd && generation === this.generation) this.requestOutOfBandAds(session, 'zap')
     })
     this.transition = transition
     await transition
@@ -85,6 +105,11 @@ export default class Player {
   }
 
   private disposeSession(): void {
+    this.playerIsPaused = false
+    window.clearTimeout(this.pauseAdTimer)
+    this.pauseAdTimer = undefined
+    this.endPauseAd()
+    this.endZapAd()
     this.simidControllers.forEach((controller, adId) => {
       controller.reset()
       this.simidIframes.get(adId)?.remove()
@@ -93,7 +118,6 @@ export default class Player {
     this.simidIframes.forEach(iframe => iframe.remove())
     this.simidIframes.clear()
     this.adDatas.clear()
-    this.trackedAdIds.clear()
     this.smartlibSession?.stopStreamingSession()
     this.smartlibSession = undefined
     this.controllerAdapter = undefined
@@ -113,6 +137,26 @@ export default class Player {
         console.error('[Player] Playback error:', error)
       })
     }
+    if (bitmovin.player.PlayerEvent?.Paused) {
+      this.player.on(bitmovin.player.PlayerEvent.Paused, () => {
+        this.onPlaybackStateChange(true)
+        this.onVideoPaused()
+      })
+    }
+    if (bitmovin.player.PlayerEvent?.Playing) {
+      this.player.on(bitmovin.player.PlayerEvent.Playing, () => {
+        this.onPlaybackStateChange(false)
+        this.onVideoPlaying()
+      })
+    }
+  }
+
+  public togglePlayback(): void {
+    if (this.player.isPaused()) {
+      this.player.play()
+    } else {
+      this.player.pause()
+    }
   }
 
   private setAdEventsListeners(session: any, generation: number): void {
@@ -123,11 +167,22 @@ export default class Player {
     })
     session.setAdEventsListener({
       onPrepareAdBreak: (adBreakData: any) => console.log('[Player] onPrepareAdBreak:', adBreakData),
-      onAdBreakBegin: (adBreakData: any) => console.log('[Player] onAdBreakBegin:', adBreakData),
+      onAdBreakBegin: (adBreakData: any) => {
+        if (generation !== this.generation) return
+        console.log('[Player] onAdBreakBegin:', adBreakData)
+        if (adBreakData.ooba?.name === 'pause') {
+          this.activePauseAdBreak = adBreakData
+          this.activePauseAdId = adBreakData.ads?.[0]?.adId
+          this.raiseOutOfBandAdIframe(this.activePauseAdId)
+        } else if (adBreakData.ooba?.name === 'zap') {
+          this.activeZapAdBreak = adBreakData
+          this.activeZapAdId = adBreakData.ads?.[0]?.adId
+          this.raiseOutOfBandAdIframe(this.activeZapAdId)
+        }
+      },
       onPrepareAd: (adData: any) => {
         if (generation !== this.generation) return
         this.adDatas.set(adData.adId, adData)
-        if (adData.type?.toLowerCase?.() === 'nonlinear') this.trackedAdIds.add(adData.adId)
         const resource = adData.nonLinearIframeResources?.[0]
         if (!resource) return
         const duration = adData.duration ? adData.duration / 1000 : 0
@@ -146,7 +201,18 @@ export default class Player {
         this.simidIframes.delete(adData.adId)
         this.adDatas.delete(adData.adId)
       },
-      onAdBreakEnd: (adBreakData: any) => console.log('[Player] onAdBreakEnd:', adBreakData)
+      onAdBreakEnd: (adBreakData: any) => {
+        if (generation !== this.generation) return
+        console.log('[Player] onAdBreakEnd:', adBreakData)
+        if (this.activePauseAdBreak?.id === adBreakData.id) {
+          this.activePauseAdBreak = undefined
+          this.activePauseAdId = undefined
+        }
+        if (this.activeZapAdBreak?.id === adBreakData.id) {
+          this.activeZapAdBreak = undefined
+          this.activeZapAdId = undefined
+        }
+      }
     })
   }
 
@@ -194,8 +260,9 @@ export default class Player {
   private showSimidIframe(adId: string, show: boolean): void {
     const iframe = this.simidIframes.get(adId)
     if (!iframe) return
+    if (adId === this.activePauseAdId || adId === this.activeZapAdId) iframe.style.zIndex = '30'
     iframe.style.display = show ? 'block' : 'none'
-    if (show && this.trackedAdIds.has(adId)) {
+    if (show) {
       this.smartlibSession?.sendTracker('impression', adId)
       this.smartlibSession?.sendTracker('creativeView', adId)
     }
@@ -220,8 +287,60 @@ export default class Player {
   }
 
   private playMedia(): boolean {
+    this.endPauseAd()
     this.player.play()
     return true
+  }
+
+  private onVideoPaused(): void {
+    if (this.playerIsPaused || this.activePauseAdBreak) return
+    this.playerIsPaused = true
+    window.clearTimeout(this.pauseAdTimer)
+    if (!this.smartlibSession) return
+    this.pauseAdTimer = window.setTimeout(() => {
+      this.pauseAdTimer = undefined
+      const session = this.smartlibSession
+      if (session && this.playerIsPaused) {
+        this.requestOutOfBandAds(session, 'pause')
+      }
+    }, PAUSE_AD_DELAY_MS)
+  }
+
+  private onVideoPlaying(): void {
+    this.playerIsPaused = false
+    window.clearTimeout(this.pauseAdTimer)
+    this.pauseAdTimer = undefined
+    this.endPauseAd()
+  }
+
+  private requestOutOfBandAds(session: any, name: 'pause' | 'zap'): void {
+    try {
+      session.requestOutOfBandAds(name, 0, true)
+    } catch (error) {
+      console.error(`[Player] Failed to request ${name} ads:`, error)
+    }
+  }
+
+  private raiseOutOfBandAdIframe(adId?: string): void {
+    if (!adId) return
+    const iframe = this.simidIframes.get(adId)
+    if (iframe) iframe.style.zIndex = '30'
+  }
+
+  private endPauseAd(): void {
+    if (!this.activePauseAdBreak) return
+    window.clearTimeout(this.pauseAdTimer)
+    this.pauseAdTimer = undefined
+    this.smartlibSession?.endOutOfBandAdBreak(this.activePauseAdBreak.id)
+    this.activePauseAdBreak = undefined
+    this.activePauseAdId = undefined
+  }
+
+  private endZapAd(): void {
+    if (!this.activeZapAdBreak) return
+    this.smartlibSession?.endOutOfBandAdBreak(this.activeZapAdBreak.id)
+    this.activeZapAdBreak = undefined
+    this.activeZapAdId = undefined
   }
 
   private completeAd(adId: string, skipped: boolean): void {

@@ -647,6 +647,8 @@ export class SimidController extends SimidComponent {
     simidIframe.style.zIndex = '10'
     simidIframe.style.width = '100%'
     simidIframe.style.height = '100%'
+    simidIframe.style.backgroundColor = 'transparent'
+    simidIframe.setAttribute('allowtransparency', 'true')
     simidIframe.setAttribute('allowFullScreen', '')
     simidIframe.setAttribute('allow', 'geolocation')
 

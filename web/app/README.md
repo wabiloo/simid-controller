@@ -15,7 +15,17 @@ npm start
 
 Open http://localhost:8080. The app reads its channel list from [`public/channels.json`](public/channels.json), auto-tunes the first channel, and stops the previous stream and its SIMID sessions when switching channels. If autoplay is rejected by the browser, playback is retried muted.
 
-The sample entries use public DASH demonstration streams and thumbnail images so channel switching can be tried without a DAI account. They do not provide SIMID ads. Replace stream URLs with Broadpeak DAI-enabled streams to test stream-triggered non-linear SIMID ads. Each JSON channel has `id`, `number`, `name`, `category`, `thumbnail`, and `stream` properties.
+The channel list currently uses the Broadpeak NEOX HLS service URL for each entry. Each JSON channel has `id`, `number`, `name`, `category`, `thumbnail`, and `stream` properties. Query parameters from each stream URL are forwarded to SmartLib as ad parameters before URL resolution.
+
+Pausing playback waits two seconds, then requests the configured `pause` out-of-band ad break in SmartLib. Resuming playback or changing channels ends the pause ad break and cleans up its SIMID iframe. Pause ads are served only when the Broadpeak service is configured with a matching `pause` OOB ad.
+
+Changing channels requests the configured `zap` out-of-band ad break after the new stream starts. Zap ads do not pause playback; they are served only when the Broadpeak service is configured with a matching `zap` OOB ad, and the active zap ad break ends on the next channel change.
+
+Set the page URL to `?mode=on-zap` to select on-zap mode. The default is pre-roll mode. The current mode is shown in the pill below the channel list. In on-zap mode, channel changes trigger the `zap` OOB ad call; in pre-roll mode, the stream URL should carry the service's pre-roll query parameter.
+
+A temporary, subdued **Pause playback** button beneath the channel list can be used to trigger pause ads while investigating another SIMID creative. It switches to **Resume playback** when paused and is hidden in theater mode.
+
+The app uses the supplied `logo_blue_white.png` Broadpeak logo, served from `public/broadpeak-logo.png` in the upper-left header. The pause/resume investigation control appears below the channel guide and is hidden in theater mode.
 
 ## Keyboard forwarding from focused SIMID creatives
 

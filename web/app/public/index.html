@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080b10">
-  <title>SIMID Channel Surf</title>
+  <title>New Formats - Pre-roll on channel change</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bitmovin-player-ui@4/dist/css/bitmovinplayer-ui.css">
   <script src="https://cdn.bitmovin.com/player/web/8/bitmovinplayer.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bitmovin-player-ui@4/dist/js/bitmovinplayer-ui.js"></script>
@@ -15,7 +15,7 @@
     body { margin: 0; min-width: 320px; min-height: 100vh; background: #080b10; }
     button { font: inherit; }
     .app-shell { display: grid; grid-template-columns: 280px minmax(0, 1fr); grid-template-rows: auto 1fr; column-gap: 22px; row-gap: 18px; min-height: 100vh; max-width: 1600px; margin: auto; padding: 28px; }
-    .brand-logo { grid-column: 1; grid-row: 1; display: block; width: 188px; height: auto; margin: 0; justify-self: start; align-self: start; }
+    .brand-logo { grid-column: 1; grid-row: 1; position: relative; top: -28px; display: block; width: 188px; height: auto; margin: 0; justify-self: center; align-self: start; }
     .layout { display: contents; }
     .left-rail { grid-column: 1; grid-row: 2; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
     .campaign-tile { padding: 2px 8px 0; }
@@ -23,12 +23,12 @@
     .campaign-subtitle { margin: 4px 0 0; color: #a3afbd; font-size: 11px; line-height: 1.4; }
     .guide { display: flex; flex-direction: column; min-height: 0; overflow: hidden; border: 1px solid #ffffff14; border-radius: 12px; background: #10151d; }
     #channels { display: flex; flex-direction: column; gap: 4px; max-height: min(680px, calc(100vh - 130px)); overflow: auto; padding: 8px; scrollbar-color: #344354 transparent; scrollbar-width: thin; }
-    .channel-card { display: grid; grid-template-columns: 92px minmax(0, 1fr); align-items: center; gap: 12px; width: 100%; min-height: 70px; padding: 7px; border: 1px solid transparent; border-radius: 8px; text-align: left; color: inherit; background: transparent; cursor: pointer; transition: background .15s, border-color .15s; }
+    .channel-card { display: grid; grid-template-columns: 60px minmax(0, 1fr); align-items: center; gap: 12px; width: 100%; min-height: 70px; padding: 7px; border: 1px solid transparent; border-radius: 8px; text-align: left; color: inherit; background: transparent; cursor: pointer; transition: background .15s, border-color .15s; }
     .channel-card:hover { background: #ffffff0b; }
     .channel-card:focus-visible, .icon-button:focus-visible, .zap-button:focus-visible { outline: 2px solid #77ccff; outline-offset: 2px; }
     .channel-card.is-active { border-color: #53baf477; background: #153047; box-shadow: inset 3px 0 #57c0ff; }
-    .channel-thumbnail { display: block; width: 92px; height: 54px; border-radius: 5px; object-fit: cover; background: #1a2633; }
-    .channel-thumbnail.thumbnail-fallback { background: linear-gradient(135deg, #21394c, #101820); }
+    .channel-thumbnail { display: block; width: 56px; height: 56px; border-radius: 7px; object-fit: contain; background: transparent; }
+    .channel-thumbnail.thumbnail-fallback { background: transparent; }
     .channel-details { display: grid; min-width: 0; grid-template-columns: 25px minmax(0, 1fr); align-items: baseline; column-gap: 5px; row-gap: 3px; }
     .channel-number { color: #67c2f5; font-size: 10px; font-weight: 800; font-variant-numeric: tabular-nums; }
     .channel-name { overflow: hidden; color: #ebf0f6; font-size: 12px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
@@ -47,6 +47,8 @@
        already, so this places the creative at the player origin without the
        opaque-overlay compositing path. */
     #player-container iframe.simid-creative { width: 100%; height: 100%; z-index: 20; border: 0; background-color: transparent !important; }
+    .ad-mode-status { display: flex; justify-content: center; margin: 0; padding: 12px 16px 16px; border-top: 1px solid #ffffff12; color: #a3afbd; font-size: 11px; font-weight: 700; letter-spacing: .02em; }
+    .ad-mode-status[data-mode="on-zap"] { color: #9cddff; }
     .temporary-playback-controls { padding: 10px 8px 12px; border-top: 1px solid #ffffff12; }
     #temporary-pause-button { width: 100%; min-height: 40px; padding: 8px 14px; border: 1px solid #ffffff20; border-radius: 7px; background: #182430; color: #c5d0dc; font-size: 13px; font-weight: 650; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
     #temporary-pause-button:hover { background: #203749; border-color: #00a5d966; color: #fff; }
@@ -80,13 +82,13 @@
     .theater-mode .channel-toast { top: max(24px, env(safe-area-inset-top)); left: max(24px, env(safe-area-inset-left)); font-size: 15px; }
     @media (max-width: 760px) {
       .app-shell { grid-template-columns: minmax(120px, 34%) minmax(0, 1fr); column-gap: 10px; row-gap: 12px; padding: 12px; }
-      .brand-logo { width: min(150px, 100%); }
+      .brand-logo { top: -12px; width: min(150px, 100%); }
       .layout { grid-template-columns: minmax(120px, 34%) minmax(0, 1fr); gap: 10px; }
       .screen-column { grid-column: 2; grid-row: 1 / span 2; }
       #channels { max-height: calc(100vh - 130px); padding: 5px; }
-      .channel-card { grid-template-columns: 1fr; gap: 5px; padding: 5px; }
-      .channel-thumbnail { width: 100%; height: auto; aspect-ratio: 16 / 9; }
-      .channel-details { grid-template-columns: 22px minmax(0, 1fr); }
+      .channel-card { grid-template-columns: 40px minmax(0, 1fr); gap: 6px; padding: 5px; }
+      .channel-thumbnail { width: 40px; height: 40px; }
+      .channel-details { grid-template-columns: 20px minmax(0, 1fr); }
       .channel-category { display: none; }
       .key-legend { padding: 10px; }
       .key-hint { flex-wrap: wrap; }
@@ -111,6 +113,7 @@
             <div class="key-hint"><kbd>F</kbd><span>Toggle theater view</span></div>
             <div class="key-hint"><kbd>Esc</kbd><span>Exit theater view</span></div>
           </div>
+          <div id="ad-mode-pill" class="ad-mode-status" role="status" aria-live="polite">Ad mode · Pre-roll</div>
         </aside>
         <div class="temporary-playback-controls">
           <button id="temporary-pause-button" type="button" aria-pressed="false">Pause playback</button>

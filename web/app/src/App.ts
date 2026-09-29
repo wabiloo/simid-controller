@@ -9,6 +9,8 @@ type Channel = {
   stream: string
 }
 
+type AdMode = 'pre-roll' | 'on-zap'
+
 const CHANNELS_URL = './channels.json'
 const CHANNEL_SWITCH_TOAST_MS = 3000
 const SUPPORTED_KEYS = new Set(['ArrowUp', 'ArrowDown', 'f', 'F', 'Escape'])
@@ -18,6 +20,7 @@ export default class App {
   private channelsElement: HTMLElement
   private player: Player
   private channels: Channel[] = []
+  private adMode: AdMode = new URLSearchParams(window.location.search).get('mode') === 'on-zap' ? 'on-zap' : 'pre-roll'
   private activeChannelIndex = -1
   private toastHideTimer = -1
   private theaterMode = false
@@ -28,11 +31,18 @@ export default class App {
     this.channelsElement = document.getElementById('channels') as HTMLElement
 
     const playerElement = document.getElementById('player') as HTMLElement
-    this.player = new Player(this.playerContainer, playerElement, (key) => this.handleAppKey(key))
+    this.player = new Player(
+      this.playerContainer,
+      playerElement,
+      (key) => this.handleAppKey(key),
+      paused => this.updatePauseButton(paused)
+    )
+    this.updateAdModePill()
 
     document.getElementById('theater-toggle')!.addEventListener('click', () => this.setTheaterMode(!this.theaterMode))
     document.getElementById('channel-up')!.addEventListener('click', () => this.zap(-1))
     document.getElementById('channel-down')!.addEventListener('click', () => this.zap(1))
+    document.getElementById('temporary-pause-button')!.addEventListener('click', () => this.player.togglePlayback())
     document.addEventListener('keydown', event => this.onKeyDown(event))
     window.addEventListener('resize', () => this.player.handleResize())
   }
@@ -98,6 +108,7 @@ export default class App {
     const channel = this.channels[index]
     if (!channel || index === this.activeChannelIndex) return
 
+    const requestZapAd = this.adMode === 'on-zap' && this.activeChannelIndex >= 0
     const requestId = ++this.tuneRequest
     this.activeChannelIndex = index
     this.channelsElement.querySelectorAll<HTMLButtonElement>('.channel-card').forEach((button, buttonIndex) => {
@@ -108,7 +119,7 @@ export default class App {
     this.showChannelToast(channel)
     this.hideStatus()
     try {
-      await this.player.load(channel.stream)
+      await this.player.load(channel.stream, requestZapAd)
     } catch (error) {
       if (this.tuneRequest !== requestId) return
       console.error('[App] Failed to tune channel:', error)
@@ -173,6 +184,18 @@ export default class App {
 
   private hideStatus(): void {
     document.getElementById('status-message')!.hidden = true
+  }
+
+  private updatePauseButton(paused: boolean): void {
+    const button = document.getElementById('temporary-pause-button') as HTMLButtonElement
+    button.textContent = paused ? 'Resume playback' : 'Pause playback'
+    button.setAttribute('aria-pressed', String(paused))
+  }
+
+  private updateAdModePill(): void {
+    const pill = document.getElementById('ad-mode-pill')!
+    pill.textContent = this.adMode === 'on-zap' ? 'Ad mode · On-zap' : 'Ad mode · Pre-roll'
+    pill.dataset.mode = this.adMode
   }
 
   private isTypingTarget(target: EventTarget | null): boolean {

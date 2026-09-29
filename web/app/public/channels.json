@@ -1,34 +1,42 @@
 [
   {
-    "id": "angel-one",
+    "id": "horse-jumping",
     "number": "01",
-    "name": "Angel One",
-    "category": "Sci-fi · Demo",
-    "thumbnail": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=400&q=80",
+    "name": "Horse Jumping",
+    "category": "Sports",
+    "thumbnail": "./logos/horseriding.png",
     "stream": "https://stream.broadpeak.io/hlsts/live/neox_usp/neox_usp.isml/master.m3u8?bpkio_serviceid=2ab56412b1163ee1e99a163a082689a8&category=all"
   },
   {
-    "id": "sintel",
+    "id": "cycling",
     "number": "02",
-    "name": "Sintel",
-    "category": "Adventure · Demo",
-    "thumbnail": "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=400&q=80",
+    "name": "Cycling",
+    "category": "Sports",
+    "thumbnail": "./logos/cycling.png",
     "stream": "https://stream.broadpeak.io/hlsts/live/neox_usp/neox_usp.isml/master.m3u8?bpkio_serviceid=2ab56412b1163ee1e99a163a082689a8&category=all"
   },
   {
-    "id": "angel-one-encore",
+    "id": "sailing",
     "number": "03",
-    "name": "Angel One Encore",
-    "category": "Sci-fi · Demo",
-    "thumbnail": "https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=400&q=80",
+    "name": "Sailing",
+    "category": "Sports",
+    "thumbnail": "./logos/sailing.png",
+    "stream": "https://stream.broadpeak.io/hlsts/live/neox_usp/neox_usp.isml/master.m3u8?bpkio_serviceid=2ab56412b1163ee1e99a163a082689a8&category=all"
+  },
+  {
+    "id": "animes",
+    "number": "04",
+    "name": "Animes",
+    "category": "Entertainment",
+    "thumbnail": "./logos/anime.png",
     "stream": "https://stream.broadpeak.io/hlsts/live/neox_usp/neox_usp.isml/master.m3u8?bpkio_serviceid=2ab56412b1163ee1e99a163a082689a8&category=all"
   },
   {
     "id": "big-buck-bunny",
-    "number": "04",
+    "number": "05",
     "name": "Big Buck Bunny",
-    "category": "Animation · Demo",
-    "thumbnail": "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=400&q=80",
+    "category": "Animation",
+    "thumbnail": "./logos/bigbuckbunny.png",
     "stream": "https://stream.broadpeak.io/hlsts/live/neox_usp/neox_usp.isml/master.m3u8?bpkio_serviceid=2ab56412b1163ee1e99a163a082689a8&category=all"
   }
 ]
