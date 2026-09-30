@@ -384,6 +384,7 @@ export class SimidController extends SimidComponent {
     this._creativeDimensions = creativeDimensions
     const args: PlayerResizeMessageArgs = {
       videoDimensions: playerDimensions,
+      mediaDimensions: playerDimensions,
       creativeDimensions,
       fullscreen
     }
@@ -597,6 +598,7 @@ export class SimidController extends SimidComponent {
 
     const environmentData: EnvironmentData = {
       videoDimensions: this._mainPlayerDimensions,
+      mediaDimensions: this._mainPlayerDimensions,
       creativeDimensions: this._creativeDimensions,
       fullscreen: false,
       fullscreenAllowed: true,

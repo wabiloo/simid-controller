@@ -21,7 +21,7 @@ Pausing playback waits two seconds, then requests the configured `pause` out-of-
 
 Changing channels requests the configured `zap` out-of-band ad break after the new stream starts. Zap ads do not pause playback; they are served only when the Broadpeak service is configured with a matching `zap` OOB ad, and the active zap ad break ends on the next channel change.
 
-Set the page URL to `?mode=on-zap` to select on-zap mode. The default is pre-roll mode. The current mode is shown in the pill below the channel list. In on-zap mode, channel changes trigger the `zap` OOB ad call; in pre-roll mode, the stream URL should carry the service's pre-roll query parameter.
+Set the page URL to `?mode=on-zap` to select **OOBA on zap** mode; pre-roll is the default and uses `?mode=pre-roll`. The mode control below the keyboard tips toggles modes and updates the page URL. In OOBA on zap mode, the delay field accepts 0–99 seconds and updates `zapDelay` in the page URL (for example, `?mode=on-zap&zapDelay=5`). The initial tune and every channel change request the `on-zap` OOB ad after that delay; a later channel change cancels any pending request. The app ends each on-zap break through SmartLib 30 seconds after it begins, or earlier when changing channels. In pre-roll mode, the stream URL carries `preroll=1` instead of `preroll=0`.
 
 A temporary, subdued **Pause playback** button beneath the channel list can be used to trigger pause ads while investigating another SIMID creative. It switches to **Resume playback** when paused and is hidden in theater mode.
 

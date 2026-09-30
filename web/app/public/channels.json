@@ -5,7 +5,7 @@
     "name": "Horse Jumping",
     "category": "Sports",
     "thumbnail": "./logos/horseriding.png",
-    "stream": "https://stream.broadpeak.io/hlsts/live/neox_usp/neox_usp.isml/master.m3u8?bpkio_serviceid=2ab56412b1163ee1e99a163a082689a8&category=all"
+    "stream": "https://dcv5s0ei7csoc.cloudfront.net/2ab56412b1163ee18acf6ba7b52b3710/scte35/bpk-tv/jumping/default/index.m3u8"
   },
   {
     "id": "cycling",
@@ -13,7 +13,7 @@
     "name": "Cycling",
     "category": "Sports",
     "thumbnail": "./logos/cycling.png",
-    "stream": "https://stream.broadpeak.io/hlsts/live/neox_usp/neox_usp.isml/master.m3u8?bpkio_serviceid=2ab56412b1163ee1e99a163a082689a8&category=all"
+    "stream": "https://dcv5s0ei7csoc.cloudfront.net/2ab56412b1163ee17e176e955f65af0c/bpk-tv/cycling/default/index.mpd"
   },
   {
     "id": "sailing",
@@ -21,22 +21,38 @@
     "name": "Sailing",
     "category": "Sports",
     "thumbnail": "./logos/sailing.png",
-    "stream": "https://stream.broadpeak.io/hlsts/live/neox_usp/neox_usp.isml/master.m3u8?bpkio_serviceid=2ab56412b1163ee1e99a163a082689a8&category=all"
+    "stream": "https://dcv5s0ei7csoc.cloudfront.net/2ab56412b1163ee155db52b7f7643d5b/index.m3u8"
+  },
+  {
+    "id": "rugby",
+    "number": "04",
+    "name": "Rugby",
+    "category": "Sports",
+    "thumbnail": "./logos/rugby.png",
+    "stream": "https://dcv5s0ei7csoc.cloudfront.net/2ab56412b1163ee1e279f42496f909d1/bpk-tv/aus/fmp4/index.m3u8"
+  },
+  {
+    "id": "football",
+    "number": "05",
+    "name": "Football",
+    "category": "Sports",
+    "thumbnail": "./logos/football.png",
+    "stream": "https://dcv5s0ei7csoc.cloudfront.net/2ab56412b1163ee110c62ed06c9d8d5e/bpk-tv/psg/default/index.mpd"
   },
   {
     "id": "animes",
-    "number": "04",
-    "name": "Animes",
+    "number": "06",
+    "name": "Blender",
     "category": "Entertainment",
-    "thumbnail": "./logos/anime.png",
-    "stream": "https://stream.broadpeak.io/hlsts/live/neox_usp/neox_usp.isml/master.m3u8?bpkio_serviceid=2ab56412b1163ee1e99a163a082689a8&category=all"
+    "thumbnail": "./logos/blender.png",
+    "stream": "https://dcv5s0ei7csoc.cloudfront.net/2ab56412b1163ee1d697a795380ff99f/bpk-tv/bpkiofficial/hlsv3/index.m3u8"
   },
   {
     "id": "big-buck-bunny",
-    "number": "05",
+    "number": "07",
     "name": "Big Buck Bunny",
     "category": "Animation",
     "thumbnail": "./logos/bigbuckbunny.png",
-    "stream": "https://stream.broadpeak.io/hlsts/live/neox_usp/neox_usp.isml/master.m3u8?bpkio_serviceid=2ab56412b1163ee1e99a163a082689a8&category=all"
+    "stream": "https://dcv5s0ei7csoc.cloudfront.net/2ab56412b1163ee1c59234929ddcc0cb/bpk-tv/BBB2/fmp4/BBB2/BBB2/index.m3u8"
   }
 ]

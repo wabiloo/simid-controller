@@ -13,7 +13,9 @@ type AdMode = 'pre-roll' | 'on-zap'
 
 const CHANNELS_URL = './channels.json'
 const CHANNEL_SWITCH_TOAST_MS = 3000
-const SUPPORTED_KEYS = new Set(['ArrowUp', 'ArrowDown', 'f', 'F', 'Escape'])
+const SUPPORTED_KEYS = new Set(['ArrowUp', 'ArrowDown', 'f', 'F', 'Escape', ' '])
+const delayParam = new URLSearchParams(window.location.search).get('zapDelay')
+const initialZapDelay = delayParam !== null && /^\d{1,2}$/.test(delayParam) ? Number(delayParam) : 0
 
 export default class App {
   private playerContainer: HTMLElement
@@ -21,6 +23,7 @@ export default class App {
   private player: Player
   private channels: Channel[] = []
   private adMode: AdMode = new URLSearchParams(window.location.search).get('mode') === 'on-zap' ? 'on-zap' : 'pre-roll'
+  private zapDelaySeconds = initialZapDelay
   private activeChannelIndex = -1
   private toastHideTimer = -1
   private theaterMode = false
@@ -35,16 +38,25 @@ export default class App {
       this.playerContainer,
       playerElement,
       (key) => this.handleAppKey(key),
-      paused => this.updatePauseButton(paused)
+      () => {}
     )
     this.updateAdModePill()
+    this.updateModeUrl()
+    const delayInput = document.getElementById('zap-delay') as HTMLInputElement
+    delayInput.value = String(this.zapDelaySeconds)
 
+    document.getElementById('ad-mode-pill')!.addEventListener('click', () => this.toggleAdMode())
+    delayInput.addEventListener('input', () => {
+      const digits = delayInput.value.replace(/\D/g, '').slice(0, 2)
+      if (delayInput.value !== digits) delayInput.value = digits
+      this.updateZapDelay(delayInput, false)
+    })
+    delayInput.addEventListener('change', () => this.updateZapDelay(delayInput, true))
     document.getElementById('theater-toggle')!.addEventListener('click', () => this.setTheaterMode(!this.theaterMode))
     document.getElementById('channel-up')!.addEventListener('click', () => this.zap(-1))
     document.getElementById('channel-down')!.addEventListener('click', () => this.zap(1))
-    document.getElementById('temporary-pause-button')!.addEventListener('click', () => this.player.togglePlayback())
     document.addEventListener('keydown', event => this.onKeyDown(event))
-    window.addEventListener('resize', () => this.player.handleResize())
+    window.addEventListener('resize', () => this.player.handleResize(this.theaterMode))
   }
 
   public async init(): Promise<void> {
@@ -108,7 +120,6 @@ export default class App {
     const channel = this.channels[index]
     if (!channel || index === this.activeChannelIndex) return
 
-    const requestZapAd = this.adMode === 'on-zap' && this.activeChannelIndex >= 0
     const requestId = ++this.tuneRequest
     this.activeChannelIndex = index
     this.channelsElement.querySelectorAll<HTMLButtonElement>('.channel-card').forEach((button, buttonIndex) => {
@@ -119,7 +130,7 @@ export default class App {
     this.showChannelToast(channel)
     this.hideStatus()
     try {
-      await this.player.load(channel.stream, requestZapAd)
+      await this.player.load(channel.stream, this.adMode, this.zapDelaySeconds)
     } catch (error) {
       if (this.tuneRequest !== requestId) return
       console.error('[App] Failed to tune channel:', error)
@@ -154,6 +165,9 @@ export default class App {
       case 'Escape':
         if (this.theaterMode) this.setTheaterMode(false)
         break
+      case ' ':
+        this.player.togglePlayback()
+        break
     }
   }
 
@@ -165,7 +179,7 @@ export default class App {
     const button = document.getElementById('theater-toggle')!
     button.textContent = enabled ? 'Exit theater' : 'Theater mode'
     button.setAttribute('aria-pressed', String(enabled))
-    this.player.handleResize()
+    requestAnimationFrame(() => this.player.handleResize(enabled))
   }
 
   private showChannelToast(channel: Channel): void {
@@ -186,16 +200,36 @@ export default class App {
     document.getElementById('status-message')!.hidden = true
   }
 
-  private updatePauseButton(paused: boolean): void {
-    const button = document.getElementById('temporary-pause-button') as HTMLButtonElement
-    button.textContent = paused ? 'Resume playback' : 'Pause playback'
-    button.setAttribute('aria-pressed', String(paused))
-  }
-
   private updateAdModePill(): void {
     const pill = document.getElementById('ad-mode-pill')!
-    pill.textContent = this.adMode === 'on-zap' ? 'Ad mode · On-zap' : 'Ad mode · Pre-roll'
-    pill.dataset.mode = this.adMode
+    pill.textContent = this.adMode === 'on-zap' ? 'OOBA on zap' : 'Pre-roll'
+    pill.setAttribute('aria-label', `Ad mode: ${pill.textContent}. Activate to switch to ${this.adMode === 'on-zap' ? 'Pre-roll' : 'OOBA on zap'}.`)
+    document.getElementById('zap-delay-label')!.hidden = this.adMode !== 'on-zap'
+  }
+
+  private toggleAdMode(): void {
+    this.adMode = this.adMode === 'on-zap' ? 'pre-roll' : 'on-zap'
+    this.updateModeUrl()
+    this.updateAdModePill()
+  }
+
+  private updateModeUrl(): void {
+    const url = new URL(window.location.href)
+    if (url.searchParams.get('mode') !== this.adMode) {
+      url.searchParams.set('mode', this.adMode)
+      window.history.replaceState(null, '', url)
+    }
+  }
+
+  private updateZapDelay(input: HTMLInputElement, normalize: boolean): void {
+    const seconds = Number(input.value)
+    this.zapDelaySeconds = input.value !== '' && Number.isFinite(seconds)
+      ? Math.min(99, Math.max(0, Math.trunc(seconds)))
+      : 0
+    if (normalize) input.value = String(this.zapDelaySeconds)
+    const url = new URL(window.location.href)
+    url.searchParams.set('zapDelay', String(this.zapDelaySeconds))
+    window.history.replaceState(null, '', url)
   }
 
   private isTypingTarget(target: EventTarget | null): boolean {

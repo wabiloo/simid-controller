@@ -13,7 +13,9 @@ class SimidControllerAdapter extends GenericSimidControllerApi {
   }
 }
 
+const SIMID_FADE_MS = 400
 const PAUSE_AD_DELAY_MS = 2000
+const ZAP_AD_DURATION_MS = 30000
 
 export default class Player {
   private playerContainer: HTMLElement
@@ -31,6 +33,9 @@ export default class Player {
   private activeZapAdBreak?: any
   private activeZapAdId?: string
   private pauseAdTimer?: number
+  private simidFadeTimers = new Map<string, number>()
+  private zapAdTimer?: number
+  private zapAdEndTimer?: number
   private playerIsPaused = false
   private onAppKey: (key: string) => void
   private onPlaybackStateChange: (paused: boolean) => void
@@ -49,8 +54,13 @@ export default class Player {
     this.loadPlayer()
   }
 
-  public async load(url: string, requestZapAd = false): Promise<void> {
+  public async load(url: string, adMode: 'pre-roll' | 'on-zap' = 'pre-roll', zapDelaySeconds = 0): Promise<void> {
     const generation = ++this.generation
+    const tuneTime = performance.now()
+    window.clearTimeout(this.zapAdTimer)
+    this.zapAdTimer = undefined
+    window.clearTimeout(this.zapAdEndTimer)
+    this.zapAdEndTimer = undefined
     const transition = this.transition.catch(() => undefined).then(async () => {
       if (this.player) await this.player.unload()
       this.disposeSession()
@@ -67,10 +77,26 @@ export default class Player {
       const parsedUrl = new URL(url)
       const queryParams = new URLSearchParams(parsedUrl.search)
       const baseUrl = parsedUrl.origin + parsedUrl.pathname
+      queryParams.set('preroll', adMode === 'pre-roll' ? '1' : '0')
       queryParams.forEach((value, name) => session.setAdParameter(name, value))
 
       const result = await session.getURL(baseUrl)
       if (generation !== this.generation) return
+      if (adMode === 'on-zap') {
+        if (zapDelaySeconds === 0) {
+          this.requestOutOfBandAds(session, 'zap')
+        } else {
+          const remainingMs = Math.max(0, zapDelaySeconds * 1000 - (performance.now() - tuneTime))
+          if (remainingMs === 0) {
+            this.requestOutOfBandAds(session, 'zap')
+          } else {
+            this.zapAdTimer = window.setTimeout(() => {
+              this.zapAdTimer = undefined
+              if (generation === this.generation && this.smartlibSession === session) this.requestOutOfBandAds(session, 'zap')
+            }, remainingMs)
+          }
+        }
+      }
       const playUrl = result.url || url
       const source = playUrl.toLowerCase().includes('.m3u8') ? { hls: playUrl } : { dash: playUrl }
       await this.player.load(source)
@@ -81,7 +107,6 @@ export default class Player {
         this.player.mute()
         await this.player.play()
       }
-      if (requestZapAd && generation === this.generation) this.requestOutOfBandAds(session, 'zap')
     })
     this.transition = transition
     await transition
@@ -89,14 +114,22 @@ export default class Player {
 
   public async stop(): Promise<void> {
     ++this.generation
+    window.clearTimeout(this.zapAdTimer)
+    this.zapAdTimer = undefined
+    window.clearTimeout(this.zapAdEndTimer)
+    this.zapAdEndTimer = undefined
     const transition = this.transition.catch(() => undefined).then(() => this.stopCurrentStream())
     this.transition = transition
     await transition
   }
 
-  public handleResize(): void {
-    const rect = this.getElementDimensions(this.playerContainer)
-    this.simidControllers.forEach(controller => controller.notifyResize(rect, rect, false))
+  public handleResize(fullscreen = false): void {
+    // Always report the container's own box in container-relative coordinates
+    // (origin 0,0), matching loadSimid(). Viewport-relative offsets or
+    // window.inner* sizes would desync the creative from the video.
+    const rect = this.playerContainer.getBoundingClientRect()
+    const dimensions = new DOMRect(0, 0, rect.width, rect.height)
+    this.simidControllers.forEach(controller => controller.notifyResize(dimensions, dimensions, fullscreen))
   }
 
   private async stopCurrentStream(): Promise<void> {
@@ -108,6 +141,8 @@ export default class Player {
     this.playerIsPaused = false
     window.clearTimeout(this.pauseAdTimer)
     this.pauseAdTimer = undefined
+    window.clearTimeout(this.zapAdTimer)
+    this.zapAdTimer = undefined
     this.endPauseAd()
     this.endZapAd()
     this.simidControllers.forEach((controller, adId) => {
@@ -170,14 +205,20 @@ export default class Player {
       onAdBreakBegin: (adBreakData: any) => {
         if (generation !== this.generation) return
         console.log('[Player] onAdBreakBegin:', adBreakData)
-        if (adBreakData.ooba?.name === 'pause') {
-          this.activePauseAdBreak = adBreakData
-          this.activePauseAdId = adBreakData.ads?.[0]?.adId
-          this.raiseOutOfBandAdIframe(this.activePauseAdId)
-        } else if (adBreakData.ooba?.name === 'zap') {
+        if (adBreakData.ooba?.name === 'on-zap' || adBreakData.ooba?.name === 'zap') {
           this.activeZapAdBreak = adBreakData
           this.activeZapAdId = adBreakData.ads?.[0]?.adId
           this.raiseOutOfBandAdIframe(this.activeZapAdId)
+          window.clearTimeout(this.zapAdEndTimer)
+          this.zapAdEndTimer = window.setTimeout(() => {
+            if (generation === this.generation && this.smartlibSession === session && this.activeZapAdBreak?.id === adBreakData.id) {
+              this.endZapAd()
+            }
+          }, ZAP_AD_DURATION_MS)
+        } else if (adBreakData.ooba?.name === 'pause') {
+          this.activePauseAdBreak = adBreakData
+          this.activePauseAdId = adBreakData.ads?.[0]?.adId
+          this.raiseOutOfBandAdIframe(this.activePauseAdId)
         }
       },
       onPrepareAd: (adData: any) => {
@@ -209,6 +250,8 @@ export default class Player {
           this.activePauseAdId = undefined
         }
         if (this.activeZapAdBreak?.id === adBreakData.id) {
+          window.clearTimeout(this.zapAdEndTimer)
+          this.zapAdEndTimer = undefined
           this.activeZapAdBreak = undefined
           this.activeZapAdId = undefined
         }
@@ -261,7 +304,20 @@ export default class Player {
     const iframe = this.simidIframes.get(adId)
     if (!iframe) return
     if (adId === this.activePauseAdId || adId === this.activeZapAdId) iframe.style.zIndex = '30'
-    iframe.style.display = show ? 'block' : 'none'
+    // The controller creates the iframe with display:none, so display must be
+    // managed here; opacity provides the fade (see CSS transition).
+    window.clearTimeout(this.simidFadeTimers.get(adId))
+    if (show) {
+      iframe.style.display = 'block'
+      iframe.style.pointerEvents = ''
+      iframe.style.opacity = '0'
+      void iframe.offsetWidth // commit opacity:0 so the transition runs
+      iframe.style.opacity = '1'
+    } else {
+      iframe.style.opacity = '0'
+      iframe.style.pointerEvents = 'none'
+      this.simidFadeTimers.set(adId, window.setTimeout(() => { iframe.style.display = 'none' }, SIMID_FADE_MS))
+    }
     if (show) {
       this.smartlibSession?.sendTracker('impression', adId)
       this.smartlibSession?.sendTracker('creativeView', adId)
@@ -315,7 +371,10 @@ export default class Player {
 
   private requestOutOfBandAds(session: any, name: 'pause' | 'zap'): void {
     try {
-      session.requestOutOfBandAds(name, 0, true)
+      const requestName = name === 'zap' ? 'on-zap' : name
+      const additionalQueryParams = name === 'zap' ? { 'ooba-tag': 'atres-smartclip-banner' } : undefined
+      console.info(`[Player] Requesting ${name} out-of-band ads`, { requestName, additionalQueryParams })
+      session.requestOutOfBandAds(requestName, 30, true, additionalQueryParams)
     } catch (error) {
       console.error(`[Player] Failed to request ${name} ads:`, error)
     }
@@ -337,6 +396,8 @@ export default class Player {
   }
 
   private endZapAd(): void {
+    window.clearTimeout(this.zapAdEndTimer)
+    this.zapAdEndTimer = undefined
     if (!this.activeZapAdBreak) return
     this.smartlibSession?.endOutOfBandAdBreak(this.activeZapAdBreak.id)
     this.activeZapAdBreak = undefined

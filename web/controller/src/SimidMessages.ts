@@ -260,6 +260,7 @@ export enum CloseButtonSupport {
 
 export type EnvironmentData = {
   videoDimensions: Dimensions
+  mediaDimensions?: Dimensions // SIMID v1.1 name
   creativeDimensions: Dimensions
   fullscreen: boolean
   fullscreenAllowed: boolean
@@ -287,6 +288,7 @@ export type PlayerLogMessageArgs = LogMessageArgs
 
 export type PlayerResizeMessageArgs = {
   videoDimensions: Dimensions
+  mediaDimensions?: Dimensions // SIMID v1.1 name
   creativeDimensions: Dimensions
   fullscreen: boolean
 }
